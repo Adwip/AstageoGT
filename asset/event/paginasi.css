@@ -1,0 +1,35 @@
+
+    #spage{
+      background-color: #5999ff;
+      color: white;
+    }
+    .navigasi{
+      list-style-type: none;
+      margin: 0 0 0 10px;
+      padding: 0;
+    }
+
+    .pag-tem{
+      float: left;
+    }
+    
+    .pag-tem :hover{
+        background-color: bisque;
+    }
+    .pag-lin{
+      margin: 0;
+      height: 30px;
+      text-decoration: none;
+      display: inline-block;
+      background-color: white;
+      border: 1px solid #787d82;
+    }
+    .fir-p{
+      border-radius: 4px 0 0 4px;
+    }
+    .las-p{
+      border-radius: 0 4px 4px 0;
+    }
+    .poin-p{
+      width: 40px;
+    }

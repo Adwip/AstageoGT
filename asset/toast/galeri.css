@@ -1,0 +1,70 @@
+.galeri{
+    visibility: hidden;
+    top: 25%;
+    right: 20%;
+    position: fixed;
+    z-index: 1;
+}
+.galeri-musim{
+    width: auto;
+    height: auto;
+    right: 30%;
+    top: 15%;
+}
+
+.galeri-dinat{
+    width: auto;
+    height: auto;
+    top: 10%;
+}
+
+.galeri-ipt{
+    width: auto;
+    height: auto;
+    right: 10%;
+    top: 10%;
+}
+.galeri2{
+    width: 700px;
+    height: 300px;
+}
+#clb{
+    float: right;
+    margin-left: 5px;
+}
+.tombol{
+    float: inherit;
+}
+.pos-but-down{
+    margin-top: 8px;
+    float: right;
+}
+.panel-but{
+    height: 50px;
+    padding-top: 10px;
+    color: black;
+    width: auto;
+    float: left;
+}
+.foto-size{
+    width: 550px;
+    height: 400px;
+}
+.foto-size2{
+    width: 680px;
+    height: 400px;
+    float: left;
+}
+
+.foto-size-musim{
+    width: auto;
+    height: auto;
+    float: left;
+}
+.foto-size-ipt{
+    width: 1000px;
+    height: 550px;;
+    float: left;
+}
+
+

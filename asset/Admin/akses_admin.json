@@ -1,0 +1,138 @@
+[
+    {
+        "root": {
+            "berita": null,
+            "artikel": null,
+            "kepegawaian": null,
+            "cuaca": null,
+            "prak_musim": null,
+            "analis_iklim": null,
+            "inf_iklim": null,
+            "per_iklim": null,
+            "kual_udara": null,
+            "gempa": null,
+            "ttm_petir": null,
+            "umum": null,
+            "administrator": "Ya"
+        }
+    },
+    {
+        "120519ADM002": {
+            "berita": "Ya",
+            "artikel": "Ya",
+            "kepegawaian": "Ya",
+            "cuaca": "Ya",
+            "prak_musim": "Ya",
+            "analis_iklim": "Ya",
+            "inf_iklim": "Ya",
+            "per_iklim": "Ya",
+            "kual_udara": "Ya",
+            "gempa": "Ya",
+            "ttm_petir": "Ya",
+            "umum": "Ya",
+            "administrator": "Ya"
+        }
+    },
+    {
+        "080719ADM003": {
+            "berita": "Ya",
+            "artikel": "Ya",
+            "kepegawaian": "Ya",
+            "cuaca": "Ya",
+            "prak_musim": "Ya",
+            "analis_iklim": "Ya",
+            "inf_iklim": null,
+            "per_iklim": null,
+            "kual_udara": null,
+            "gempa": null,
+            "ttm_petir": null,
+            "umum": null,
+            "administrator": null
+        }
+    },
+    {
+        "140719ADM004": {
+            "berita": null,
+            "artikel": null,
+            "kepegawaian": null,
+            "cuaca": null,
+            "prak_musim": null,
+            "analis_iklim": null,
+            "inf_iklim": null,
+            "per_iklim": null,
+            "kual_udara": null,
+            "gempa": null,
+            "ttm_petir": null,
+            "umum": null,
+            "administrator": null
+        }
+    },
+    {
+        "140719ADM005": {
+            "berita": null,
+            "artikel": null,
+            "kepegawaian": null,
+            "cuaca": null,
+            "prak_musim": null,
+            "analis_iklim": null,
+            "inf_iklim": null,
+            "per_iklim": null,
+            "kual_udara": null,
+            "gempa": null,
+            "ttm_petir": null,
+            "umum": null,
+            "administrator": null
+        }
+    },
+    {
+        "140719ADM006": {
+            "berita": null,
+            "artikel": null,
+            "kepegawaian": null,
+            "cuaca": null,
+            "prak_musim": null,
+            "analis_iklim": null,
+            "inf_iklim": null,
+            "per_iklim": null,
+            "kual_udara": null,
+            "gempa": null,
+            "ttm_petir": null,
+            "umum": null,
+            "administrator": null
+        }
+    },
+    {
+        "140719ADM007": {
+            "berita": null,
+            "artikel": null,
+            "kepegawaian": null,
+            "cuaca": null,
+            "prak_musim": null,
+            "analis_iklim": null,
+            "inf_iklim": null,
+            "per_iklim": null,
+            "kual_udara": null,
+            "gempa": null,
+            "ttm_petir": null,
+            "umum": null,
+            "administrator": null
+        }
+    },
+    {
+        "140719ADM008": {
+            "berita": null,
+            "artikel": null,
+            "kepegawaian": null,
+            "cuaca": null,
+            "prak_musim": null,
+            "analis_iklim": null,
+            "inf_iklim": null,
+            "per_iklim": null,
+            "kual_udara": null,
+            "gempa": null,
+            "ttm_petir": null,
+            "umum": null,
+            "administrator": null
+        }
+    }
+]
