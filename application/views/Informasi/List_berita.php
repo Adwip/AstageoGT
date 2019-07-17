@@ -71,7 +71,7 @@
                             <th class="column-title">No</th>
                             <th class="column-title">Waktu Dibuat </th>
                             <th class="column-title">Judul </th>
-                            <!--<th class="column-title">Gambar </th>-->
+                            <th class="column-title">Gambar </th>
                             <th class="column-title">Penyusun </th>
                             <th class="column-title no-link last"><span class="nobr">Aksi</span>
                             </th>

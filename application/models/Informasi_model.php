@@ -478,6 +478,7 @@ class Informasi_model extends CI_Model
 								<td class=" ">'.$list.'</td>
 								<td class=" ">'.$news[$l]->tanggal_input.'</td>
 								<td class=" "><a class="lihat" data-id="'.$news[$l]->id_berita.'" href="'.site_url('Informasi/baca_news').'">'.$news[$l]->judul.'</a></td>
+								<td><button class="cek_g_musim btn btn-xs btn-warning" type="button" value="'.$news[$l]->id_berita.'" >Cek gambar</button></td>
 								<td class=" ">'.$news[$l]->penyusun.'.</td>
 								<td class=" ">
 									<button type="button" onClick=editBRT("'.$news[$l]->id_berita.'","'.site_url('Informasi/get_beritaID').'") class="btn btn-round btn-info btn-xs" >Edit</button><br>
