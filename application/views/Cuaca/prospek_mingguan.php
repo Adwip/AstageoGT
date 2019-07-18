@@ -31,7 +31,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -161,11 +161,13 @@
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>                
                     </ul>
-                    
                   </div>
-                  <div class="x_content pdf" style="display: none;">
+                  <div class="x_content pdf" style="display: none;" id="disp-data">
                     <br />
                       <span id="pdf"></span>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-12 ">
+                    <button type="button" class="btn btn-danger tutup">Batal</button>
                   </div>
                 </div>
             </div>
@@ -174,7 +176,7 @@
                   <div class="x_title">
                     <h5>Edit Prospek Cuaca Mingguan</h5>  
                   </div>
-                  <div class="x_content edit-form" style="display: none;">
+                  <div class="x_content edit-form" style="display: none;" id="form-edit">
                     <form method="POST" action="<?php echo site_url('Cuaca/edit_cuming') ?>" id="kirim-data">
                         <div class='col-md-12 col-xs-12 col-sm-12'>
                           <div class="form-group">

@@ -31,7 +31,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -112,10 +112,9 @@
                 </div>
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
+                <div class="x_panel"  id="form-tambah">
                   <div class="x_title">
                     <h5>Masukkan data dinamika atmosfer di sini</h5>
-                    
                   </div>
                   <div class="x_content input-data" style="display: none;" >
                     <br />

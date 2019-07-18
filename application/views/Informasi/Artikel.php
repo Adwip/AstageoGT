@@ -30,7 +30,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -192,7 +192,7 @@
                   <div class="x_title">
                     <h5>Edit artikel</h5>
                   </div>
-                  <div class="x_content edit-form"  style="display: none;">
+                  <div class="x_content edit-form"  style="display: none;" id="edit-form">
                     <br />
                       <form method="POST" action="<?php echo site_url('Informasi/edit_artikel') ?>" id="kirim-data">
                       <div class="form-group">

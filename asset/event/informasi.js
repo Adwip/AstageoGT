@@ -69,9 +69,9 @@ function editUPT(id, link){
               		$('#edit-head').val(data['data']['kepala']);
                   $('#nama').val(data['data']['nama']);
                   $('#t-input').val(data['data']['tanggal_input']);
-                  $('#foto-edit').html(data['foto']);
-
-              		$('.edit-page').show();
+                  //$('#foto-edit').html(data['foto']);
+                  $('.edit-page').show();
+                  document.getElementById("form-edit").scrollIntoView();
               	}
               }
     })
@@ -91,6 +91,7 @@ function editPJB(id,link){
         $('#id-form').val(data['nomor']);
         $('#ft-form').val(data['img']);
         $('.form-edit').show();
+        document.getElementById("form-edit").scrollIntoView();
       }
 
     }
@@ -121,7 +122,7 @@ $('.baca-pdf').click(function(e){
 })
 
 $('.tutup').click(function(){
-  //document.getElementById("list-dta").scrollIntoView();
+  document.getElementById("list-data").scrollIntoView();
   $(this).closest('.x_content').hide()
 })
 
@@ -143,8 +144,9 @@ function baca_upt(link){
           $('#faksimili').html(data['data']['faksimili'])
           $('#petugas').html(data['data']['nama'])
           $('#tinput').html(data['data']['tanggal_input'])
-          $('#struktur').html(data['foto'])
+          //$('#struktur').html(data['foto'])
           $('.view-page').show()
+          document.getElementById("lihat-upt").scrollIntoView();
         }
       }
     })
@@ -251,6 +253,7 @@ function get_art(link){
           $('#edit_judul').val(data.judul)
           $('#edit_ket').val(data.ket)
           $('.edit-form').show()
+          document.getElementById("edit-form").scrollIntoView();
         }
       }
     })

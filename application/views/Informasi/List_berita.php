@@ -27,7 +27,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -191,7 +191,11 @@
         <!-- /footer content -->
       </div>
     </div>
-    
+    <div class="galeri posisi">
+        <a href="#" class="tombol  kiri  btn btn-default"><span class="glyphicon glyphicon-arrow-left zindex"></span></a>
+          <span id="img-loc"></span>
+          <a href="#" class="tombol btn kanan btn-default"><span class="glyphicon glyphicon-arrow-right  zindex"></span></a>
+    </div>
     <style>
       .btn:focus, .btn:active, button:focus, button:active {
         outline: none !important;
@@ -237,8 +241,11 @@
     <link href="<?php echo base_url(); ?>asset/confirm/ms-conf.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>asset/toast/toast.css" rel="stylesheet">
     <script src="<?php echo base_url(); ?>asset/toast/toast.js"></script>
+    <link href="<?php echo base_url(); ?>asset/toast/galeri.css" rel="stylesheet">
+    <script src="<?php echo base_url(); ?>asset/toast/galeri.js"></script>
     <script>
       $(document).ready(function(){
+        get_galeri('<?php echo site_url('Informasi/baca_gambar') ?>','brt')
         $('#spage, button[value="empty"]').click(function(){
             return false;
         })

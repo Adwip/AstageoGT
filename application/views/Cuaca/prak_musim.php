@@ -30,7 +30,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -103,7 +103,7 @@
             <br>
             <br>
             <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="x_panel">
+              <div class="x_panel"  id="form-tambah">
                   <div class="x_title">
                     <h5>Masukkan data musim di sini</h5>
                   </div>
@@ -153,7 +153,6 @@
               <div class="x_panel">
                   <div class="x_title">
                     <h5>Baca data prakiraan musim</h5>
-                    
                   </div>
                   <div class="x_content cek-data" style="display:none;">
                     <br />
@@ -178,13 +177,12 @@
                   </div>
                 </div>
             </div>
-            <br>
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                   <div class="x_title">
                     <h5>Edit prakiraan musim</h5>
                   </div>
-                  <div class="x_content edit-form"  style="display: none;">
+                  <div class="x_content edit-form"  style="display: none;" id="form-edit">
                     <br />
                       <form method="POST" action="<?php echo site_url('cuaca/edit_musim') ?>" id="kirim-data3">
                       <div class="form-group">

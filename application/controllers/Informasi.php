@@ -144,6 +144,7 @@ class Informasi extends CI_Controller {
 			
 	}
 
+
 	public function del_berita(){
 		$count = count($_POST['hapus']);
 		$s=null;
@@ -283,14 +284,14 @@ class Informasi extends CI_Controller {
 			$faksimili = $_POST['faksimili'];
 			$kepala = $_POST['kepala'];
 			$struktur=null;
-
+			/*
 			$tipe = array('png','JPG','jpeg','GIF','jpg','PNG','gif');
 			$type = pathinfo($_FILES['struktur']['name'],PATHINFO_EXTENSION);
 			if (in_array($type,$tipe)) {
 				$temp = explode(".", $_FILES['struktur']['name']);
 				$struktur = date('Hisdmy')."UPT.".end($temp);
 					move_uploaded_file($_FILES['struktur']['tmp_name'], '../File_BMKG/Profil/'.$struktur);
-			}
+			}*/
 
 			echo $this->informasi_model->set_UPT($stasiun,$alamat,$surel,$telepon,$faksimili,$this->session->userdata('nama'),$struktur,$kepala,$this->waktu);
 		
@@ -527,5 +528,10 @@ class Informasi extends CI_Controller {
 
 	public function del_struktur(){
 
+	}
+
+	public function baca_gambar(){
+		$data=$this->informasi_model->baca_gambar($_GET['id'],$_GET['tp']);
+		echo $data;
 	}
 }

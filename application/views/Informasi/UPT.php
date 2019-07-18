@@ -26,7 +26,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -122,10 +122,10 @@
                         <input type="text" name="kepala" autocomplete="off" class="form-control has-feedback-left"  placeholder="Kepala Stasiun / UPT" required>
                         <span class="fa fa-male form-control-feedback left" aria-hidden="true"></span>
                       </div>
-                      <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                      <!--<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                         <label>Struktur organisasi <small>file gambar</small></label>
                         <input type="file" required name="struktur" class="form-control">
-                      </div>
+                      </div>-->
 
                       <div class="ln_solid"></div>
                       <div class="form-group">
@@ -134,7 +134,6 @@
                           <button type="submit" class="kirim btn btn-success">Simpan</button>
                         </div>
                       </div>
-
                     </form>
                   </div>
                 </div>
@@ -146,64 +145,59 @@
                   <div class="x_title">
                     <h5>Edit Unit Pelayanan Teknis</h5>
                   </div>
-                  <div class="x_content edit-page" style="display: none;">
+                  <div class="x_content edit-page" style="display: none;" id="form-edit">
                     <br />
                       <form method="POST" action="<?php echo site_url('Informasi/edit_upt') ?>" class="form-horizontal form-label-left input_mask" id="kirim-data">
-                        
-                      
-                        <div class="col-md-2 col-sm-2 col-xs-12 form-group">
-                          <label>ID UPT</label>
-                          <input  type='text' id="edit-id" class="form-control tgal" readonly="readonly" name="id" />
-                        </div>
-                      
-                        <div class="col-md-3 col-sm-3 col-xs-12 form-group">
-                          <label>Petugas</label>
-                          <input  type='text' id="nama" class="form-control tgal" readonly="readonly"/>
-                        </div>
-                      
-                      
-                        <div class="col-md-3 col-sm-3 col-xs-12 form-group">
+                      <div class="col-md-2 col-sm-2 col-xs-12 form-group">
+                        <label>ID UPT</label>
+                        <input  type='text' id="edit-id" class="form-control tgal" readonly="readonly" name="id" />
+                      </div>
+                      <div class="col-md-3 col-sm-3 col-xs-12 form-group">
+                        <label>Petugas</label>
+                        <input  type='text' id="nama" class="form-control tgal" readonly="readonly"/>
+                      </div>
+                      <div class="col-md-3 col-sm-3 col-xs-12 form-group">
                           <label>Tanggal input</label>
                           <input  type='text' id="t-input" class="form-control tgal" readonly="readonly" />
                         </div>
-                      
-
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <label>Nama stasiun</label>
                         <input type="text" name="stasiun" class="form-control has-feedback-left" id="edit-kan" placeholder="Nama Stasiun" required="required">
                         <span class="fa fa-building form-control-feedback left" aria-hidden="true"></span>
                       </div>
-
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <label>Alamat stasiun</label>
                         <input type="text" name="alamat" class="form-control has-feedback-left" id="edit-add" placeholder="Alamat" required="required">
                         <span class="fa fa-road form-control-feedback left" aria-hidden="true"></span>
                       </div>
-
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="text" name="surel" class="form-control has-feedback-left" id="edit-sur" placeholder="Alamat E-Mail">
+                        <label>Alamat e-mail</label>
+                        <input id="edit-sur" type="text" name="surel" autocomplete="off" class="form-control has-feedback-left" required placeholder="Alamat E-Mail" data-parsley-type="email" data-parsley-trigger="change">
                         <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                       </div>
-
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="text" name="telepon" class="form-control has-feedback-left" id="edit-telp" placeholder="Nomor Telepon">
+                        <label>Nomor telepon</label>
+                        <input id="edit-telp" type="text" name="telepon" autocomplete="off" class="form-control has-feedback-left" required placeholder="Nomor Telepon" data-inputmask="'mask' : '(9999) 999-9999'">
                         <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="text" name="faksimili" class="form-control has-feedback-left" id="edit-faks" placeholder="Alamat Faksimili">
+                        <label>Nomor Faksimili</label>
+                        <input id="edit-faks" type="text" name="faksimili" autocomplete="off" class="form-control has-feedback-left" required placeholder="Alamat Faksimili" data-inputmask="'mask' : '(9999) 999-9999'">
                         <span class="fa fa-fax form-control-feedback left" aria-hidden="true"></span>
                       </div>
-
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <label>Kepala stasiun</label>
                         <input type="text" name="kepala" class="form-control has-feedback-left" id="edit-head" placeholder="Kepala Stasiun / UPT" required="required">
                         <span class="fa fa-male form-control-feedback left" aria-hidden="true"></span>
                       </div>
-                      <div class="col-md-5 col-sm-5 col-xs-12">
+                      <!--<div class="col-md-5 col-sm-5 col-xs-12">
                       <label>Tambah struktur oraganisasi jika akan mengganti</label>
                         <input type="file" name="struktur" >
-                        </div>
-                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        </div>-->
+                      <!--<div class="col-md-12 col-sm-12 col-xs-12">
                       <br>
                         <span id="foto-edit"></span>
-                      </div>
+                      </div>-->
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-2 col-sm-2 col-xs-12 ">
@@ -225,9 +219,9 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                   <div class="x_title">
-                    <h5>Edit Unit Pelayanan Teknis</h5>
+                    <h5>Data Unit Pelayanan Teknis</h5>
                   </div>
-                  <div class="x_content view-page" style="display: none;">
+                  <div class="x_content view-page" style="display: none; color:black;" id="lihat-upt">
                     <br />
                     <div class="col-md-12 col-sm-12 col-xs-12 ">
                       <br>
@@ -271,13 +265,13 @@
                         <h4><strong id="faksimili"></strong></h4>
                       </span>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                    <!--<div class="col-md-12 col-sm-12 col-xs-12 ">
                       <br>
                       <label><h5>Struktur Organisasi UPT</h5></label>
                       <span>
                         <h4><strong id="struktur"></strong></h4>
                       </span>
-                    </div>
+                    </div>-->
                     <div class="col-md-5 col-sm-5 col-xs-12 ">
                       <br>
                       <label><h5>Petugas</h5></label>

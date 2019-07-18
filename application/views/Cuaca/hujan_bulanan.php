@@ -35,7 +35,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -101,7 +101,7 @@
                   <div class="x_title">
                     <h5>Tambah Data Hujan bulanan </h5>
                   </div>
-                  <div class="x_content form-kirim" style="display: none;">
+                  <div class="x_content form-kirim" style="display: none;" id="form-tambah" >
                       <form method="POST" class="form-horizontal form-label-left input_mask" action="<?php echo site_url('Cuaca/set_hujan_bulanan') ?>" id="kirim-data">
                         <div class="col-md-5 col-sm-4 col-xs-12 form-group has-feedback">
                           <input type="text" class="form-control has-feedback-left wilayah" id="bulan-form" readonly="readonly" name="bulan">
@@ -134,7 +134,7 @@
                   <div class="x_title">
                     <h5>Edit Data Hujan Bulanan</h5>
                   </div>
-                  <div class="x_content form-edit" style="display:none;">                      
+                  <div class="x_content form-edit" style="display:none;" id="form-edit">                      
                     <form method="POST" class="form-horizontal form-label-left input_mask" action="<?php echo site_url('Cuaca/edit_hbl') ?>" id="kirim-data">
                         <div class="col-md-10 col-sm-10 col-xs-10 form-group has-feedback">
                           <input type="text" class="form-control has-feedback-left wilayah" id="edit-id" readonly="readonly" name="id">

@@ -37,7 +37,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main" style="height: 1300px;">
+        <div class="right_col" role="main" style="height: 1300px;" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -335,7 +335,7 @@
 
                   <div class="x_content cek_cuaca" style="display: none;">
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="weather-icon " style="text-align: center;">
+                        <div class="weather-icon " style="text-align: center;" id="baca-cuaca">
                             <span id="cek-cuaca"></span>
                         </div><br>
                         <!--Tempat simbol cuaca-->

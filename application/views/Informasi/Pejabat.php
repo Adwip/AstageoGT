@@ -26,7 +26,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -127,7 +127,7 @@
                   <div class="x_title">
                     <h5>Edit data pejabat</h5>
                   </div>
-                  <div class="x_content form-edit" style="display: none;">
+                  <div class="x_content form-edit" style="display: none;" id="form-edit">
                     <br />
                       <form method="POST" action="<?php echo site_url('Informasi/edit_pejabat') ?>" class="form-horizontal form-label-left input_mask" id="kirim-data" >
 
@@ -169,7 +169,7 @@
                       <div class="form-group">
                         <div class="col-md-2 col-sm-2 col-xs-12 ">
                           <br>
-                          <button type="button" class="btn btn-danger batal">Batal</button>
+                          <button type="button" class="btn btn-danger tutup">Batal</button>
                         </div>
                       </div>
                     </form>

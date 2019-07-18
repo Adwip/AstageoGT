@@ -466,6 +466,7 @@ class Informasi_model extends CI_Model
 	public function getBerita($waktu,$order){
 		//$this->db->ORDER_BY('tanggal_input','DESC');
 		$this->db->LIKE('tanggal_input',date('Y-m',strtotime($waktu)));
+		$this->db->ORDER_BY('tanggal_input','DESC');
 		$data = $this->db->get('berita');
 		$data2['berita']=null;
 		$data2['page']=null;
@@ -478,7 +479,7 @@ class Informasi_model extends CI_Model
 								<td class=" ">'.$list.'</td>
 								<td class=" ">'.$news[$l]->tanggal_input.'</td>
 								<td class=" "><a class="lihat" data-id="'.$news[$l]->id_berita.'" href="'.site_url('Informasi/baca_news').'">'.$news[$l]->judul.'</a></td>
-								<td><button class="cek_g_musim btn btn-xs btn-warning" type="button" value="'.$news[$l]->id_berita.'" >Cek gambar</button></td>
+								<td><button class="show-gal btn btn-xs btn-warning" type="button" value="'.$news[$l]->id_berita.'" >Cek gambar</button></td>
 								<td class=" ">'.$news[$l]->penyusun.'.</td>
 								<td class=" ">
 									<button type="button" onClick=editBRT("'.$news[$l]->id_berita.'","'.site_url('Informasi/get_beritaID').'") class="btn btn-round btn-info btn-xs" >Edit</button><br>
@@ -785,6 +786,18 @@ class Informasi_model extends CI_Model
 		$this->db->where('jenis',$type);
 		$this->db->update('umum',array('isi'=>$isi,'nama'=>$nama,'tanggal'=>$tanggal_input));
 
+	}
+
+	public function baca_gambar($id,$tp){
+		$path=array('brt'=>'Berita/');
+		$data2=null;
+		$data=$this->db->get_where('foto',array('tautan'=>$id));
+		$i=0;
+		foreach ($data->result() as $key) {
+			$data2[$i]='<img class="foto-size " src="'.base_url('../File_BMKG/'.$path[$tp].$key->foto).'" alt="Citra-radar">';
+			$i++;
+		}
+		return json_encode($data2);
 	}
 
 }

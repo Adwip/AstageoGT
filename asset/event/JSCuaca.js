@@ -11,6 +11,7 @@ function tambahHB(bulan,tahun){
         $('#bulan-form').val(bulan);
         $('#tahun-form').val(tahun);
         $('.form-kirim').show();
+        document.getElementById("form-tambah").scrollIntoView();
 }
 
 function tambahProb(inten,bulan,tahun){
@@ -78,8 +79,8 @@ function cek_cuaca(id,link,waktu){
         $('#petugas').html(data['petugas'])
         $('#tanggal_input').html(data['tanggal_input'])
         $('#waktu').html(waktu)
-        $('.dis-cuaca').hide()
         $('.cek_cuaca').show()
+        document.getElementById("baca-cuaca").scrollIntoView();
       }
     }
   })
@@ -121,12 +122,14 @@ $('.cek_dinat_pdf').click(function(e){
 })
 
 $('.tutup').click(function(){
+    document.getElementById("list-data").scrollIntoView();
     $(this).closest('.x_content').hide()
 })
 
 $('.tutup1').click(function(){
-    $(this).closest('.x_content').hide()
-    $('.dis-cuaca').show()
+  $('.dis-cuaca').show()
+  document.getElementById("list-data").scrollIntoView();
+  $(this).closest('.x_content').hide()
 })
 
 function set_(m,t,i){
@@ -233,6 +236,7 @@ $('.kirim').click(function(){
 
 $('.tambah-baru').click(function(){
       $('.form-tambah').show();
+      document.getElementById("form-tambah").scrollIntoView();
     })
 
 function baca_data(link){
@@ -287,6 +291,7 @@ $('.kirim-dinat, .kirim-ipt, .kirim').click(function(e){
     $('.tambah').click(function(){
         $('#tanggal-mulai').val($(this).val());
         $('.formulir').show();
+        document.getElementById("form-tambah").scrollIntoView();
       });
 
 
@@ -300,6 +305,7 @@ function edit_ctr(id,link){
           $('#id-ctr').val(id)
           $('.edit-foto').html(data)
           $('.edit_ctr').show()
+          document.getElementById("form-edit").scrollIntoView();
         }
       }
     })
@@ -311,9 +317,9 @@ $('.prevent').click(function(e){
         var val = $(this).attr('data-ex');
         var isi = $(this).attr('href');
         if (val=='show') {
-
           $('#pdf').html('<iframe style="height: 700px;" class=" col-md-12 col-sm-12" src="'+isi+'"></iframe>');
           $('.pdf').show();
+          document.getElementById("disp-data").scrollIntoView();
         }else{
 
         }
@@ -400,6 +406,7 @@ function edit_req_cuming(link){
         $('#tanggal_akhir_edit').val(data['tanggal_akhir'])
         $('#id_edit').val(data['id'])
         $('.edit-form').show()
+        document.getElementById("form-edit").scrollIntoView();
       }
     })
   })
@@ -418,6 +425,7 @@ function edit_req_mus(link){
         $('#edit_judul').val(data['judul'])
         $('#id_edit').val(data['id_mus'])
         $('.edit-form').show()
+        document.getElementById("form-edit").scrollIntoView();
       }
     })
   })
@@ -670,6 +678,7 @@ function get_hbl_id(link){
           $('#curah-img').html(data.curah)
           $('#sifat-img').html(data.sifat)
           $('.form-edit').show()
+          document.getElementById("form-edit").scrollIntoView();
         }
       }
     })

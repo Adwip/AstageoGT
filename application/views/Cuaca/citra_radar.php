@@ -27,7 +27,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main"  id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -36,7 +36,7 @@
               <div id="snackbar" align="right"></div>
               
             </div>
-            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12" >
                 <div class="x_panel">
                   <div class="x_title">
                     <h5>Daftar data citra radar</h5>
@@ -123,7 +123,7 @@
                   <div class="x_title">
                     <h5>Edit data citra radar</h5>
                   </div>
-                  <div class="x_content edit_ctr" style="display: none;">
+                  <div class="x_content edit_ctr" style="display: none;" id="form-edit">
                       <form action="<?php echo site_url('Cuaca/edit_ctr') ?>" id="kirim-data" method="POST">
                         <div class="form-group">
                           <div class="col-md-6 col-sm-6 col-xs-12">
