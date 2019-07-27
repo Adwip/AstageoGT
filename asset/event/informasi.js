@@ -24,13 +24,9 @@ $('.lihat').click(function(e){
   })
 })
 
-function baca(id){
-	alert(id);
-}
-
 /* edit news function using jquery ajax */
 function editBRT(id, link){
-  CKEDITOR.instances.ckeditorc.setData(null);
+  CKValueEdit.setData('');
   $.ajax({
       url: link,
       type: 'GET',
@@ -40,7 +36,7 @@ function editBRT(id, link){
         if (data!=null) {
           $('#edit-id').val(id);
           $('#edit-judul').val(data['judul']);
-          CKEDITOR.instances.ckeditorc.setData(data['teks']);
+          CKValueEdit.setData(data['teks']);
           $('.edit-foto').html(data['foto']);
           $('.form-edit').show();
           document.getElementById("form-edit").scrollIntoView();
@@ -85,11 +81,12 @@ function editPJB(id,link){
     data: 'id='+id,
     success: function(data){
       if (data!=null) {
-        $('.form-nama').val(data['name']);
-        $('.form-jabatan').val(data['posisi']);
-        $('#foto-edit').html(data['foto']);
-        $('#id-form').val(data['nomor']);
-        $('#ft-form').val(data['img']);
+        $('.form-nama').val(data['name'])
+        $('.form-jabatan').val(data['posisi'])
+        $('#form-kategori').val(data['kategori'])
+        $('#foto-edit').html(data['foto'])
+        $('#id-form').val(data['nomor'])
+        $('#ft-form').val(data['img'])
         $('.form-edit').show();
         document.getElementById("form-edit").scrollIntoView();
       }
@@ -123,6 +120,10 @@ $('.baca-pdf').click(function(e){
 
 $('.tutup').click(function(){
   document.getElementById("list-data").scrollIntoView();
+  $(this).closest('.x_content').hide()
+})
+
+$('.tutupSDM').click(function(){
   $(this).closest('.x_content').hide()
 })
 
@@ -170,13 +171,18 @@ $('form#del').submit(function(e){
     if ($(this).serialize()==false) {
       return false
     }
-    mscConfirm("Hapus ?",function(){
+    mscConfirm("Hapus data ?",function(){
         $.ajax({
           url: $('form#del').attr('action'),
           type: 'POST',
           data: $('form#del').serialize(),
-          success: function(){
-            notifjs("Berhasil menghapus data",'#ff6a00');
+          success: function(data){
+            if (data!=null) {
+              notifjs("Berhasil menghapus "+data+" data",'#ff6a00');
+            }else{
+              gagal("Gagal menghapus data");
+            }
+            
           },error: function(){
             gagal("Gagal menghapus data");
           }
@@ -185,18 +191,42 @@ $('form#del').submit(function(e){
   })
 
 function edit_req_peng(link){
-  CKEDITOR.instances.ckeditorc2.setData(null);
   $('.edit-req-peng').click(function(){
+    CKEDITOR.instances.ckeditorc2.setData(null);
     $.ajax({
       url: link,
       type: 'GET',
       data: 'id='+$(this).val(),
       dataType: 'json',
       success: function(data){
-        CKEDITOR.instances.ckeditorc2.setData(data[0]['isi']);
-        $('#judul_edit').val(data[0]['judul'])
-        $('#id_edit').val(data[0]['id_peng'])
-        $('.edit-form').show()
+        if (data!=null) {
+          $('#judul_edit').val(data[0]['judul'])
+          $('#id_edit').val(data[0]['id_peng'])
+          CKEDITOR.instances.ckeditorc2.setData(data[0]['isi']);
+          $('.edit-form').show()
+          document.getElementById("form-edit").scrollIntoView();
+        }
+      }
+    })
+  })
+}
+
+function edit_req_jdih(link){
+  $('.edit-req-jdih').click(function(){
+    $.ajax({
+      url: link,
+      type: 'GET',
+      data: 'id='+$(this).val(),
+      dataType: 'json',
+      success: function(data){
+        if (data!=null) {
+          $('#id_edit').val(data[0]['id_jdih'])
+          $('#kategori_edit').val(data[0]['jenis_aturan'])
+          $('#nomor_edit').val(data[0]['nomor'])
+          $('#tentang_edit').val(data[0]['tentang'])
+          $('.edit-form').show()
+          document.getElementById("edit-form").scrollIntoView();
+        }
       }
     })
   })
@@ -206,9 +236,15 @@ $('#kirim-data, #kirim-data2, #kirim-data3').submit(function(e){
   e.preventDefault()
   var data = new FormData(this)
   if ($(this).attr('id')=='kirim-data2') {
-    data.append('teks',CKEDITOR.instances.ckeditorc.getData())  
+    if (CKValue.getData()=='') {
+      return false;
+    }
+    data.append('teks',CKValue.getData())  
   }else if($(this).attr('id')=='kirim-data3'){
-    data.append('teks',CKEDITOR.instances.ckeditorc2.getData())  
+    if (CKValueEdit.getData()=='') {
+      return false;
+    }
+    data.append('teks',CKValueEdit.getData())  
   }
   $.ajax({
     url: $(this).attr('action'),
@@ -282,9 +318,83 @@ function baca_artikel(link){
   })
 }
 
+function baca_peng(link){
+  $('.baca-pengumuman').click(function(e){
+    e.preventDefault()
+    $.ajax({
+      url:link,
+      type: 'GET',
+      data: {id : $(this).attr('href')},
+      dataType: 'json',
+      success: function(data){
+        if (data!=null) {
+          $('#judul').html(data.judul)
+          $('#teks').html(data.isi)
+          $('#pdf').html(data.file)
+          $('#cek-data').show()
+          document.getElementById("cek-data").scrollIntoView();
+        }
+      }
+    })
+  })
+}
+
+function baca_jdih(link){
+  $('.baca-jdih').click(function(e){
+    e.preventDefault()
+    $.ajax({
+      url: link,
+      type: 'GET',
+      data: {id: $(this).attr('href')},
+      dataType: 'json',
+      success: function(data){
+        if (data!=null) {
+          $('#jenis').html(data.jenis)
+          $('#nomor-jdih').html(data.nomor)
+          $('#tentang').html(data.tentang)
+          $('#pdf').html(data.pdf)
+          $('#cek-data').show()
+          document.getElementById("cek-data").scrollIntoView();
+        }
+      }
+    })
+  })
+}
+
+
+
 function keluar(link){
   mscConfirm("Lanjutkan keluar ?","Anda harus login kembali jika ingin masuk",function(){
     window.location.replace(link)
+  })
+}
+
+function kirim_news(link){
+  $('#kirim-data-news').submit(function(e){
+    e.preventDefault()
+    var data = new FormData(this)
+    data.append('teks',CKValue.getData())  
+    $.ajax({
+      url: $(this).attr('action'),
+      type: $(this).attr('method'),
+      data: data,
+      cache: false,
+      contentType: false,
+      processData: false,
+      beforeSend: function (){
+        $('button').prop('disabled',true);
+      },success: function (data) {
+        if (data==1) {
+          notifjsnews("Berhasil menambah data",'#34c231',link) 
+        }else{
+          gagal("Gagal memproses data")
+          $('button').prop('disabled',false)
+        }
+      },error: function(){
+        gagal("Gagal memproses data")
+        $('button').prop('disabled',false); 
+      }
+    });
   })
 }
 

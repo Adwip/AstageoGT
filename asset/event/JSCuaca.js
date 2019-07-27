@@ -1,5 +1,8 @@
 //set weather function
 function cuaca(wilayah, tanggal,waktu2){
+  $('#suhu-maks-set, #suhu-min-set, #lembap-min-set, #lembap-maks-set').focus().css({'border-color':"","box-shadow":""})
+  $('#suhu-maks-set, #suhu-min-set, #lembap-min-set, #lembap-maks-set').css({'border-color':"","box-shadow":""})
+  $('.set_cuaca input').val(null)
 	$('.wilayah').val(wilayah);
 	$('.tanggal').val(tanggal);
 	$('.waktu').val(waktu2);
@@ -37,6 +40,8 @@ $('.hapus').click(function(){
 //edit cuaca
 
 function edit_cuaca(id,link,waktu){
+  $('#suhu-maks-edit, #suhu-min-edit, #lembap-min-edit, #lembap-maks-edit ').focus().css({'border-color':"","box-shadow":""})
+  $('#suhu-maks-edit, #suhu-min-edit, #lembap-min-edit, #lembap-maks-edit ').css({'border-color':"","box-shadow":""})
   $.ajax({
     url:link,
     type: 'GET',
@@ -50,10 +55,10 @@ function edit_cuaca(id,link,waktu){
         $('.waktu_edit').val(waktu)
         $('.cuaca_edit').val(data['Jenis'])
         $('.mata-angin_edit').val(data['arah_angin'])
-        $('.suhu_min_edit').val(data['suhu_min'])
-        $('.suhu_maks_edit').val(data['suhu_maks'])
-        $('.lembap_min_edit').val(data['kelembapan_min'])
-        $('.lembap_maks_edit').val(data['kelembapan_maks'])
+        $('.suhu-min-edit').val(data['suhu_min'])
+        $('.suhu-maks-edit').val(data['suhu_maks'])
+        $('.lembap-min-edit').val(data['kelembapan_min'])
+        $('.lembap-maks-edit').val(data['kelembapan_maks'])
         $('.dis-cuaca').hide()
         $('.edit_cuaca').show()
       }
@@ -143,7 +148,7 @@ function set_(m,t,i){
 function ket(m,t){
   $('#bulan-form-ket').val(m)
   $('#tahun-form-ket').val(t)
-  $('.form-input, .form-edit-ph, #edit_form_ket').hide()
+  $('#form-input, #form-edit-ph, .edit_form_ket').hide()
   $('.form-keterangan, .set_form_ket').show()
 }
 
@@ -221,8 +226,8 @@ $('.batal').click(function(){
 
 $('.tambah').click(function(){
         $('#tanggal_mulai').val($(this).val());
-
         $('.input-data').show()
+        document.getElementById("form-tambah").scrollIntoView();
 })
 
 $('.kirim').click(function(){
@@ -253,6 +258,7 @@ function baca_data(link){
           $('#tambahan').html(data.tambahan)
           $('#dokpdf').prop('src',data.pdf)
           $('.cek-data').show()
+          document.getElementById("baca-data").scrollIntoView();
         }
       }
     })
@@ -272,6 +278,8 @@ function baca_data2(link){
           $('#creator').html(data.creator)
           $('#tambahan').html(data.tambahan)
           $('.cek-data').show()
+          document.getElementById("baca-data").scrollIntoView();
+          
         }
       }
     })
@@ -289,6 +297,10 @@ $('.kirim-dinat, .kirim-ipt, .kirim').click(function(e){
 
 //tambah prospek mingguan & ipt
     $('.tambah').click(function(){
+        $('#tanggal_akhir_set').val('')
+        $('#cek-tgl').html('')
+        $('#tanggal_akhir_set').focus().css({'border-color':"","box-shadow":""})
+        $('#tanggal_akhir_set').css({'border-color':"","box-shadow":""})
         $('#tanggal-mulai').val($(this).val());
         $('.formulir').show();
         document.getElementById("form-tambah").scrollIntoView();
@@ -396,6 +408,9 @@ function del_in(bulan,tahun,link,stat){
 
 function edit_req_cuming(link){
   $('.edit-req-cuming').click(function(){
+    $('#cek-tgl-edit').html('')
+    $('#tanggal_akhir_edit').focus().css({'border-color':"","box-shadow":""})
+    $('#tanggal_akhir_edit').css({'border-color':"","box-shadow":""})
     $.ajax({
       url: link,
       type: 'GET',
@@ -413,15 +428,15 @@ function edit_req_cuming(link){
 }
 
 function edit_req_mus(link){
-  CKEDITOR.instances.ckeditorc2.setData(null);
   $('.edit-req-pmus').click(function(){
+    CKValueEdit.setData('');
     $.ajax({
       url: link,
       type: 'GET',
       data: 'id='+$(this).val(),
       dataType: 'json',
       success: function(data){
-        CKEDITOR.instances.ckeditorc2.setData(data['teks']);
+        CKValueEdit.setData(data['teks']);
         $('#edit_judul').val(data['judul'])
         $('#id_edit').val(data['id_mus'])
         $('.edit-form').show()
@@ -432,20 +447,24 @@ function edit_req_mus(link){
 }
 
 function edit_req_dinat(link){
-  CKEDITOR.instances.ckeditorc2.setData(null);
   $('.edit-req-dinat').click(function(){
+    CKValueEdit.setData('');
+    $('#cek-tgl-edit').html('')
+    $('#tanggal_akhir_edit').focus().css({'border-color':"","box-shadow":""})
+    $('#tanggal_akhir_edit').css({'border-color':"","box-shadow":""})
     $.ajax({
       url: link,
       type: 'GET',
       data: 'id='+$(this).val(),
       dataType: 'json',
       success: function(data){
-        CKEDITOR.instances.ckeditorc2.setData(data['teks']);
+        CKValueEdit.setData(data['teks']);
         $('#tanggal_mulai_edit').val(data['awal'])
         $('#tanggal_akhir_edit').val(data['akhir'])
         $('#judul_edit').val(data['judul'])
         $('#id_edit').val(data['id'])
         $('.edit-form').show()
+        document.getElementById("edit-form").scrollIntoView();
       }
     })
   })
@@ -453,6 +472,9 @@ function edit_req_dinat(link){
 
 function edit_req_ipt(link){
   $('.edit_req_ipt').click(function(){
+    $('#cek-tgl-edit').html('')
+    $('#tanggal_akhir_edit').focus().css({'border-color':"","box-shadow":""})
+    $('#tanggal_akhir_edit').css({'border-color':"","box-shadow":""})
     $.ajax({
       url: link,
       type: 'GET',
@@ -464,6 +486,7 @@ function edit_req_ipt(link){
         $('#judul_edit').val(data['judul'])
         $('#id_edit').val(data['id'])
         $('.edit-form').show()
+        document.getElementById("edit-form").scrollIntoView();
       }
     })
   })
@@ -472,17 +495,18 @@ function edit_req_ipt(link){
 
 function edit_req_tch(link){
   $('.edit_req_tch').click(function(){
-    CKEDITOR.instances.ckeditorc2.setData(null);
+    CKValueEdit.setData('');
     $.ajax({
       url: link,
       type: 'GET',
       data: 'id='+$(this).val(),
       dataType: 'json',
       success: function(data){
-        CKEDITOR.instances.ckeditorc2.setData(data['tch']['teks']);
+        CKValueEdit.setData(data['tch']['teks']);
         $('.edit-foto').html(data['fotos'])
         $('#id_edit').val(data['tch']['id_tch'])
         $('.edit-form').show()
+        document.getElementById("edit-form").scrollIntoView();
       }
     })
   })
@@ -490,17 +514,18 @@ function edit_req_tch(link){
 
 function edit_req_tsh(link){
   $('.edit_req_tsh').click(function(){
-    CKEDITOR.instances.ckeditorc2.setData(null);
+    CKValueEdit.setData('');
     $.ajax({
       url: link,
       type: 'GET',
       data: 'id='+$(this).val(),
       dataType: 'json',
       success: function(data){
-        CKEDITOR.instances.ckeditorc2.setData(data['tsh']['teks']);
+        CKValueEdit.setData(data['tsh']['teks']);
         $('.edit-foto').html(data['fotos'])
         $('#id_edit').val(data['tsh']['id_tsh'])
         $('.edit-form').show()
+        document.getElementById("edit-form").scrollIntoView();
       }
     })
   })
@@ -508,17 +533,18 @@ function edit_req_tsh(link){
 
 function edit_req_pnh(link){
   $('.edit_req_pnh').click(function(){
-    CKEDITOR.instances.ckeditorc2.setData(null);
+    CKValueEdit.setData('');
     $.ajax({
       url: link,
       type: 'GET',
       data: 'id='+$(this).val(),
       dataType: 'json',
       success: function(data){
-        CKEDITOR.instances.ckeditorc2.setData(data['pch']['teks']);
+        CKValueEdit.setData(data['pch']['teks']);
         $('.edit-foto').html(data['fotos'])
         $('#id_edit').val(data['pch']['id_pch'])
         $('.edit-form').show()
+        document.getElementById("edit-form").scrollIntoView();
       }
     })
   })
@@ -526,17 +552,18 @@ function edit_req_pnh(link){
 
 function edit_req_epi(link){
   $('.edit_req_epi').click(function(){
-    CKEDITOR.instances.ckeditorc2.setData(null);
+    CKValueEdit.setData('');
     $.ajax({
       url: link,
       type: 'GET',
       data: 'id='+$(this).val(),
       dataType: 'json',
       success: function(data){
-        CKEDITOR.instances.ckeditorc2.setData(data['epi']['teks']);
+        CKValueEdit.setData(data['epi']['teks']);
         $('.edit-foto').html(data['fotos'])
         $('#id_edit').val(data['epi']['id_epi'])
         $('.edit-form').show()
+        document.getElementById("edit-form").scrollIntoView();
       }
     })
   })
@@ -565,13 +592,18 @@ $('form#del').submit(function(e){
   if ($(this).serialize()==false) {
     return false
   }
-  mscConfirm("Hapus ?",function(){
+  mscConfirm("Hapus data ?",function(){
       $.ajax({
         url: $('form#del').attr('action'),
         type: 'POST',
         data: $('form#del').serialize(),
-        success: function(){
-          notifjs("Berhasil menghapus data",'#ff6a00');
+        success: function(data){
+          if (data!=null) {
+            notifjs("Berhasil menghapus "+data+" data",'#ff6a00');
+          }else{
+            gagal("Gagal menghapus data");
+          }
+          
         },error: function(){
           gagal("Gagal menghapus data");
         }
@@ -583,9 +615,15 @@ $('#kirim-data, #kirim-data2, #kirim-data3').submit(function(e){
   e.preventDefault()
   var data = new FormData(this)
   if ($(this).attr('id')=='kirim-data2') {
-    data.append('teks',CKEDITOR.instances.ckeditorc.getData())  
+    if (CKValue.getData()=='') {
+      return false;
+    }
+    data.append('teks',CKValue.getData())  
   }else if($(this).attr('id')=='kirim-data3'){
-    data.append('teks',CKEDITOR.instances.ckeditorc2.getData())  
+    if (CKValueEdit.getData()=='') {
+      return false;
+    }
+    data.append('teks',CKValueEdit.getData())  
   }
   $.ajax({
     url: $(this).attr('action'),
@@ -613,13 +651,20 @@ $('#kirim-data, #kirim-data2, #kirim-data3').submit(function(e){
 })
 
 $('.new_hth').click(function(){
+  $('#cek-tgl').html('')
+  $('#tanggal_akhir_set').focus().css({'border-color':"","box-shadow":""})
+  $('#tanggal_akhir_set').css({'border-color':"","box-shadow":""})
   $('#tanggal_mulai').val($(this).val())
   $('.input-data').show()
+  document.getElementById("tambah-form").scrollIntoView();
 })
 
 function edit_hth(link) {
   $('.ch-hth').click(function(e){
-    CKEDITOR.instances.ckeditorc2.setData(null);
+    $('#cek-tgl-edit').html('')
+    $('#tanggal_akhir_edit').focus().css({'border-color':"","box-shadow":""})
+    $('#tanggal_akhir_edit').css({'border-color':"","box-shadow":""})
+    CKValueEdit.setData('');
     $.ajax({
       url: link,
       data: {id: $(this).val()},
@@ -632,8 +677,9 @@ function edit_hth(link) {
           $('#tanggal_akhir_edit').val(data.ta)
           $('#judul_edit').val(data.judul)
           $('#id-foto').val(data.foto)
-          CKEDITOR.instances.ckeditorc2.setData(data.ket);
+          CKValueEdit.setData(data.ket);
           $('.edit-form').show()
+          document.getElementById("edit-form").scrollIntoView();
         }
       }
     })
@@ -662,6 +708,14 @@ function baca_gambar(link){
     })
   })
 }
+
+$('.add-form').click(function(){
+  $('#cek-tgl').html('')
+  $('#tanggal_akhir_set').focus().css({'border-color':"","box-shadow":""})
+  $('#tanggal_akhir_set').css({'border-color':"","box-shadow":""})
+  $('#tambah-form').show()
+  document.getElementById("tambah-form").scrollIntoView();
+})
 
 function get_hbl_id(link){
   $('.get_hbl_id').click(function(){
@@ -692,6 +746,181 @@ $('.cekbut2, .cekbut3').change(function(){
     $('.edit-but').prop('disabled',true)
   }
 })
+
+$('#suhu-maks-set, #lembap-maks-set').change(function(){
+  if ($(this).attr('id')=='suhu-maks-set'&&($(this).val()<$('#suhu-min-set').val()||$(this).val()>60)) {
+    $(this).focus().css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+    $(this).css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+    $(this).val(null)
+  }else if($(this).attr('id')=='lembap-maks-set'&&($(this).val()<$('#lembap-min-set').val()||$(this).val()>100)){
+    $(this).focus().css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+    $(this).css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+    $(this).val(null)
+  }else{
+    $(this).focus().css({'border-color':"","box-shadow":""})
+    $(this).css({'border-color':"","box-shadow":""})
+  }
+})
+
+
+$('#suhu-maks-edit, #lembap-maks-edit').change(function(){
+  if ($(this).attr('id')=='suhu-maks-edit'&&($(this).val()<$('#suhu-min-set').val()||$(this).val()>60)) {
+    $(this).focus().css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+    $(this).css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+    $(this).val(null)
+  }else if($(this).attr('id')=='lembap-maks-edit'&&($(this).val()<$('#lembap-min-set').val()&&$(this).val()>100)){
+    $(this).focus().css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+    $(this).css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+    $(this).val(null)
+  }else{
+    $(this).focus().css({'border-color':"","box-shadow":""})
+    $(this).css({'border-color':"","box-shadow":""})
+  }
+})
+
+$('#suhu-min-set, #lembap-min-set, #suhu-min-edit, #lembap-min-edit ').change(function(){
+  var now = $(this)
+  if ((now.attr('id')=='suhu-min-set'||now.attr('id')=='suhu-min-edit')&&(now.val()<-10||now.val()>50)) {
+    now.focus().css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+    now.css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+    now.val(null)
+  }else if ((now.attr('id')=='lembap-min-set'||now.attr('id')=='lembap-min-edit')&&(now.val()<-10||now.val()>100)) {
+    now.focus().css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+    now.css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+    now.val(null)
+  }else{
+    now.focus().css({'border-color':"","box-shadow":""})
+    now.css({'border-color':"","box-shadow":""})
+  }
+})
+
+
+$('.cek-tanggal').click(function(){
+  if ($('#tanggal_akhir_set').val()!="") {
+    var tanggal1 = $('#tanggal-mulai, #tanggal_mulai').val().split("-")
+    tanggal1 = new Date(tanggal1[1]+'/'+tanggal1[0]+'/'+tanggal1[2])
+    var tanggal2 = $('#tanggal_akhir_set').val().split("-")
+    tanggal2 = new Date(tanggal2[1]+'/'+tanggal2[0]+'/'+tanggal2[2])
+
+    if (tanggal2<=tanggal1) {
+      $('#cek-tgl').html(' Tanggal tidak valid')
+        $('#tanggal_akhir_set').focus().css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+        $('#tanggal_akhir_set').css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+        return false
+    }else{
+      $('#cek-tgl').html('')
+      $('#tanggal_akhir_set').focus().css({'border-color':"","box-shadow":""})
+      $('#tanggal_akhir_set').css({'border-color':"","box-shadow":""})
+    }
+  }
+})
+
+$('.cek-tanggal-edit').click(function(){
+    var tanggal1 = $('#tanggal_mulai_edit').val().split("-")
+    tanggal1 = new Date(tanggal1[1]+'/'+tanggal1[0]+'/'+tanggal1[2])
+    var tanggal2 = $('#tanggal_akhir_edit').val().split("-")
+    tanggal2 = new Date(tanggal2[1]+'/'+tanggal2[0]+'/'+tanggal2[2])
+    //alert(tanggal1)
+    
+    if (tanggal2<=tanggal1) {
+      $('#cek-tgl-edit').html(' Tanggal tidak valid')
+        $('#tanggal_akhir_edit').focus().css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+        $('#tanggal_akhir_edit').css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+        return false;
+    }else{
+      $('#cek-tgl-edit').html('')
+      $('#tanggal_akhir_edit').focus().css({'border-color':"","box-shadow":""})
+      $('#tanggal_akhir_edit').css({'border-color':"","box-shadow":""})
+    }
+})
+
+$('.baca-ket').click(function(){
+  $('#modal-ket').show()
+})
+
+function edit_req_per(link){
+  $('.edit_req_per').click(function(){
+    $('#cek-tgl-edit').html('')
+    $('#edit_tanggal').focus().css({'border-color':"","box-shadow":""})
+    $('#edit_tanggal').css({'border-color':"","box-shadow":""})
+    $.ajax({
+      url:link,
+      type:'GET',
+      data:{id:$(this).val()},
+      dataType:'json',
+      success: function(data){
+        if (data!=null) {
+          $('#id_edit').val(data['id'])
+          $('#edit_tanggal').val(data['tanggal'])
+          $('#edit_wilayah').val(data['wilayah'])
+          $('#edit_per').val(data['isi'])
+          $('.edit-form').show()
+          document.getElementById("edit-form").scrollIntoView();
+        }
+      }
+    })
+  })
+}
+
+function baca_warning(link){
+  $('.baca_warning').click(function(){
+    $.ajax({
+      url:link,
+      type:'GET',
+      data:{id:$(this).val()},
+      dataType:'json',
+      success: function(data){
+        if (data!=null) {
+          $('#head-warn').html('Peringatan wilayah '+data.wilayah+' tanggal '+data.tanggal)
+          $('#peringatan-read').html(data.isi)
+          $('#modal-ket').show()
+        }
+      }
+    })
+  })
+}
+
+function cek_tanggal(tgl){
+  $('.cek-tanggal').click(function(){
+      var tanggal1 = tgl.split("-")
+    
+      var tanggal2 = $('#tanggal_akhir_set').val().split("-")
+
+      for (let index = 2; index >= 0; index--) {
+        if (tanggal2[index]<tanggal1[index]) {
+          $('#cek-tgl').html(' Tanggal tidak valid')
+          $('#tanggal_akhir_set').focus().css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+          $('#tanggal_akhir_set').css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+          return false
+        }else{
+          $('#cek-tgl').html('')
+          $('#tanggal_akhir_set').focus().css({'border-color':"","box-shadow":""})
+          $('#tanggal_akhir_set').css({'border-color':"","box-shadow":""})
+        }
+      }
+  })
+}
+
+function cek_tanggal_edit(tgl){
+  $('.cek-tanggal-edit').click(function(){
+    var tanggal1 = tgl.split("-")
+  
+    var tanggal2 = $('#edit_tanggal').val().split("-")
+
+    for (let index = 2; index >= 0; index--) {
+      if (tanggal2[index]<tanggal1[index]) {
+        $('#cek-tgl-edit').html(' Tanggal tidak valid')
+        $('#edit_tanggal').focus().css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+        $('#edit_tanggal').css({'border-color':"red","box-shadow":"inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6)"})
+        return false
+      }else{
+        $('#cek-tgl-edit').html('')
+        $('#edit_tanggal').focus().css({'border-color':"","box-shadow":""})
+        $('#edit_tanggal').css({'border-color':"","box-shadow":""})
+      }
+    }
+})
+}
   
 
 /*

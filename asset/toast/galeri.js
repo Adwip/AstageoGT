@@ -36,7 +36,7 @@ function get_galeri(link,tp){
 }
 
 function foto_hbl(link,cls){
-    $('.cek_hb, .cek_g_musim, .cek_g_dinat, .cek_g_ipt, .cek_g_hth ').click(function(e){
+    $('.cek_hb, .cek_g_musim, .cek_g_dinat, .cek_g_ipt, .cek_g_hth, .cek_g_ptr ').click(function(e){
         $('#img-loc').html('<img class="'+cls+'" src="'+link+$(this).val()+'">')
         $('.galeri').css("visibility","visible")
     })

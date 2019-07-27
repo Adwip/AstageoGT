@@ -156,17 +156,19 @@ class Pegawai_model extends CI_Model{
 
 	public function del_admin($id){
 		$this->db->delete('admin',array('id_admin'=>$id));
-		$data=file_get_contents('asset/Admin/akses_admin.json');
-		$data=json_decode($data,TRUE);
-		$data2=null;
-		foreach ($data as $key=>$val ) {
-			if (!isset($data[$key][$id])) {
-				$data2[$key]= $val;
+		if ($this->db->affected_rows()==1) {
+			$data=file_get_contents('asset/Admin/akses_admin.json');
+			$data=json_decode($data,TRUE);
+			$data2=null;
+			foreach ($data as $key=>$val ) {
+				if (!isset($data[$key][$id])) {
+					$data2[$key]= $val;
+				}
 			}
+			$data=json_encode($data2,JSON_PRETTY_PRINT);
+			file_put_contents('asset/Admin/akses_admin.json',$data);
+			return 1;
 		}
-		$data=json_encode($data2,JSON_PRETTY_PRINT);
-
-		file_put_contents('asset/Admin/akses_admin.json',$data);
 	}
 
 	public function set_akses_json($nia,$berita,$artikel,$kepegawaian,$cuaca,$prak_musim,$analis_iklim,$inf_iklim,$per_iklim,$kual_udara,$gempa,$ttm_petir,$umum,$administrator){

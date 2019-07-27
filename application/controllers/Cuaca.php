@@ -56,12 +56,12 @@ class Cuaca extends CI_Controller {
 	}
 
 	public function del_cuaca(){
-		$length = count($_POST['hapus']);
+		$hasil=null;
 			# code...
-		for ($i=0; $i < $length; $i++) { 
-			$data=$_POST['hapus'][$i];
-			$this->Cuaca_model->del_cuaca($data);
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
+			$hasil+=$this->Cuaca_model->del_cuaca($_POST['hapus'][$i]);
 		}
+		echo $hasil;
 	}
 
 	public function set_cuaca(){
@@ -193,11 +193,11 @@ class Cuaca extends CI_Controller {
 	}
 
 	public function del_citra(){
-		$count=count($_POST['hapus']);
-		for ($i=0; $i < $count; $i++) {
-		$this->Cuaca_model->del_radar($_POST['hapus'][$i]); 
-			# code...
+		$hasil=null;
+		for ($i=0; $i < count($_POST['hapus']); $i++) {
+			$hasil+=$this->Cuaca_model->del_radar($_POST['hapus'][$i]);
 		}
+		echo $hasil;
 	}
 
 	public function cuaca_mingguan(){
@@ -222,15 +222,12 @@ class Cuaca extends CI_Controller {
 	}
 
 	public function del_cuming(){
-		$count=count($_POST['hapus']);
+		$hasil=null;
 
-		for ($i=0; $i < $count; $i++) { 
-			$this->Cuaca_model->del_cuming($_POST['hapus'][$i]);
-			# code...
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
+			$hasil+=$this->Cuaca_model->del_cuming($_POST['hapus'][$i]);
 		}
-
-
-		header('Location:'.site_url('Cuaca/cuaca_mingguan'));
+		echo $hasil;
 	}
 
 	public function set_cuming(){
@@ -344,11 +341,12 @@ class Cuaca extends CI_Controller {
 	}
 
 	public function del_prakmus(){
-		$count = count($_POST['hapus']);
-		for ($i=0; $i < $count; $i++) { 
+		$hasil = null;
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
 			# code...
-			$this->Cuaca_model->del_prakmus($_POST['hapus'][$i]);
+			$hasil+=$this->Cuaca_model->del_prakmus($_POST['hapus'][$i]);
 		}
+		echo $hasil;
 	}
 	public function edit_musim(){
 		$id=$_POST['id'];
@@ -459,14 +457,12 @@ class Cuaca extends CI_Controller {
 	}
 
 	public function del_hbl(){
-		$count = count($_POST['hapus']);
+		$hasil=null; 
 
-		for ($i=0; $i < $count; $i++) { 
-			$this->Cuaca_model->del_hbl($_POST['hapus'][$i]);
-			# code...
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
+			$hasil+=$this->Cuaca_model->del_hbl($_POST['hapus'][$i]);
 		}
-
-		redirect(site_url('Cuaca/prak_hujan_bulanan'));
+		echo $hasil;
 	}
 
 	public function dinamika_atmosfer(){
@@ -538,15 +534,12 @@ class Cuaca extends CI_Controller {
 	}
 
 	public function del_dinat(){
-		$count = count($_POST['hapus']);
+		$hasil = null;
 
-		for ($i=0; $i < $count; $i++) { 
-			$this->Cuaca_model->del_dinat($_POST['hapus'][$i]);
-			# code...
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
+			$hasil+=$this->Cuaca_model->del_dinat($_POST['hapus'][$i]);
 		}
-	
-		//echo($count);
-		header('Location:'.site_url('Cuaca/dinamika_atmosfer'));		
+		echo $hasil;
 	}
 
 	public function get_dinat_id(){
@@ -696,11 +689,12 @@ class Cuaca extends CI_Controller {
 	}
 
 	public function del_ipt(){
-		$count = count($_POST['hapus']);
+		$hasil = null;
 
-		for ($i=0; $i < $count; $i++) { 
-			$this->Cuaca_model->del_ipt($_POST['hapus'][$i]);
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
+			$hasil+=$this->Cuaca_model->del_ipt($_POST['hapus'][$i]);
 		}
+		echo $hasil;
 	}
 
 	public function info_HTH(){
@@ -776,11 +770,11 @@ class Cuaca extends CI_Controller {
 	}
 
 	public function del_hth(){
-		# code...
+		$hasil=null;
 		for ($i=0; $i < count($_POST['hapus']); $i++) { 
-			# code...
-			$this->Cuaca_model->del_hth($_POST['hapus'][$i]);
+			$hasil+=$this->Cuaca_model->del_hth($_POST['hapus'][$i]);
 		}
+		echo $hasil;
 	}
 
 	public function TCH(){
@@ -844,12 +838,13 @@ class Cuaca extends CI_Controller {
 	}
 
 	public function del_tch(){
-		$count = count($_POST['hapus']);
+		$hasil = null;
 
-		for ($i=0; $i < $count; $i++) { 
-			$this->Cuaca_model->del_tch($_POST['hapus'][$i]);
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
+			$hasil+=$this->Cuaca_model->del_tch($_POST['hapus'][$i]);
 			# code...
 		}
+		echo $hasil;
 	}
 
 	public function get_tch_id(){
@@ -989,12 +984,13 @@ class Cuaca extends CI_Controller {
 	}
 
 	public function del_tsh(){
-		$count = count($_POST['hapus']);
+		$hasil = null;
 
-		for ($i=0; $i < $count; $i++) { 
-			$this->Cuaca_model->del_tsh($_POST['hapus'][$i]);
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
+			$hasil+=$this->Cuaca_model->del_tsh($_POST['hapus'][$i]);
 			# code...
 		}
+		echo $hasil;
 	}
 
 	public function PNH(){
@@ -1388,8 +1384,54 @@ class Cuaca extends CI_Controller {
 			$this->Cuaca_model->del_hpb($_POST['hapus'][$i]);
 			# code...
 		}
-		//echo($count);
-		header('Location:'.site_url('Cuaca/probabilistik'));
 	}
+
+	public function peringatan(){
+		if ($this->session->userdata('umum')!='Ya') {
+			$this->load->view('Umum');
+			# code...
+		}else{
+			$waktu=date('Y-m');
+			$page=1;
+			if (isset($_GET['bulan'])) {
+				# code...
+				$waktu=$_GET['tahun'].'-'.$_GET['bulan'];
+			}
+			if (isset($_GET['page'])) {
+				$page=$_GET['page'];
+			}
+			$data['peringatan']=$this->Cuaca_model->peringatan($waktu,$page);
+			$data['tahun']=$this->Cuaca_model->tahun('peringatan',date('Y',strtotime($waktu)));
+			$data['bulan']=$this->Cuaca_model->bulan(date('m',strtotime($waktu)));
+			$data['year']=date('Y',strtotime($waktu));
+			$data['month']=date('m',strtotime($waktu));
+			$this->load->view('Cuaca/peringatan',$data);
+		}
+	}
+
+	public function set_peringatan(){
+		$teks = $_POST['teks'];
+		$wilayah = $_POST['wilayah'];
+		$tanggal = strtr($_POST['tanggal'],'/','-');
+		echo $this->Cuaca_model->set_peringatan($teks,$wilayah,$tanggal, $this->session->userdata('nama'),$this->waktu);
+	}
+
+	public function del_peringatan(){
+		$hasil=null;
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
+			$hasil+=$this->Cuaca_model->del_peringatan($_POST['hapus'][$i]);
+		}
+		echo $hasil;
+	}
+
+	public function edit_peringatan(){
+		echo $this->Cuaca_model->edit_peringatan($_POST['id'],$_POST['teks'],$_POST['wilayah'],strtr($_POST['tanggal'],'/','-'));
+	}
+
+	public function get_peringatan_id(){
+		echo json_encode($this->Cuaca_model->get_peringatan_id($_GET['id']));
+	}
+
+
 
 }

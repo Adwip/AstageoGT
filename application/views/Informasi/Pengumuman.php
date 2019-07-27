@@ -32,7 +32,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -77,7 +77,7 @@
 
                       <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                         <div class="table-responsive">
-                      <table class="table table-striped jambo_table bulk_action">
+                      <table class="table table-striped jambo_table">
                         <thead>
                           <tr class="headings">
                             <th class="column-title">No</th>
@@ -137,7 +137,10 @@
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                         	<label style="margin-bottom: 5px;">Isi pengumuman</label>
-                          <textarea name="teks" class="ckeditor beritav" id="ckeditorc"></textarea>
+                          <div id="toolbar-container"></div>
+                            <div style="height:500px; border: 1px solid grey; color:black;" id="ckeditorc">
+
+                            </div>
                         </div>
                       </div>
                       <div class="form-group">
@@ -165,12 +168,13 @@
                   <div class="x_title">
                     <h5>Baca pengumuman</h5>
                   </div>
-                  <div class="x_content cek-data" style="display: none;">
-                      <div class="col-md-12 col-sm-12 col-xs-12">
-                        <span id="pdf"></span>
-                      </div>
-                      <div class="col-md-12 col-sm-12 col-xs-12">
+                  <div class="x_content cek-data" style="display: none;" id="cek-data">
+                      <div style="color:black;" class="col-md-12 col-sm-12 col-xs-12">
+                        <h2 id="judul"></h2>
+                        <hr style="border-color: black;">
                         <span id="teks"></span>
+                        <hr style="border-color: black;">
+                        <span id="pdf"></span>
                       </div>
                       <div class="col-md-8 col-sm-8 col-xs-12">
                         <button type="button" class="btn btn-danger tutup">Selesai</button>
@@ -185,47 +189,39 @@
                     <h5>Edit pengumuman di sini</h5>
                     
                   </div>
-                  <div class="x_content edit-form" style="display: none;" >
+                  <div class="x_content edit-form" style="display: none;" id="form-edit">
                     <br />
                       <form method="POST" action="<?php echo site_url('Informasi/edit_peng') ?>" id="kirim-data3">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                           <input id="id_edit" readonly required type="text"  class="form-control col-md-5 col-xs-12" autocomplete="off" name="id">
                         </div>
                       <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12"><br>
                           <label>Judul</label>
                           <input id="judul_edit" required type="text"  class="form-control col-md-5 col-xs-12" autocomplete="off" name="judul">
                         </div>
                       </div>
-                      <br>
-                      <br>
-                      <br>
                       <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                          <label style="margin-bottom: 5px; margin-top: 20px;">Isi teks</label>
-                          <textarea name="teks" class="ckeditor beritav" id="ckeditorc2"></textarea>
+                        <div class="col-md-12 col-sm-12 col-xs-12"><br>
+                          <label>Isi teks</label>
+                          <div id="toolbar-container-edit"></div>
+                          <div style="height:500px; border: 1px solid grey; color:black;" id="ckeditorc2">
+
+                          </div>
                         </div>
                       </div>
-                      <br>
-                      <br>
                       <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                        </div>
-                      </div>
-                      <br>
-                      <br>
-                      <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                          <label>PDF jika ada</label>
+                        <div class="col-md-12 col-sm-12 col-xs-12"><br>
+                          <label>Tambah PDF jika ada</label>
                           <input type="file" name="pdf" id="dokumen">
                         </div>
                       </div>
                       <br>
                       <div class="form-group">
-                        <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="col-md-3 col-sm-3 col-xs-12"><br>
                           <button  type="submit" class="btn btn-success ">Kirim</button>
                         </div>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-8 col-sm-8 col-xs-12"><br>
                           <button type="button" class="btn btn-danger tutup">Batal</button>
                         </div>
                       </div>
@@ -260,8 +256,10 @@
     <!-- Custom Theme Scripts -->
     <script src="<?php echo base_url(); ?>asset/build/js/custom.js"></script>
     <!-- CK Editor -->
-    <script src="<?php echo base_url(); ?>asset/vendors/ckeditor/ckeditor.js"></script>
-    <script src="<?php echo base_url(); ?>asset/ckedtor.js"></script>
+    <script src="<?php echo base_url(); ?>asset/vendors/ckeditor5/ckeditor.js"></script>
+    <script src="<?php echo base_url(); ?>asset/ckeditor5set.js"></script>
+    <script src="<?php echo base_url(); ?>asset/ckeditor5Edit.js"></script>
+    
      <!-- bootstrap-daterangepicker -->
     <script src="<?php echo base_url(); ?>asset/vendors/moment/min/moment.min.js"></script>
     <script src="<?php echo base_url(); ?>asset/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -269,7 +267,7 @@
     <script src="<?php echo base_url(); ?>asset/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <!-- Bootstrap Colorpicker -->
     <script src="<?php echo base_url(); ?>asset/vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-    
+
     <script src="<?php echo base_url(); ?>asset/event/informasi.js"></script>
     <script src="<?php echo base_url() ?>asset/confirm/ms-conf.js"></script>
     <link href="<?php echo base_url(); ?>asset/confirm/ms-conf.css" rel="stylesheet">
@@ -277,7 +275,9 @@
     <script src="<?php echo base_url(); ?>asset/toast/toast.js"></script>
     <script>
       $(document).ready(function(){
+        //window.location.href = ""
         edit_req_peng('<?php echo site_url('Informasi/get_peng_id') ?>')
+        baca_peng('<?php echo site_url('Informasi/baca_peng') ?>')
         $('#spage, button[value="empty"]').click(function(){
             return false;
         })

@@ -100,8 +100,6 @@
                 </div>
                 <br>
             </div>
-            <br>
-            <br>
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel"  id="form-tambah">
                   <div class="x_title">
@@ -120,7 +118,10 @@
                       <br>
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                          <textarea name="musim" class="ckeditor beritav" id="ckeditorc"></textarea>
+                          <div id="toolbar-container"></div>
+                          <div style="height:500px; border: 1px solid grey; color:black;" id="ckeditorc">
+
+                          </div>
                         </div>
                       </div>
                       <br>
@@ -131,7 +132,8 @@
                       </div>
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                          <label style="margin-top: 10px;">Masukkan Gambar & File PDF</label>
+                          <label style="margin-top: 10px;">Masukkan Gambar & File PDF</label><br>
+                          <small>JPG, JPEG, GIF, PNG || PDF</small>
                           <input id="dokumen" required type="file" name="dok[]" multiple style="margin-bottom: 10px;">
                         </div>
                       </div>
@@ -154,7 +156,7 @@
                   <div class="x_title">
                     <h5>Baca data prakiraan musim</h5>
                   </div>
-                  <div class="x_content cek-data" style="display:none;">
+                  <div class="x_content cek-data" style="display:none;" id="baca-data">
                     <br />
                       <h2 class="text-c" id="ark-judul"></h2>
                       <h6 class="text-c" id="creator"></h6>
@@ -202,7 +204,10 @@
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                           <label style="margin-top: 20px;margin-bottom: 5px;">Isi teks</label>
-                          <textarea name="musim" class="ckeditor beritav" id="ckeditorc2"></textarea>
+                          <div id="toolbar-container-edit"></div>
+                          <div style="height:500px; border: 1px solid grey; color:black;" id="ckeditorc2">
+
+                          </div>
                         </div>
                       </div>
                       <div class="form-group">
@@ -211,7 +216,8 @@
                       </div>
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                          <label style="margin-top: 10px;">Masukkan Gambar atau  File PDF jika akan mengubah</label>
+                          <label style="margin-top: 10px;">Masukkan Gambar atau  File PDF jika akan mengubah</label><br>
+                          <small>JPG, JPEG, GIF, PNG || PDF</small>
                           <input type="file" name="dok[]" multiple style="margin-bottom: 10px;">
                         </div>
                       </div>
@@ -266,8 +272,10 @@
     <!-- Custom Theme Scripts -->
     <script src="<?php echo base_url(); ?>asset/build/js/custom.min.js"></script>
     <!-- CK Editor -->
-    <script src="<?php echo base_url(); ?>asset/vendors/ckeditor/ckeditor.js"></script>
-    <script src="<?php echo base_url(); ?>asset/ckedtor.js"></script>
+    <script src="<?php echo base_url(); ?>asset/vendors/ckeditor5/ckeditor.js"></script>
+    <script src="<?php echo base_url(); ?>asset/ckeditor5set.js"></script>
+    <script src="<?php echo base_url(); ?>asset/ckeditor5Edit.js"></script>
+    
     <script src="<?php echo base_url(); ?>asset/event/JSCuaca.js"></script>
     <link href="<?php echo base_url(); ?>asset/toast/toast.css" rel="stylesheet">
     <script src="<?php echo base_url(); ?>asset/toast/toast.js"></script>

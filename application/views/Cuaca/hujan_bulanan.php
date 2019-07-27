@@ -112,11 +112,11 @@
                           <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                          <label>Curah hujan <small>File gambar</small></label>
+                          <label>Curah hujan <small>jpg, jpeg, gif, png</small></label>
                           <input required="required" type="file" class="form-control has-feedback-left" name="curah_hujan">
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                          <label>Sifat hujan <small>File gambar</small></label>
+                          <label>Sifat hujan <small>jpg, jpeg, gif, png</small></label>
                           <input required="required" type="file" class="form-control has-feedback-left " name="sifat_hujan">
                         </div>
                         <div class="col-md-5 col-sm-5 col-xs-12">
@@ -152,7 +152,7 @@
                           <span id="curah-img">
                             
                           </span>
-                          <label>Curah hujan <small>File gambar</small></label>
+                          <label>Curah hujan <small>jpg, jpeg, gif, png</small></label>
                           <input type="file" class="form-control has-feedback-left cekbut2" name="curah">
                           <small> Tambahkan gambar jika akan mengganti</small>
                         </div>
@@ -160,7 +160,7 @@
                           <span id="sifat-img">
                             
                           </span>
-                          <label>Sifat hujan <small>File gambar</small></label>
+                          <label>Sifat hujan <small>jpg, jpeg, gif, png</small></label>
                           <input type="file" class="form-control has-feedback-left cekbut3" name="sifat">
                           <small> Tambahkan gambar jika akan mengganti</small>
                         </div>
@@ -193,9 +193,6 @@
       </span>
     </div>
 
-    <style>
-
-</style>
     <!-- jQuery -->
     <script src="<?php echo base_url(); ?>asset/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->

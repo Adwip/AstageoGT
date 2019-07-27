@@ -67,7 +67,9 @@
                       </table>
                       
                     </div>
+                    <div align="right">
                     <button class="btn btn-round btn-danger btn-xs hapus" >Hapus</button>
+                    </div>
                   </form>
                   </div>
                 </div>
@@ -322,6 +324,7 @@
     <!-- Custom Theme Scripts -->
     <script src="<?php echo base_url(); ?>asset/build/js/custom.js"></script>
     <script src="<?php echo base_url(); ?>asset/vendors/Parsley2/Parsley.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.1/parsley.js"></script>
     <!-- jquery.inputmask -->
     <script src="<?php echo base_url(); ?>asset/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
     <script src="<?php echo base_url() ?>asset/confirm/ms-conf.js"></script>

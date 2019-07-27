@@ -26,7 +26,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -80,6 +80,9 @@
 
                         <tbody>
                           <?php echo $pnh ['get_pnh'] ?>
+                          <tr>
+                            <td align="center" colspan="9"><button type="button" class="btn btn-xs btn-success add-form">Tambah</button></td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -102,13 +105,9 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Tambah berita tren curah hujan</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                    </ul>
                     <div class="clearfix"></div>
                   </div>
-                  <div class="x_content" style="display: none;">
+                  <div class="x_content" style="display: none;" id="tambah-form">
                     <br />
                     <form method="POST" action="<?php echo site_url('Cuaca/set_pnh') ?>" id="kirim-data2">
                       <div class="form-group">
@@ -120,7 +119,8 @@
                       <br>
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                          <label>Masukkan file gambar</label>
+                          <label>Masukkan file gambar</label><br>
+                          <small>JPG, JPEG, GIF, PNG</small>
                           <input style="margin-top: 10px;" type="file" name="foto[]" multiple>
                         </div>
                       </div>
@@ -129,6 +129,9 @@
                       <div class="form-group">
                         <div class="col-md-3 col-sm-3 col-xs-12">
                           <button style="margin-top: 10px;" type="submit" class="btn btn-success">Kirim</button>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12"><br>
+                          <button type="button" class="btn btn-danger tutup">Batal</button>
                         </div>
                       </div>
                   </form>
@@ -141,7 +144,7 @@
                     <h5>Edit data perubahan normal hujan</h5>
                   </div>
 
-                  <div class="x_content edit-form" style="display: none;">
+                  <div class="x_content edit-form" style="display: none;" id="edit-form">
                       <form action="<?php echo site_url('Cuaca/edit_pnh') ?>"  id="kirim-data3" method="POST">
                         <div class="form-group">
                           <div class="col-md-6 col-sm-6 col-xs-12">
@@ -159,7 +162,8 @@
                           <div class="row edit-foto" style="margin-top: 10px; ">
                           </div>
                           <span>
-                            <label>Masukkan file gambar untuk ganti gambar</label>
+                            <label>Masukkan file gambar untuk ganti gambar</label><br>
+                            <small>JPG, JPEG, GIF, PNG</small>
                             <input style="margin-top: 10px; margin-bottom: 10px;" type="file" name="pnh[]" multiple />
                           </span>
                           </div>
@@ -184,7 +188,7 @@
                   <div class="x_title">
                     <h5>Baca data perubahan normal hujan</h5>    
                   </div>
-                  <div class="x_content cek-data" style="display:none;">
+                  <div class="x_content cek-data" style="display:none;" id="baca-data">
                     <br />
                       <h2 class="text-c" id="ark-judul"></h2>
                       <h6 class="text-c" id="creator"></h6>

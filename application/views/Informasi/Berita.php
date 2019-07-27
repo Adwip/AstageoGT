@@ -35,6 +35,7 @@
               <div class="title_left">
                 <h3>Berita hari ini</h3>
               </div>
+              <div id="snackbar" align="right"></div>
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12">
                <div class="x_panel">
@@ -46,9 +47,9 @@
                     </ul>
                     
                   </div>
-                  <div class="x_content" style="height: 600px;">
+                  <div class="x_content" style="height:auto;">
                     <br />
-                    <form method="POST" action="<?php echo site_url('Informasi/setBerita') ?>" enctype="multipart/form-data">
+                    <form method="POST" action="<?php echo site_url('Informasi/setBerita') ?>" enctype="multipart/form-data" id="kirim-data-news">
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input required type="text"  class="form-control col-md-5 col-xs-12" autocomplete="off" name="judul">
@@ -59,7 +60,11 @@
                       <br>
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                          <textarea name="berita" class="ckeditorc beritav" id="ckeditorc"></textarea>
+                          <div id="toolbar-container"></div>
+                          <div style="height:500px; border: 1px solid grey; color:black;" id="ckeditorc">
+
+                          </div>
+                          <!--<textarea name="berita" class="ckeditorc beritav" id="ckeditorc"></textarea>-->
                         </div>
                       </div>
                       <br>
@@ -69,7 +74,8 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12"><br>
+                          <small>JPG, JPEG, GIF, PNG</small>
                           <input style="margin-top: 10px;margin-bottom: 10px;" required type="file" name="foto[]" multiple>
                         </div>
                       </div>
@@ -77,7 +83,7 @@
                       <br>
                       <div class="form-group">
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                          <button type="submit" class="btn btn-success kirim">Kirim</button>
+                          <button type="submit" class="btn btn-success kirim-cek">Kirim</button>
                         </div>
                       </div>
                   </form>
@@ -112,18 +118,24 @@
     <!-- Custom Theme Scripts -->
     <script src="<?php echo base_url(); ?>asset/build/js/custom.js"></script>
     <!-- CK Editor -->
-    <script src="<?php echo base_url(); ?>asset/vendors/ckeditor/ckeditor.js"></script>
-    <script src="<?php echo base_url(); ?>asset/ckedtorcstm.js"></script>
+    <script src="<?php echo base_url(); ?>asset/vendors/ckeditor5/ckeditor.js"></script>
+    <!--<script src="<?php echo base_url(); ?>asset/ckedtorcstm.js"></script>-->
+    <script src="<?php echo base_url(); ?>asset/ckeditor5set.js"></script>
     <link href="<?php echo base_url(); ?>asset/confirm/ms-conf.css" rel="stylesheet">
     <script src="<?php echo base_url() ?>asset/confirm/ms-conf.js"></script>
+    <script src="<?php echo base_url(); ?>asset/event/informasi.js"></script>
+    <link href="<?php echo base_url(); ?>asset/toast/toast.css" rel="stylesheet">
+    <script src="<?php echo base_url(); ?>asset/toast/toast.js"></script>
 
     <script>
       $(document).ready(function(){
         
       })
-      $('.kirim').click(function(){
+
+      kirim_news('<?php echo site_url('Informasi/List_berita') ?>')
+      $('.kirim-cek').click(function(){
        // CKEDITOR.instances.ckeditorc.insertHtml( '<p>This is a new paragraph<strong>Halo</strong>.</p>' );
-        if (CKEDITOR.instances.ckeditorc.getData()=='') {
+        if (CKValue.getData()=='') {
           return false;         
         }
         

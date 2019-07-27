@@ -36,7 +36,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main" style="height: 1300px;">
+        <div class="right_col" role="main" style="height: 1300px;" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -100,7 +100,7 @@
                 </div>
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
+                <div class="x_panel" id="form-input">
                   <div class="x_title">
                     <h5>Input data Terbit terbenam baru</h5>
                   </div>
@@ -135,104 +135,26 @@
                   </div>
                 </div>
             </div>
-        <!--<div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="x_panel">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel"  id="baca-data">
                   <div class="x_title">
-                    <h5>Tambah data terbit terbenam matahari </h5>
-                    <ul class="nav navbar-right panel_toolbox">
-                      
-                    </ul>
+                    <h5>Baca data terbit terbenam matahari</h5>
                   </div>
+                  <div class="x_content cek-data" style="display:none;">
+                      <div>
+                        <iframe id="dokpdf" src="#" frameborder="0" width="1000" height="1100"></iframe>
+                      </div>
+                      <span id="dokumen"></span>
 
-                  <div class="x_content form-baru" style="display: none;">
-                      <form method="POST" class="form-horizontal form-label-left input_mask" action="<?php echo site_url('Aktlam/set_ttm') ?>">
-
-                      <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <label>Wilayah</label>
-                        <input type="text" class="form-control has-feedback-left" readonly name="wilayah" id="form-wilayah">
-                        <span class="fa fa-globe form-control-feedback left" aria-hidden="true"></span>
-                      </div>
-
-                      <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
-                        <label>Tanggal</label>
-                        <input type="text" class="form-control has-feedback-left" readonly name="tanggal" required id="form-tanggal">
-                        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
-                      </div>
-                      <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
-                        <label>Waktu fajar</label>
-                        <div class='input-group clockpicker' data-align="top" data-autoclose="true">
-                            <input  type='text' class="form-control clock" readonly="readonly" name="waktu_fajar" placeholder="Waktu fajar" />
-                            <span class="input-group-addon">
-                               <span class="glyphicon glyphicon-time"></span>
-                            </span>
-                        </div>
-                      </div>
-                      <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
-                        <label>Waktu terbit</label>
-                        <div class='input-group clockpicker' data-align="top" data-autoclose="true">
-                            <input  type='text' class="form-control clock" readonly="readonly" name="waktu_terbit" placeholder="Waktu terbit" />
-                            <span class="input-group-addon">
-                               <span class="glyphicon glyphicon-time"></span>
-                            </span>
-                        </div>
-                      </div>
-                      <div class="col-md-3 col-sm-3 col-xs-12 form-group">
-                        <label>Waktu terbenam</label>
-                        <div class='input-group clockpicker' data-align="top" data-autoclose="true">
-                            <input  type='text' class="form-control clock" readonly="readonly" name="waktu_terbenam" placeholder="Waktu terbenam" />
-                            <span class="input-group-addon">
-                               <span class="glyphicon glyphicon-time"></span>
-                            </span>
-                        </div>
-                      </div>
-                      <div class="col-md-3 col-sm-3 col-xs-12 form-group">
-                        <label>Waktu senja</label>
-                        <div class='input-group clockpicker' data-align="top" data-autoclose="true">
-                            <input  type='text' class="form-control clock" readonly="readonly" name="waktu_senja" placeholder="Waktu senja" />
-                            <span class="input-group-addon">
-                               <span class="glyphicon glyphicon-time"></span>
-                            </span>
-                        </div>
-                      </div>
-                      <div class="col-md-3 col-sm-3 col-xs-12 form-group">
-                        <label>Waktu transit</label>
-                        <div class='input-group clockpicker' data-align="top" data-autoclose="true">
-                            <input  type='text' class="form-control clock" readonly="readonly" name="waktu_transit" placeholder="Waktu transit" />
-                            <span class="input-group-addon">
-                               <span class="glyphicon glyphicon-time"></span>
-                            </span>
-                        </div>
-                      </div>
-                      <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
-                        <label>Azimuth terbit</label>
-                        <input type="text" autocomplete="off" class="form-control has-feedback-left" name="azimuth_terbit" placeholder="Azimuth terbit" required>
-                        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
-                      </div>
-                      
-                      <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
-                        <label>Tinggi transit</label>
-                        <input type="text" autocomplete="off" class="form-control has-feedback-left" name="tinggi_transit" required placeholder="Tinggi transit">
-                        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
-                      </div>
-                      <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
-                        <label>Azimuth terbenam</label>
-                        <input type="text" autocomplete="off" class="form-control has-feedback-left" name="azimuth_terbenam" required placeholder="Azimuth terbenam">
-                        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
-                      </div>
-                      
-
+                      <div class="ln_solid"></div>
                       <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12 ">
-                          <br>
-                          <button type="submit" class="btn btn-success">Simpan</button>
-                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                        <button type="button" class="btn btn-danger tutup">Selesai</button>
                       </div>
-
-                    </form>
-
+                      </div>
                   </div>
                 </div>
-            </div>-->
+            </div>
           </div>
         </div>
         <!-- /page content -->

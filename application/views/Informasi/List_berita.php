@@ -107,7 +107,7 @@
                   </div>
                   <div class="x_content form-edit" id="form-edit" style="display: none;">
                     <br />
-                    <form method="POST" action="<?php echo site_url('Informasi/edit_berita') ?>" id="kirim-data2">
+                    <form method="POST" action="<?php echo site_url('Informasi/edit_berita') ?>" id="kirim-data3">
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input id="edit-judul" required type="text"  class="form-control col-md-5 col-xs-12" autocomplete="off" name="judul">
@@ -123,7 +123,10 @@
                       <br>
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                          <textarea name="berita" class="ckeditor beritav" id="ckeditorc"></textarea>
+                          <div id="toolbar-container-edit"></div>
+                          <div style="height:500px; border: 1px solid grey; color:black;" id="ckeditorc2">
+
+                          </div>
                         </div>
                       </div>
                       <br>
@@ -135,7 +138,8 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12"><br>
+                          <small>JPG, JPEG, GIF, PNG</small>
                           <input style="margin-top: 10px; margin-bottom: 10px;" type="file" name="foto[]" multiple>
                         </div>
                       </div>
@@ -234,8 +238,9 @@
     <!-- Custom Theme Scripts -->
     <script src="<?php echo base_url(); ?>asset/build/js/custom.js"></script>
     <!-- CK Editor -->
-    <script src="<?php echo base_url(); ?>asset/vendors/ckeditor/ckeditor.js"></script>
-    <script src="<?php echo base_url(); ?>asset/editor-news.js"></script>
+    <script src="<?php echo base_url(); ?>asset/vendors/ckeditor5/ckeditor.js"></script>
+    <script src="<?php echo base_url(); ?>asset/ckeditor5Edit.js"></script>
+
     <script src="<?php echo base_url(); ?>asset/event/informasi.js"></script>
     <script src="<?php echo base_url() ?>asset/confirm/ms-conf.js"></script>
     <link href="<?php echo base_url(); ?>asset/confirm/ms-conf.css" rel="stylesheet">

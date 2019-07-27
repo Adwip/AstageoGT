@@ -35,6 +35,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>asset/vendors/clockpicker-seconds/src/standalone.css">
     <link href="<?php echo base_url(); ?>asset/confirm/ms-conf.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url('asset/event/paginasi.css') ?>">
+    <link href="<?php echo base_url() ?>asset/event/modal-style.css" rel="stylesheet">
+
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
@@ -57,7 +59,7 @@
                     </ul>
                   </div>
                   <div class="x_content" >
-                    <form method="GET" action="<?php echo site_url('Aktlam/gempa') ?>">
+                  <!--<form method="GET" action="<?php echo site_url('Aktlam/gempa') ?>">
                       <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
                           <select class="form-control has-feedback-left" name="status">
                             <option value="*">Semua</option>
@@ -73,7 +75,7 @@
                             
                         </div>
                       </div>
-                      </form>
+                      </form>-->
                     <br />
                     <form method="POST" action="<?php echo site_url('Aktlam/del_gempa') ?>" id="del">
                       <div class="table-responsive">
@@ -389,58 +391,6 @@
                   </div>
                 </div>
               </div>
-
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel" >
-                  <div class="x_title">
-                    <h5>Baca data gempa</h5>
-                  </div>
-                  <div class="x_content v-data" style="display:none;">
-                    <h2>Data gempa bumi</h2>
-                    <div class="col-md-6 col-sm-6 col-xs-12 garis" >
-                      <h2>Wilayah gempa</h2>
-                      <span id="v-wilayah" ><h4>16 km BaratDaya KARERA-SUMBATIMUR-NTT</h4></span>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 garis" >
-                      <h2>Waktu gempa</h2>
-                      
-                      <span id="v-waktu" ><h4>17-Jun-19 12:43:31 WIB</h4></span>
-                    </div>
-                    
-                    <div class="col-md-4 col-sm-4 col-xs-12 garis" >
-                      <h2>Magnitudo</h2>
-                      <span id="v-mag" ><h4>5.6 SR</h4></span>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 garis" >
-                      <h2>Koordinat gempa</h2>
-                      <span id="v-koor" ><h4>-8.99 LU - 6.7 BT</h4></span>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 garis" >
-                      <h2>Status dirasakan</h2>
-                      <span id="v-rasa" ><h4>Dirasakan</h4></span>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 garis" >
-                      <h2>Lokasi gempa</h2>
-                      <span id="v-lok" ><h4>Laut</h4></span>
-                    </div>
-                    <div class="col-md- col-sm-4 col-xs-12 garis" >
-                      <h2>Potensi tsunami</h2>
-                      <span id="v-tsun" ><h4>Ya</h4></span>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 garis" >
-                      <h2>Skala MMI</h2>
-                      <span id="v-mmi" ><h4>MMI 1, MMI 2</h4></span>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 garis" >
-                      <h2>Keterangan</h2>
-                      <span id="v-ket" ></span>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 ">
-                      <br>
-                      <button type="button" class="btn btn-danger tutup">Selesai</button>
-                    </div>
-                  </div>
-                </div>
               </div>
           </div>
         </div>
@@ -454,8 +404,51 @@
         </footer>
         <!-- /footer content -->
       </div>
+    <div id="gempa-cek" style="display: none;">
+      <div align="center" id="head-gem">
+        <h1>Gempa bumi</h1>
+      </div>
+      <hr style="border: 0.6px solid black; margin-bottom: 5px;" id="hr">
+      <div style="overflow: auto; height: 500px;" id="isi-gem">
+        <div style="float: left;" id="img-gempa">
+          -
+        </div>
+        <div style="float: left; margin-left:10px;" id="teks-gempa">
+          <div class="">
+            <h4>Wilayah</h4>
+            <h5 id="v-wilayah">-</h5>
+          </div>
+          <div class="">
+            <h4>Koordinat</h4>
+            <h5 id="v-koor">-</h5>
+          </div>
+          <div class="">
+            <h4>Magnitudo</h4>
+            <h5 id="v-mag">-</h5>
+          </div>
+          <div class="">
+            <h4>Kedalaman</h4>
+            <h5 id="v-dalam"></h5>
+          </div>
+          <div class="">
+            <h4>Potensi tsunami</h4>
+            <h5 id="v-tsun">-</h5>
+          </div>
+          <div class="">
+            <h4>Skala MMI</h4>
+            <h5 id="v-mmi">-</h5>
+          </div>
+          <div class="">
+            <h4>Keterangan</h4>
+            <h6 style="width: 800px;" id="v-ket"></h6>
+          </div>
+          <div class="">
+            <h4>Informasi data</h4>
+            <h6 style="width: 800px;" id="v-extend"></h6>
+          </div>
+        </div>
+      </div>
     </div>
-
     <style>
       textarea {
         resize: vertical;
@@ -472,18 +465,14 @@
     <script src="<?php echo base_url(); ?>asset/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
     <script src="<?php echo base_url(); ?>asset/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <!--<script src="<?php echo base_url(); ?>asset/vendors/nprogress/nprogress.js"></script>-->
     <!-- jQuery custom content scroller -->
     <script src="<?php echo base_url(); ?>asset/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
     <!-- Chart.js -->
     <script src="<?php echo base_url(); ?>asset/vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- FastClick -->
-    <!--<script src="<?php echo base_url(); ?>asset/vendors/fastclick/lib/fastclick.js"></script>-->
     <!-- Custom Theme Scripts -->
     <script src="<?php echo base_url(); ?>asset/build/js/custom.js"></script>
     <script src="<?php echo base_url() ?>asset/Informasi.js"></script>
-        <!-- bootstrap-daterangepicker -->
+    <!-- bootstrap-daterangepicker -->
     <script src="<?php echo base_url(); ?>asset/vendors/moment/min/moment.min.js"></script>
     <script src="<?php echo base_url(); ?>asset/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Bootstrap Colorpicker -->
@@ -511,6 +500,9 @@
             return false;
           })
         view_gempa('<?php echo site_url('Aktlam/get_gempa_v') ?>')
+        $('.body').click(function(){
+          $('#gempa-cek').hide()
+        })
       })
     </script>
   </body>

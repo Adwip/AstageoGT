@@ -30,7 +30,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -67,8 +67,8 @@
                           <tr class="headings">
                             <th class="column-title">Bulan</th>
                             <th class="column-title">Judul</th>
-                            <th class="column-title">Sambaran</th>
                             <th class="column-title">Kerapatan</th>
+                            <th class="column-title">Sambaran</th>
                             <th class="column-title">Petugas</th>
                             <th class="column-title">Tanggal input</th>
                             <th class="column-title">Aksi
@@ -98,11 +98,11 @@
             <br>
             <br>
             <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="x_panel">
+              <div class="x_panel" id="form-input">
                   <div class="x_title">
                     <h5>Masukkan data petir baru</h5>
                   </div>
-                  <div class="x_content form-tambah"  style="display:none;">
+                  <div class="x_content form-tambah" style="display:none;">
                     <br />
                       <form method="POST" action="<?php echo site_url('Aktlam/set_petir') ?>" id="kirim-data">
                         <div class="form-group">
@@ -164,19 +164,11 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                   <div class="x_title">
-                    <h5>Baca artikel</h5>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                    </ul>
-                    
+                    <h5>Baca data petir</h5>
                   </div>
                   <div class="x_content cek-data" style="display: none;">
                     <br />
-                      
-
                       <span id="dokumen"></span>
-
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-2 col-sm-2 col-xs-12">
@@ -192,7 +184,7 @@
                   <div class="x_title">
                     <h5>Edit data petir</h5>
                   </div>
-                  <div class="x_content form-edit"  style="display:none;">
+                  <div class="x_content form-edit"  style="display:none;" id="form-edit">
                     <br />
                       <form method="POST" action="<?php echo site_url('Aktlam/edit_petir') ?>"  id="kirim-data">
                         <div class="form-group">
@@ -221,13 +213,19 @@
                       </div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <label>Kerapatan petir</label>
+                          <label>Kerapatan petir</label><br>
+                          <span id="rapat"></span><br><br>
+                          <small>Tambah kan file jika akan mengganti</small><br>
+                          <small>jpg, jpeg, gif, png</small>
                           <input type="file" name="rapat">
                         </div>
                       </div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <label>Sambaran petir</label>
+                          <label>Sambaran petir</label><br>
+                          <span id="sambar"></span><br><br>
+                          <small>Tambah kan file jika akan mengganti</small><br>
+                          <small>jpg, jpeg, gif, png</small>
                           <input type="file" name="sambar">
                         </div>
                       </div>
@@ -240,10 +238,10 @@
                       <br>
                       <br>
                       <div class="form-group">
-                        <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="col-md-3 col-sm-3 col-xs-12"><br>
                           <button type="submit" class="btn btn-success kirim">Kirim</button>
                         </div>
-                        <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="col-md-3 col-sm-3 col-xs-12"><br>
                         <button type="button" class="btn btn-danger tutup">Batal</button>
                       </div>
                       </div>
@@ -264,7 +262,11 @@
         <!-- /footer content -->
       </div>
     </div>
-
+    <div class="galeri galeri2">
+      <div id="clb"><button class="btn btn-xs btn-danger clb">Tutup</button></div>
+      <span id="img-loc">
+      </span>
+    </div>
     <!-- jQuery -->
     <script src="<?php echo base_url(); ?>asset/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -280,12 +282,15 @@
     <script src="<?php echo base_url(); ?>asset/event/aktlam.js"></script>
     <link href="<?php echo base_url(); ?>asset/toast/toast.css" rel="stylesheet">
     <script src="<?php echo base_url(); ?>asset/toast/toast.js"></script>
+    <link href="<?php echo base_url(); ?>asset/toast/galeri.css" rel="stylesheet">
+    <script src="<?php echo base_url(); ?>asset/toast/galeri.js"></script>
   </body>
   <script>
     $(document).ready(function(){
       edit_spt('<?php echo site_url('Aktlam/get_spt_edit') ?>')
       read_spt('<?php echo site_url('Aktlam/get_spt_id') ?>')
       req_ptr_id('<?php echo site_url('Aktlam/get_ptr_edit') ?>')
+      foto_hbl('<?php echo base_url('../File_BMKG/Sam_petir/')?>','foto-size2')
     })
   </script>
 </html>

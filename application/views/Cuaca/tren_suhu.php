@@ -32,7 +32,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -86,6 +86,9 @@
 
                         <tbody>
                           <?php echo $tsh['tren_suhu']  ?>
+                          <tr>
+                            <td align="center" colspan="9"><button type="button" class="btn btn-xs btn-success add-form">Tambah</button></td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -108,25 +111,25 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Tambah berita tren suhu</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                    </ul>
                     <div class="clearfix"></div>
                   </div>
-                  <div class="x_content" style="display: none;">
+                  <div class="x_content" style="display: none;" id="tambah-form">
                     <br />
                     <form method="POST" action="<?php echo site_url('Cuaca/set_tren_suhu') ?>" id="kirim-data2">
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                          <textarea name="berita" class="ckeditor beritav" id="ckeditorc"></textarea>
+                            <div id="toolbar-container"></div>
+                            <div style="height:500px; border: 1px solid grey; color:black;" id="ckeditorc">
+
+                            </div>
                         </div>
                       </div>
                       <br>
                       <br>
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                          <label>Masukkan file gambar</label>
+                          <label>Masukkan file gambar</label><br>
+                          <small>JPG, JPEG, GIF, PNG</small>
                           <input style="margin-top: 10px;" type="file" name="foto[]" multiple>
                         </div>
                       </div>
@@ -135,6 +138,9 @@
                       <div class="form-group">
                         <div class="col-md-3 col-sm-3 col-xs-12">
                           <button style="margin-top: 10px;" type="submit" class="btn btn-success kirim">Kirim</button>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12"><br>
+                          <button type="button" class="btn btn-danger tutup">Batal</button>
                         </div>
                       </div>
                   </form>
@@ -147,7 +153,7 @@
                     <h5>Edit data tren suhu</h5>
                   </div>
 
-                  <div class="x_content edit-form" style="display: none;">
+                  <div class="x_content edit-form" style="display: none;" id="edit-form">
                       <form action="<?php echo site_url('Cuaca/edit_tsh') ?>"  id="kirim-data3" method="POST">
                         <div class="form-group">
                           <div class="col-md-6 col-sm-6 col-xs-12">
@@ -157,7 +163,10 @@
                         </div>
                        <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                          <textarea name="berita" class="ckeditor beritav" id="ckeditorc2"></textarea>
+                          <div id="toolbar-container-edit"></div>
+                          <div style="height:500px; border: 1px solid grey; color:black;" id="ckeditorc2">
+
+                          </div>
                         </div>
                       </div>
                         <div class="form-group">
@@ -165,7 +174,8 @@
                           <div class="row edit-foto" style="margin-top: 10px; ">
                           </div>
                           <span>
-                            <label>Masukkan file gambar untuk ganti gambar</label>
+                            <label>Masukkan file gambar untuk ganti gambar</label><br>
+                            <small>JPG, JPEG, GIF, PNG</small>
                             <input style="margin-top: 10px; margin-bottom: 10px;" type="file" name="tsh[]" multiple />
                           </span>
                           </div>
@@ -190,7 +200,7 @@
                   <div class="x_title">
                     <h5>Baca data tren curah hujan</h5>    
                   </div>
-                  <div class="x_content cek-data" style="display:none;">
+                  <div class="x_content cek-data" style="display:none;" id="baca-data">
                     <br />
                       <h2 class="text-c" id="ark-judul"></h2>
                       <h6 class="text-c" id="creator"></h6>
@@ -200,8 +210,9 @@
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-2 col-sm-2 col-xs-12">
-                        <button type="button" class="btn btn-danger tutup">Selesai</button>
+                          <button type="button" class="btn btn-danger tutup">Selesai</button>
                       </div>
+                        
                       </div>
                   </div>
                 </div>
@@ -245,8 +256,10 @@
     <!-- Custom Theme Scripts -->
     <script src="<?php echo base_url(); ?>asset/build/js/custom.min.js"></script>
     <!-- CK Editor -->
-    <script src="<?php echo base_url(); ?>asset/vendors/ckeditor/ckeditor.js"></script>
-    <script src="<?php echo base_url(); ?>asset/ckedtor.js"></script>
+    <script src="<?php echo base_url(); ?>asset/vendors/ckeditor5/ckeditor.js"></script>
+    <script src="<?php echo base_url(); ?>asset/ckeditor5set.js"></script>
+    <script src="<?php echo base_url(); ?>asset/ckeditor5Edit.js"></script>
+    
     <script src="<?php echo base_url() ?>asset/event/JSCuaca.js"></script>
     <link href="<?php echo base_url(); ?>asset/toast/toast.css" rel="stylesheet">
     <script src="<?php echo base_url(); ?>asset/toast/toast.js"></script>

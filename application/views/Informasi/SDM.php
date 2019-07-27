@@ -52,7 +52,7 @@
                       <tr>
                           <div class="col-md-5">
                             <td><label>Perubahan terakhir : </label> 
-                              <?php echo $sdm['tgl_umur'] ?>
+                              <?php echo date('d-m-Y',strtotime($sdm['tgl_umur'])) ?>
                           </td>
                           </div>
                           <div class="col-md-6">
@@ -210,7 +210,7 @@
                       <tr >
                         <td></td>
                         <td><button name="button" value="umur" type="submit" class="btn btn-success batal submit" style="margin-top: 10px;">Simpan</button></td>
-                        <td><button type="button" class="btn btn-danger tutup" style="margin-top: 10px;">Batal</button></td>
+                        <td><button type="button" class="btn btn-danger tutupSDM" style="margin-top: 10px;">Batal</button></td>
                       </tr>
                     </form>
                     </tbody>
@@ -237,7 +237,7 @@
                       <tr>
                           <div class="col-md-5">
                             <td><label>Perubahan terakhir : </label> 
-                              <?php echo $sdm['tgl_golongan'] ?>
+                              <?php echo date('d-m-Y',strtotime($sdm['tgl_golongan'])) ?>
                           </td>
                           </div>
                           <div class="col-md-6">
@@ -286,7 +286,6 @@
                   </div>
                 </div>
             </div>
-
             <div class="col-md-5 col-sm-5 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
@@ -350,7 +349,7 @@
                       <tr >
                         <td></td>
                         <td><button name="button" value="grafik_golongan" type="submit" class="btn btn-success submit" style="margin-top: 10px;">Simpan</button></td>
-                        <td><button type="button" class="btn btn-danger tutup" style="margin-top: 10px;">Batal</button></td>
+                        <td><button type="button" class="btn btn-danger tutupSDM" style="margin-top: 10px;">Batal</button></td>
                       </tr>
                     </form>
                     </tbody>
@@ -377,7 +376,7 @@
                       <tr>
                           <div class="col-md-5">
                             <td><label>Perubahan terakhir : </label> 
-                              <?php echo $sdm['tgl_akademik'] ?>
+                              <?php echo date('d-m-Y',strtotime($sdm['tgl_akademik'])) ?>
                           </td>
                           </div>
                           <div class="col-md-6">
@@ -424,7 +423,6 @@
                   </div>
                 </div>
             </div>
-
             <div class="col-md-5 col-sm-5 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
@@ -532,7 +530,7 @@
                       <tr>
                         <td></td>
                         <td><button type="submit" class="btn btn-success submit" style="margin-top: 10px;">Simpan</button></td>
-                        <td><button type="button" class="btn btn-danger tutup" style="margin-top: 10px;">Batal</button></td>
+                        <td><button type="button" class="btn btn-danger tutupSDM" style="margin-top: 10px;">Batal</button></td>
                       </tr>
                     </form>
                     </tbody>
@@ -577,7 +575,6 @@
     <link href="<?php echo base_url(); ?>asset/confirm/ms-conf.css" rel="stylesheet">
     <script src="<?php echo base_url() ?>asset/confirm/ms-conf.js"></script>
     <script src="<?php echo base_url() ?>asset/event/informasi.js"></script>
-    <script src="<?php echo base_url(); ?>asset/vendors/Parsley2/Parsley.js"></script>
     <link href="<?php echo base_url(); ?>asset/toast/toast.css" rel="stylesheet">
     <script src="<?php echo base_url(); ?>asset/toast/toast.js"></script>
     <script>
@@ -593,7 +590,6 @@
         grafik(M_Umur, F_Umur,"mybarChart1");
         golongan(M_Golongan, F_Golongan,"mybarChart2");
         pendidikan(M_Akademik, F_Akademik,"mybarChart3");
-        $('.validasi').parsley()
       })
     </script>
   </body>

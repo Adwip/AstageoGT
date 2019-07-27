@@ -158,6 +158,9 @@ class Cuaca_model extends CI_Model{
 			# code...
 		}
 		$this->db->delete($tb, array('id_cuhar'=>$id));
+		if ($this->db->affected_rows()==1) {
+			return 1;
+		}
 	}
 
 	public function set_cuaca($wilayah, $tanggal, $tabel, $cuaca, $arah, $suhu_min, $suhu_maks, $kelembapan_maks, $kelembapan_min,$petugas,$tanggal_input,$ids){
@@ -287,10 +290,8 @@ class Cuaca_model extends CI_Model{
 		$this->db->where('id_cuhar',$id);
 		$this->db->update($tabel,$isi);
 		if ($this->db->affected_rows()>0) {
-			# code...
 			return 2;
 		}
-		# code...
 	}
 
 //cuaca mingguan & bulanan
@@ -422,12 +423,17 @@ class Cuaca_model extends CI_Model{
 	}
 
 	public function del_cuming($id){
-		$data=$this->db->get_where('cuaca_mingguan',array('id_cuming'=>$id))->result()[0];
-		if (file_exists('../File_BMKG/Iklim/Cuaca_mingguan/'.$data->PDF)) {
-			# code...
-			unlink('../File_BMKG/Iklim/Cuaca_mingguan/'.$data->PDF);
-		}
+		$data=$this->db->get_where('cuaca_mingguan',array('id_cuming'=>$id))->result();
 		$this->db->delete('cuaca_mingguan',array('id_cuming'=>$id));
+		if ($this->db->affected_rows()==1&&isset($data[0])) {
+			if (file_exists('../File_BMKG/Iklim/Cuaca_mingguan/'.$data[0]->PDF)) {
+				# code...
+				unlink('../File_BMKG/Iklim/Cuaca_mingguan/'.$data[0]->PDF);
+			}
+			return 1;
+		}
+		
+		
 	}
 
 	public function edit_cuming($id,$tanggal_mulai, $tanggal_akhir, $pdf=null){
@@ -567,18 +573,22 @@ class Cuaca_model extends CI_Model{
 
 	public function del_hbl($id){
 		$data=$this->db->get_where('hujan_bulanan',array('id_hujan'=>$id))->result();
-		foreach ($data as $dt) {
-			if (file_exists('../File_BMKG/Iklim/Prakiraan_Musim/Hujan_bulanan/'.$dt->curah_hujan)) {
-				unlink('../File_BMKG/Iklim/Prakiraan_Musim/Hujan_bulanan/'.$dt->curah_hujan);
-				# code...
-			}
-			if (file_exists('../File_BMKG/Iklim/Prakiraan_Musim/Hujan_bulanan/'.$dt->sifat_hujan)) {
-				unlink('../File_BMKG/Iklim/Prakiraan_Musim/Hujan_bulanan/'.$dt->sifat_hujan);
-				# code...
-			}
-			# code...
-		}
 		$this->db->delete('hujan_bulanan',array('id_hujan'=>$id));
+		if ($this->db->affected_rows()==1) {
+			foreach ($data as $dt) {
+				if (file_exists('../File_BMKG/Iklim/Prakiraan_Musim/Hujan_bulanan/'.$dt->curah_hujan)) {
+					unlink('../File_BMKG/Iklim/Prakiraan_Musim/Hujan_bulanan/'.$dt->curah_hujan);
+					# code...
+				}
+				if (file_exists('../File_BMKG/Iklim/Prakiraan_Musim/Hujan_bulanan/'.$dt->sifat_hujan)) {
+					unlink('../File_BMKG/Iklim/Prakiraan_Musim/Hujan_bulanan/'.$dt->sifat_hujan);
+					# code...
+				}
+				# code...
+			}
+			return 1;
+		}
+		
 	}
 
 	public function get_probabilitas($bul,$tahun){
@@ -783,19 +793,18 @@ class Cuaca_model extends CI_Model{
 	public function del_prakmus($id){
 		$data=$this->db->get_where('musim',array('id_mus'=>$id))->result();
 		$path='../File_BMKG/Iklim/Prakiraan_Musim/Prakiraan_musim/';
-		foreach ($data as $key) {
-
+		$this->db->delete('musim',array('id_mus'=>$id));
+		if ($this->db->affected_rows()==1) {
+			foreach ($data as $key) {
 				if (file_exists($path.'Gambar/'.$key->gambar)) {
 					unlink($path.'Gambar/'.$key->gambar);
-					# code...
 				}
-		
 				if (file_exists($path.'Dokumen/'.$key->pdf)) {
 					unlink($path.'Dokumen/'.$key->pdf);
 				}
-			
+			}
+			return 1;
 		}
-		$this->db->delete('musim',array('id_mus'=>$id));
 	}
 
 	public function get_musim_id($id){
@@ -961,19 +970,24 @@ class Cuaca_model extends CI_Model{
 
 	public function del_dinat($id){
 		$data=$this->db->get_where('dinamika_atmosfer',array('id_dinat'=>$id));
-		foreach ($data->result() as $dinat) {
-			if (file_exists('../File_BMKG/Iklim/Analisis_iklim/Dinamika_atmosfer/Dokumen/'.$dinat->pdf)) {
-				# code...
-				unlink('../File_BMKG/Iklim/Analisis_iklim/Dinamika_atmosfer/Dokumen/'.$dinat->pdf);
-			}
-
-			if (file_exists('../File_BMKG/Iklim/Analisis_iklim/Dinamika_atmosfer/Gambar/'.$dinat->gambar)) {
-				# code...
-				unlink('../File_BMKG/Iklim/Analisis_iklim/Dinamika_atmosfer/Gambar/'.$dinat->gambar);
-			}
-			# code...
-		}
 		$this->db->delete('dinamika_atmosfer',array('id_dinat'=>$id));
+		if ($this->db->affected_rows()==1) {
+			foreach ($data->result() as $dinat) {
+				if (file_exists('../File_BMKG/Iklim/Analisis_iklim/Dinamika_atmosfer/Dokumen/'.$dinat->pdf)) {
+					# code...
+					unlink('../File_BMKG/Iklim/Analisis_iklim/Dinamika_atmosfer/Dokumen/'.$dinat->pdf);
+				}
+
+				if (file_exists('../File_BMKG/Iklim/Analisis_iklim/Dinamika_atmosfer/Gambar/'.$dinat->gambar)) {
+					# code...
+					unlink('../File_BMKG/Iklim/Analisis_iklim/Dinamika_atmosfer/Gambar/'.$dinat->gambar);
+				}
+				# code...
+			}
+			return 1;
+		}
+		
+		
 	}
 
 	public function get_dinat_id($id){
@@ -1169,12 +1183,14 @@ class Cuaca_model extends CI_Model{
 
 	public function del_ipt($id){
 		$data=$this->db->get_where('ipt',array('id_ipt'=>$id));
-		foreach ($data->result() as $key) {
-			# code...
-			unlink('../File_BMKG/Iklim/Analisis_iklim/IPT/Dokumen/'.$key->pdf);
-			unlink('../File_BMKG/Iklim/Analisis_iklim/IPT/Gambar/'.$key->gambar);
-		}
 		$this->db->delete('ipt',array('id_ipt'=>$id));
+		if ($this->db->affected_rows()==1) {
+			foreach ($data->result() as $key) {
+				unlink('../File_BMKG/Iklim/Analisis_iklim/IPT/Dokumen/'.$key->pdf);
+				unlink('../File_BMKG/Iklim/Analisis_iklim/IPT/Gambar/'.$key->gambar);
+			}
+			return 1;
+		}
 	}
 
 	public function del_file_ipt($id, $jenis){
@@ -1321,12 +1337,16 @@ class Cuaca_model extends CI_Model{
 
 	public function del_tch($id){
 		$this->db->delete('tren_hujan',array('id_tch'=>$id));
-		$data=$this->db->get_where('foto',array('link'=>$id));
-		foreach ($data->result() as $key) {
-			# code...
-			unlink('../File_BMKG/Iklim/Perubahan_iklim/Tren_curah_hujan/'.$key->foto);
+		if ($this->db->affected_rows()==1) {
+			$data=$this->db->get_where('foto',array('link'=>$id));
+			foreach ($data->result() as $key) {
+				# code...
+				unlink('../File_BMKG/Iklim/Perubahan_iklim/Tren_curah_hujan/'.$key->foto);
+			}
+			$this->db->delete('foto',array('link'=>$id));
+			return 1;
 		}
-		$this->db->delete('foto',array('link'=>$id));
+		
 	}
 
 	public function get_tch_id($id){
@@ -1471,12 +1491,15 @@ class Cuaca_model extends CI_Model{
 
 	public function del_tsh($id){
 		$this->db->delete('tren_suhu',array('id_tsh'=>$id));
-		$data=$this->db->get_where('foto',array('link'=>$id));
-		foreach ($data->result() as $key) {
-			# code...
-			unlink('../File_BMKG/Iklim/Perubahan_iklim/Tren_suhu/'.$key->foto);
+		if ($this->db->affected_rows()==1) {
+			$data=$this->db->get_where('foto',array('link'=>$id));
+			foreach ($data->result() as $key) {
+				# code...
+				unlink('../File_BMKG/Iklim/Perubahan_iklim/Tren_suhu/'.$key->foto);
+			}
+			$this->db->delete('foto',array('link'=>$id));
+			return 1;
 		}
-		$this->db->delete('foto',array('link'=>$id));
 	}
 
 	public function get_tsh_id($id){
@@ -1582,6 +1605,37 @@ class Cuaca_model extends CI_Model{
 			unlink('../File_BMKG/Iklim/Perubahan_iklim/Perubahan_normal_hujan/'.$key->foto);
 		}
 		$this->db->delete('foto',array('link'=>$id));
+	}
+
+	public function get_pnh_id($id){
+		$this->db->join('foto','foto.link=perubahan_curah_hujan.id_pch','LEFT');
+		$data=$this->db->get_where('perubahan_curah_hujan',array('id_pch'=>$id));
+		$data2=null;
+		$data3=$data->result()[0];
+		foreach ($data->result() as $ft) {
+						# code...
+							if ($ft->foto!=null) {
+								# code...
+								$data2 .='<div class="col-md-55">
+											<div class="">
+												<div class="image view view-first">
+													<img style="width: 100%; display: block; height: 130px;" src="'.base_url().'../File_BMKG/Iklim/Perubahan_iklim/Perubahan_normal_hujan/'.$ft->foto.'" alt="image" />
+													<div class="mask">
+														<p>Centang untuk hapus</p>
+														<div class="tools tools-bottom">
+															<input value="'.$ft->foto.'" type="checkbox" name="hapus[]"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>';
+							}
+					}
+
+		$data=null;
+		$data['fotos']=$data2;
+		$data['pch']=$data3;
+		return $data;
 	}
 
 	public function set_pnh_r($id){
@@ -1823,10 +1877,8 @@ class Cuaca_model extends CI_Model{
 
 	public function get_KAH($bln,$tahun){
 		$bulan=array('01'=>'Januari','02'=>'Februari','03'=>'Maret','04'=>'April','05'=>'Mei','06'=>'Juni','07'=>'Juli','08'=>'Agustus','09'=>'September','10'=>'Oktober','11'=>'November','12'=>'Desember');
-		$data2=null;
+		$data2['l_kah']=null;
 		$data3['stat']=1;
-
-		
 			$this->db->ORDER_BY('minggu','ASC');
 			$data=$this->db->get_where('kimia_air_hujan3',array('bulan'=>$bulan[$bln],'tahun'=>$tahun));
 			if ($data->num_rows()==0) {
@@ -1835,7 +1887,7 @@ class Cuaca_model extends CI_Model{
 			}
 			$i=1;
 				foreach ($data->result() as $spm) {
-						$data2 .= '<tr class="">
+						$data2['l_kah'] .= '<tr class="">
 		                            <td class=" ">'.$spm->minggu.'</td>
 		                            <td class=" ">'.(float)$spm->nilai_ph.'</td>
 		                            <td class=" ">'.$spm->nama.'</td>
@@ -1847,7 +1899,7 @@ class Cuaca_model extends CI_Model{
 					$i++;
 				}
 				if ($i!=5) {
-					$data2.='<tr class="">
+					$data2['l_kah'] .='<tr class="">
                             <td class=" ">Data KAH</td>
                             <td class=" ">minggu ke '.$i.'</td>
                             <td class=" ">belum</td>
@@ -1861,18 +1913,21 @@ class Cuaca_model extends CI_Model{
 			if ($data->num_rows()!=0) {
 				# code...
 				$data=$data->result()[0];
-				$data2.='<tr class="">
+				$data2['l_kah'] .='<tr class="">
                             <td class=" ">Keterangan</td>
                             <td class=" ">Kimia</td>
                             <td class=" ">air</td>
                             <td class=" ">hujan</td>
                             <td class=" last">
                                 <button data-id="'.$data->id.'" type="button" class="btn btn-round btn-info btn-xs edit_ket" >Ubah</button>
-                                <button data-id="'.$data->id.'" type="button" class="btn btn-round btn-danger btn-xs del-ext" >Hapus</button>
+								<button data-id="'.$data->id.'" type="button" class="btn btn-round btn-danger btn-xs del-ext" >Hapus</button>
+								<button data-id="'.$data->id.'" type="button" class="btn btn-round btn-warning btn-xs baca-ket" >Baca</button>
                             </td>
-                          </tr>';
+						  </tr>';
+				$data2['k_kah']['isi'] = $data->isi;
+				$data2['k_kah']['waktu'] = $data->bulan.' '.$data->tahun;
 			}else{
-				$data2.='<tr class="">
+				$data2['l_kah'] .='<tr class="">
                             <td class=" ">Keterangan</td>
                             <td class=" ">Kimia</td>
                             <td class=" ">air</td>
@@ -1991,7 +2046,7 @@ class Cuaca_model extends CI_Model{
 	public function get_spm($bln,$tahun){
 
 			$bulan=array('01'=>'Januari','02'=>'Februari','03'=>'Maret','04'=>'April','05'=>'Mei','06'=>'Juni','07'=>'Juli','08'=>'Agustus','09'=>'September','10'=>'Oktober','11'=>'November','12'=>'Desember');
-		$data2=null;
+		$data2['l_spm']=null;
 		$data3['stat']=1;
 			$this->db->ORDER_BY('minggu','ASC');
 			$data=$this->db->get_where('spm',array('bulan'=>$bulan[$bln],'tahun'=>$tahun));
@@ -2001,7 +2056,7 @@ class Cuaca_model extends CI_Model{
 				$data3['stat']=0;
 			}
 				foreach ($data->result() as $spm) {
-						$data2 .= '<tr class="">
+						$data2['l_spm'] .= '<tr class="">
 		                            <td class=" ">'.$spm->minggu.'</td>
 		                            <td class=" ">'.$spm->konsentrasi.'</td>
 		                            <td class=" ">'.$spm->nama.'</td>
@@ -2013,7 +2068,7 @@ class Cuaca_model extends CI_Model{
 					$i++;
 				}
 				if ($i!=5) {
-					$data2.='<tr class="">
+					$data2['l_spm'].='<tr class="">
                             <td class=" ">Data SPM</td>
                             <td class=" ">minggu ke '.$i.'</td>
                             <td class=" ">belum</td>
@@ -2027,18 +2082,21 @@ class Cuaca_model extends CI_Model{
 			if ($data->num_rows()!=0) {
 				# code...
 				$data=$data->result()[0];
-				$data2.='<tr class="">
+				$data2['l_spm'].='<tr class="">
                             <td class=" ">Keterangan</td>
                             <td class=" ">Kimia</td>
                             <td class=" ">air</td>
                             <td class=" ">hujan</td>
                             <td class=" last">
                                 <button data-id="'.$data->id.'" type="button" class="btn btn-round btn-info btn-xs edit_ket" >Ubah</button>
-                                <button data-id="'.$data->id.'" type="button" class="btn btn-round btn-danger btn-xs del-ext" >Hapus</button>
+								<button data-id="'.$data->id.'" type="button" class="btn btn-round btn-danger btn-xs del-ext" >Hapus</button>
+								<button data-id="'.$data->id.'" type="button" class="btn btn-round btn-warning btn-xs baca-ket" >Baca</button>
                             </td>
-                          </tr>';
+						  </tr>';
+				$data2['k_spm']['isi'] = $data->isi;
+				$data2['k_spm']['waktu'] = $data->bulan.' '.$data->tahun;
 			}else{
-				$data2.='<tr class="">
+				$data2['l_spm'].='<tr class="">
                             <td class=" ">Keterangan</td>
                             <td class=" ">SPM</td>
                             <td class=" ">air</td>
@@ -2245,15 +2303,18 @@ class Cuaca_model extends CI_Model{
 
 	public function del_radar($id){
 		$this->db->delete('citra_radar',array('id_ctr'=>$id));
-		$data=$this->db->get_where('foto',array('link'=>$id))->result();
-		foreach ($data as $radar) {
-			if (file_exists('../File_BMKG/Iklim/Citra_radar/'.$radar->foto)) {
-				unlink('../File_BMKG/Iklim/Citra_radar/'.$radar->foto);
-				# code...
+		if ($this->db->affected_rows()==1) {
+			$data=$this->db->get_where('foto',array('link'=>$id))->result();
+			foreach ($data as $radar) {
+				if (file_exists('../File_BMKG/Iklim/Citra_radar/'.$radar->foto)) {
+					unlink('../File_BMKG/Iklim/Citra_radar/'.$radar->foto);
+				}
 			}
-			# code...
+			$this->db->delete('foto',array('link'=>$id));
+			return 1;
 		}
-		$this->db->delete('foto',array('link'=>$id));
+		
+		
 	}
 
 
@@ -2369,11 +2430,14 @@ class Cuaca_model extends CI_Model{
 	public function del_hth($id){
 		# code...
 		$data=$this->db->get_where('informasi_hth',array('id_hth'=>$id))->result();
-		if (isset($data[0]->gambar)) {
-			# code...
-			unlink('../File_BMKG/Iklim/Informasi_iklim/Informasi_HTH/'.$data[0]->gambar);
-		}
 		$this->db->delete('informasi_hth',array('id_hth'=>$id));
+		if ($this->db->affected_rows()==1) {
+			if (isset($data[0]->gambar)) {
+				# code...
+				unlink('../File_BMKG/Iklim/Informasi_iklim/Informasi_HTH/'.$data[0]->gambar);
+			}
+			return 1;
+		}
 	}
 
 	public function edit_hth($id,$isi){
@@ -2393,7 +2457,217 @@ class Cuaca_model extends CI_Model{
 		}
 	}
 
+	public function cuaca_dashboard($tanggal){
+		$wilayah = array('Yogyakarta', 'Sleman','Bantul','Kulonprogo','Gunungkidul');
+		$cuaca=array('Cerah'=>'cerah-am.png','Berawan'=>'berawan-am.png','Udara kabur'=>'berawan tebal-pm.png','Kabut'=>'kabut-am.png','Cerah berawan'=>'cerah berawan-am.png','Hujan ringan'=>'hujan ringan-am.png','Hujan lebat'=>'hujan lebat-am.png','Hujan petir'=>'hujan petir-am.png','Hujan lokal'=>'hujan lokal-am.png','Hujan sedang'=>'hujan sedang-am.png','Panas'=>'cerah-am.png');
+		$jam = date('H:i');
+		$data2['small']=null;
+		if ($jam>='00:00'&&$jam<='05:59') {
+			$tabel='cuaca_harian_dinihari';
+		}else if ($jam>='06:00'&&$jam<='11:59') {
+			$tabel='cuaca_harian_pagi';
+		}else if ($jam>='12:00'&&$jam<='17:59') {
+			$tabel='cuaca_harian_siang';
+		}else{
+			 $tabel='cuaca_harian_malam';
+		}
+
+		for ($i=1; $i < 5; $i++) { 
+			$data=$this->db->get_where($tabel,array('Wilayah'=>$wilayah[$i],'Tanggal'=>$tanggal));
+			if ($data->num_rows()>0) {
+				$data=$data->result()[0];
+				$data2['small'] .= '<div class="animated flipInY col-lg-3 col-md-3 col-sm-3 col-xs-12">
+										<div class="tile-stats" style="height: 130px;">
+										<img style="margin:5px 0 0 10px;;" src="'.base_url('../File_BMKG/Cuaca/icon_cuaca/'.$cuaca[$data->Jenis]).'" width="50" height="50" alt="'.$data->Jenis.'">
+										<span style="float:right;">
+											<p style="z-index:0; margin: 9px 10px 0 0; font-size: 25px;"><strong>'.$wilayah[$i].'</strong></p>
+											<p style="z-index:0; margin: 0 10px 0 0; font-size: 15px;">'.$data->arah_angin.'</p>
+										</span>
+										<p style="z-index:0; font-size: 15px;">'.$data->Jenis.'</p>
+										<p style="z-index:0;">'.$data->suhu_min.' - '.$data->suhu_maks.' °C || '.$data->kelembapan_min.' - '.$data->kelembapan_maks.' %</p>
+										</div>
+									</div>';
+			}else{
+				$data2['small'] .= '<div class="animated flipInY col-lg-3 col-md-3 col-sm-3 col-xs-12">
+										<div class="tile-stats" style="height: 130px;">
+										<span style="float:right;">
+											<p style="z-index:0; margin: 12px 6px 0 0; font-size: 25px;"><strong>'.$wilayah[$i].'</strong></p>
+										</span>
+										<h2  style="margin:10px 0 0 5px;float:left;">Data belum ada</h2>
+										</div>
+									</div>';
+			}
+		}
+
+		$data=$this->db->get_where($tabel,array('Wilayah'=>$wilayah[0],'Tanggal'=>$tanggal));
+		if ($data->num_rows()>0) {
+			$data=$data->result()[0];
+			$data2['main'] = '<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12" style="border-right: 1px solid black;height: 100%;">
+								<img style="margin:5px 0 0 20px;" src="'.base_url('../File_BMKG/Cuaca/icon_cuaca/'.$cuaca[$data->Jenis]).'" width="200" height="200" alt=""><br>
+								<p style="z-index:0; margin:5px 0 0 20px; font-size:50px;">'.$wilayah[0].'</p>
+								<p style="z-index:0; margin:5px 0 0 20px; font-size:30px;">'.$data->Jenis.'</p>
+							</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+								<h1>Suhu</h1>
+								<h2>'.$data->suhu_min.' - '.$data->suhu_maks.' °C</h2><br>
+								<h1>Kelembapan</h1>
+								<h2>'.$data->kelembapan_min.' - '.$data->kelembapan_maks.' %</h2><br>
+								<h1>Angin</h1>
+								<h2>'.$data->arah_angin.'</h2>
+							</div>';
+		}else{
+			$data2['main'] = '<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12" style="border-right: 1px solid black;height: 100%;">
+								<p align="center" style="margin:80px 0 0 0; font-size:30px;">Data belum ada</p><br>
+								<p style="margin:5px 0 0 20px; font-size:50px;">'.$wilayah[0].'</p>
+							</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+								<h1>Suhu</h1>
+								<h2>-</h2><br>
+								<h1>Kelembapan</h1>
+								<h2>-</h2><br>
+								<h1>Angin</h1>
+								<h2>-</h2>
+							</div>';
+		}
+		return $data2;
+	}
+
+	public function kah_dash($bln,$tahun){
+		$bulan=array('01'=>'Januari','02'=>'Februari','03'=>'Maret','04'=>'April','05'=>'Mei','06'=>'Juni','07'=>'Juli','08'=>'Agustus','09'=>'September','10'=>'Oktober','11'=>'November','12'=>'Desember');
+		$this->db->order_by('minggu','ASC');
+		$data=$this->db->get_where('kimia_air_hujan3',array('bulan'=>$bulan[$bln],'tahun'=>$tahun));
+		$data2=null;
+		foreach ($data->result() as $key) {
+			$data2[]=(float)$key->nilai_ph;
+		}
+		$data3[]=array('name'=>$bulan[$bln],'data'=>$data2);
+		return $data3;
+	}
+
+	public function spm_dash($bln,$tahun){
+		$bulan=array('01'=>'Januari','02'=>'Februari','03'=>'Maret','04'=>'April','05'=>'Mei','06'=>'Juni','07'=>'Juli','08'=>'Agustus','09'=>'September','10'=>'Oktober','11'=>'November','12'=>'Desember');
+		$this->db->order_by('minggu','ASC');
+		$data=$this->db->get_where('spm',array('bulan'=>$bulan[$bln],'tahun'=>$tahun));
+		$data2=null;
+		foreach ($data->result() as $key) {
+			$data2[]=(float)$key->konsentrasi;
+		}
+		$data3[]=array('name'=>$bulan[$bln],'data'=>$data2);
+		return $data3;
+	}
+
+	public function peringatan($waktu,$order){
+		$this->db->LIKE('tanggal_input',$waktu);
+		$this->db->order_by('tanggal_input','DESC');
+		$data=$this->db->get('peringatan');
+		$data2['peringatan']=null;
+		$data2['page']=null;
+		$i=0;
+		$chek=null;
+		$list=$order;
+		$musim=$data->result();
+		if ($data->num_rows()>0) {
+			for ($l=($order-1); $l<$data->num_rows(); $l++) {
+				$data2['peringatan'].='<tr class="even pointer">
+								<td>'.$list.'</td>
+								<td>'.$musim[$l]->wilayah.'</td>
+								<td>'.date('d-m-Y',strtotime($musim[$l]->tanggal)).'</td>
+								<td><button class="cek_musim btn btn-xs btn-warning baca_warning" type="button" value="'.$musim[$l]->id_pnn.'">Baca</button></td>
+								<td>'.$musim[$l]->nama.'</td>
+								<td>'.date('d-m-Y H:i:s',strtotime($musim[$l]->tanggal_input)).'</td>
+								<td>
+									<button class="btn btn-xs btn-info edit_req_per" type="button" value="'.$musim[$l]->id_pnn.'">Edit</button>
+									<input type="checkbox" value="'.$musim[$l]->id_pnn.'" name="hapus[]" data-nama="hapus"></td>
+							</tr>';
+				# code...
+				$i++;
+				$list++;
+				$chek=null;
+				if ($i==5) {
+					break;
+				}
+			}
+		}
+
+		if ($data->num_rows()>5) {
+			$order2 = ($order==1)? 'empty' : ($order-5);
+			$data2['page'].='<li class="pag-tem"><button name="page" value="'.$order2.'" class="pag-lin fir-p">Sebelumnya</button></li>';
+			for ($i=0; $i < $data->num_rows(); $i=$i+5) {
+				$check = (($order-1)==$i) ? 'id="spage"' : null;
+				$data2['page'].='<li class="pag-tem"><button '.$check.' name="page" value="'.($i+1).'" class="pag-lin poin-p">'.($i+1).'</button></li>';
+			}
+			$order = ($order+5>$data->num_rows()) ? 'empty' : $order+5;
+			$data2['page'].='<li class="pag-tem"><button name="page" value="'.$order.'" class="pag-lin las-p">Selanjutnya</button></li>';
+		}
+
+		return $data2;
+	}
+	public function set_peringatan($teks,$wilayah,$tanggal, $nama, $tanggal_input){
+		$this->db->SELECT('id_pnn');
+		$this->db->FROM('peringatan');
+		$this->db->ORDER_BY('tanggal_input','DESC');
+		$this->db->LIMIT(1);
+		$seq=$this->db->get();
+		$id=null;
+		if ($seq->num_rows()==0) {
+			$id='001';
+			# code...
+		}else{
+			$id = $this->pemisah_angka->Pisah($seq->row()->id_pnn,7); //preg_split('#(?<=[a-z])(?=\d)#i',$seq->row()->id_gmp);
+			$id= (int)$id['angka']+1;
+			if (($id>=1)&&($id<=9)) {
+				$id='00'.$id;
+				# code...
+			}else if (($id>=10)&&($id<=99)) {
+				$id='0'.$id;
+				# code...
+			}
+		}
+		$id = date('dmy').'PNN'.$id;
+		$isi=array(
+			'id_pnn'=>$id,
+			'isi'=>$teks,
+			'wilayah'=>$wilayah,
+			'tanggal'=>date('Y-m-d',strtotime($tanggal)),
+			'nama'=>$nama,
+			'tanggal_input'=>$tanggal_input
+		);
+		$this->db->insert('peringatan',$isi);
+		return $this->db->affected_rows();
+
+	}
+
+	public function edit_peringatan($id,$teks,$wilayah,$tanggal){
+		$this->db->where('id_pnn',$id);
+		$this->db->update('peringatan',array('isi'=>$teks,'wilayah'=>$wilayah,'tanggal'=>date('Y-m-d',strtotime($tanggal))));
+		if ($this->db->affected_rows()>0) {
+			return 2;
+		}
+	}
+
+	public function del_peringatan($id){
+		$this->db->delete('peringatan',array('id_pnn'=>$id));
+		if ($this->db->affected_rows()==1) {
+			return 1;
+		}
+	}
+
+	public function get_peringatan_id($id){
+		$data2=null;
+		$data=$this->db->get_where('peringatan',array('id_pnn'=>$id))->result();
+		foreach ($data as $key) {
+			$data2['id']=$key->id_pnn;
+			$data2['wilayah']=$key->wilayah;
+			$data2['tanggal']=date('d-m-Y',strtotime($key->tanggal));
+			$data2['isi']=$key->isi;
+		}
+		return $data2;
+	}
 }
+
+
+
+
 
 /*
 date('Y',strtotime($dinat->tahun))

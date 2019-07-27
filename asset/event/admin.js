@@ -11,13 +11,18 @@ $('form#del').submit(function(e){
   if ($(this).serialize()==false) {
     return false
   }
-  mscConfirm("Hapus ?",function(){
+  mscConfirm("Hapus data ?",function(){
       $.ajax({
         url: $('form#del').attr('action'),
         type: 'POST',
         data: $('form#del').serialize(),
-        success: function(){
-          notifjs("Berhasil menghapus data",'#ff6a00');
+        success: function(data){
+          if (data!=null) {
+            notifjs("Berhasil menghapus "+data+" data",'#ff6a00');
+          }else{
+            gagal("Gagal menghapus data");
+          }
+          
         },error: function(){
           gagal("Gagal menghapus data");
         }

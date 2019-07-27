@@ -30,9 +30,52 @@
         <?php $this->load->view('Menu_kiri') ?>
         <div class="right_col" role="main">
           <div class="">
-            <div class="page-title">
+            <div class="page-title col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="title_left">
-                <h1>Welcome to admin dashboard </h1>
+                <h1>Selamat datang </h1>
+              </div>
+            </div>
+            <div class="row top_tiles" style="color: black;">
+              <?php echo $cuaca['small'] ?>
+            </div>
+            <div class="row top_tiles" style="color: black;">
+              <div class="animated flipInY col-lg-8 col-md-8 col-sm-6 col-xs-12">
+                <div class="tile-stats"  style="height: 350px;">
+                  <?php echo $cuaca['main'] ?>
+                  
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="tile-stats" style="height:170px;">
+                  <div class="icon"><i class="fa fa-newspaper-o"></i></div>
+                  <div class="count"><?php echo $informasi['berita_now'] ?></div>
+                  <h3> Berita bulan ini</h3><br>
+                  <p><?php echo $informasi['berita'] ?> Berita keseluruhan</p>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="tile-stats" style="height:170px;">
+                  <div class="icon"><i class="fa fa-file-pdf-o"></i></div>
+                  <div class="count"><?php echo $informasi['artikel_now'] ?></div>
+                  <h3>Artikel bulan ini</h3><br>
+                  <p><?php echo $informasi['artikel_now'] ?> Artikel keseluruhan</p>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="tile-stats"  style="height: 560px;"><br>
+                  <span style="font-size: 170%; margin: 10px;">Kimia air hujan bulan ini</span><hr>
+                  <div class=" col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div id = "kah" style = "width: 100%; height: 450px; margin: 0 auto"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="tile-stats"  style="height: 560px;"><br>
+                  <span style="font-size: 170%; margin: 10px;">Indeks SPM bulan ini</span><hr>
+                  <div class=" col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                  <div id = "spm" style = "width: 100%; height: 450px; margin: 0 auto"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -60,11 +103,20 @@
     <!-- jQuery custom content scroller -->
     <script src="<?php echo base_url(); ?>asset/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="<?php base_url() ?>asset/event/Umum.js"></script>
+    <!--Highchart-->
+    <script src = "https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="<?php echo base_url(); ?>asset/Highchart.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="<?php echo base_url(); ?>asset/build/js/custom.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+      $(document).ready(function(){
+        grafikKAH ('#kah', JSON.parse('<?php echo  json_encode($kah) ?>'), '<?php echo  date('Y') ?>','<?php echo date('d-m-Y') ?>')
+        grafikSPM ('#spm', JSON.parse('<?php echo  json_encode($spm) ?>'), '<?php echo  date('Y') ?>','<?php echo date('d-m-Y') ?>')
+      })
       $('.tes').click(function(){
+        
         alert(document.referrer+' pathname = '+window.location.pathname)
         //location.href="<?php echo site_url('Login/keluar') ?>"
         /*var test = swal({
@@ -73,6 +125,7 @@
             buttons: true,
             dangerMode: true,
           })*/
+
       })
       function keluar(link){
         mscConfirm("Lanjutkan keluar ?",function(){

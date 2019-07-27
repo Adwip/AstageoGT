@@ -41,10 +41,11 @@ class Informasi extends CI_Controller {
 	}
 
 	public function del_pengumuman(){
-		for ($i=0; $i < count($_POST['hapus']); $i++) { 
-			# code...
-			$this->informasi_model->del_pengumuman($_POST['hapus'][$i]);
+		$hasil=null;
+		for ($i=0; $i < count($_POST['hapus']); $i++) {
+			$hasil+=$this->informasi_model->del_pengumuman($_POST['hapus'][$i]);
 		}
+		echo $hasil;
 	}
 
 	public function edit_peng(){
@@ -73,6 +74,11 @@ class Informasi extends CI_Controller {
 		echo $this->informasi_model->set_pengumuman($judul,$teks,$nambar,$this->session->userdata('nama'),$this->waktu);
 	}
 
+	public function baca_peng(){
+		$data = $this->informasi_model->baca_peng($_GET['id']);
+		echo json_encode($data);
+	}
+
 	public function get_peng_id(){
 		$data = $this->informasi_model->get_peng_id($_GET['id']);
 		echo json_encode($data);
@@ -89,33 +95,30 @@ class Informasi extends CI_Controller {
 //Berita
 	public function setBerita(){
 		$judul = $_POST['judul'];
-		$isi = $_POST['berita'];
+		$isi = $_POST['teks'];
 		$foto = count($_FILES['foto']['name']);
 
 			# code...
 			$id=$this->informasi_model->setBerita($judul,$isi,$this->session->userdata('nama'),$this->waktu);
 
-			for ($i=0; $i < $foto; $i++) { 
-				# code...
-				//echo json_encode(getimagesize($_FILES['foto']['tmp_name'][$i]));
-				$tipe = array('png','JPG','jpeg','GIF','jpg','PNG','gif');
-				$temp = explode(".", $_FILES['foto']['name'][$i]);
-			  	$nambar = date('Hisdmy')."BRT".$i.".".end($temp);
-			  	$tmp_name = $_FILES['foto']['tmp_name'][$i];
-			  	$type = pathinfo($nambar,PATHINFO_EXTENSION);
-			  	if (in_array($type, $tipe)) {
-			  		# code...
-			  		move_uploaded_file($tmp_name, '../File_BMKG/Berita/'.$nambar);
-			  		$this->informasi_model->setFoto($nambar,$id);
-			  	}
-			  	
+			if ($id!=null) {
+				for ($i=0; $i < $foto; $i++) { 
+					# code...
+					//echo json_encode(getimagesize($_FILES['foto']['tmp_name'][$i]));
+					$tipe = array('png','JPG','jpeg','GIF','jpg','PNG','gif');
+					$temp = explode(".", $_FILES['foto']['name'][$i]);
+					$nambar = date('Hisdmy')."BRT".$i.".".end($temp);
+					$tmp_name = $_FILES['foto']['tmp_name'][$i];
+					$type = pathinfo($nambar,PATHINFO_EXTENSION);
+					if (in_array($type, $tipe)) {
+						# code...
+						move_uploaded_file($tmp_name, '../File_BMKG/Berita/'.$nambar);
+						$this->informasi_model->setFoto($nambar,$id);
+					}
+					
+				}
+				echo true;
 			}
-		
-		
-
-			
-		//echo json_encode($_FILES);
-		redirect(site_url('Informasi/List_berita'));	
 	}
 
 	public function List_berita(){
@@ -146,12 +149,11 @@ class Informasi extends CI_Controller {
 
 
 	public function del_berita(){
-		$count = count($_POST['hapus']);
-		$s=null;
-		for ($i=0; $i < $count; $i++) { 
-			$this->informasi_model->del_berita($_POST['hapus'][$i]);
+		$hasil=null;
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
+			$hasil+=$this->informasi_model->del_berita($_POST['hapus'][$i]);
 		}
-		
+		echo $hasil;
 	}
 
 	public function get_beritaID(){
@@ -235,10 +237,12 @@ class Informasi extends CI_Controller {
 		echo json_encode($data);
 	}
 	public function del_artikel(){
+		$hasil=null;
 		for ($i=0; $i < count($_POST['hapus']); $i++) {
-			$this->informasi_model->del_artikel($_POST['hapus'][$i]); 
+			$hasil+=$this->informasi_model->del_artikel($_POST['hapus'][$i]); 
 			# code...
 		}
+		echo $hasil;
 	}
 
 	public function edit_artikel(){
@@ -329,12 +333,13 @@ class Informasi extends CI_Controller {
 	}
 
 	public function hapus_upt(){
-		$length = count($_POST['hapus']);
+		$hasil=null;
 			# code...
-		for ($i=0; $i < $length; $i++) { 
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
 			$data=$_POST['hapus'][$i];
-			$this->informasi_model->del_upt($data);
+			$hasil+=$this->informasi_model->del_upt($data);
 		}
+		echo $hasil;
 	}
 
 	public function sdm(){
@@ -353,6 +358,75 @@ class Informasi extends CI_Controller {
 		echo $this->informasi_model->set_SDM($_POST['L_val'],$_POST['P_val'],$this->session->userdata('nama'),$this->waktu);
 	}
 
+	public function jdih(){
+		if ($this->session->userdata('umum')!='Ya') {
+			$this->load->view('Umum');
+			# code...
+		}else{
+			$waktu=date('Y-m');
+			$page=1;
+			if (isset($_GET['bulan'])) {
+				# code...
+				$waktu=$_GET['tahun'].'-'.$_GET['bulan'];
+			}
+			if (isset($_GET['page'])) {
+				$page=$_GET['page'];
+			}
+			$data['jdih']=$this->informasi_model->jdih($waktu,$page);
+			$data['tahun']=$this->informasi_model->tahun('jdih',date('Y',strtotime($waktu)));
+			$data['bulan']=$this->informasi_model->bulan(date('m',strtotime($waktu)));
+			$data['year']=date('Y',strtotime($waktu));
+			$data['month']=date('m',strtotime($waktu));
+			$this->load->view('Informasi/jdih',$data);
+		}
+	}
+
+	public function baca_jdih(){
+		$data= $this->informasi_model->baca_jdih($_GET['id']);
+		echo json_encode($data);
+	}
+
+	
+	public function del_jdih(){
+		$hasil=null;
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
+			# code...
+			$hasil+=$this->informasi_model->del_jdih($_POST['hapus'][$i]);
+		}
+		echo $hasil;
+	}
+
+	public function edit_jdih(){
+			$tipe=array('application/pdf','application/PDF');
+			$id=$_POST['id'];
+			$isi['jenis_aturan']=$_POST['kategori'];
+			$isi['nomor'] = $_POST['nomor'];
+			$isi['tentang'] = $_POST['keterangan'];
+			if (in_array($_FILES['pdf']['type'], $tipe)) {
+				$temp = explode(".", $_FILES['pdf']['name']);
+				$isi['pdf'] = date('Hisdmy').'JDH.'.end($temp);
+				move_uploaded_file($_FILES['pdf']['tmp_name'], '../File_BMKG/JDIH/'.$isi['pdf']);
+			}
+		echo $this->informasi_model->edit_jdih($id,$isi);
+	}
+
+	public function set_jdih(){
+		$tipe=array('application/pdf','application/PDF');
+		$kategori =$_POST['kategori'];
+		$nomor = $_POST['nomor'];
+		$tentang = $_POST['keterangan'];
+		$nambar=null;
+		if (in_array($_FILES['pdf']['type'], $tipe)) {
+			$temp = explode(".", $_FILES['pdf']['name']);
+			$nambar = date('Hisdmy').'JDH.'.end($temp);
+			echo $this->informasi_model->set_jdih($kategori,$nomor,$nambar,$tentang,$_FILES['pdf']['tmp_name'],$this->session->userdata('nama'),$this->waktu);
+		}
+	}
+
+	public function get_jdih_id(){
+		$data = $this->informasi_model->get_jdih_id($_GET['id']);
+		echo json_encode($data);
+	}
 
 
 //pejabat
@@ -369,12 +443,13 @@ class Informasi extends CI_Controller {
 
 
 	public function del_pejabat(){
-		$length = count($_POST['nip']);
+		$hasil = null;
 			# code...
-		for ($i=0; $i < $length; $i++) { 
+		for ($i=0; $i < count($_POST['nip']); $i++) { 
 			$data=$_POST['nip'][$i];
-			$this->informasi_model->del_pjb($data);
+			$hasil+=$this->informasi_model->del_pjb($data);
 		}
+		echo $hasil;
 	}
 
 	public function get_pejabatID(){
@@ -402,7 +477,6 @@ class Informasi extends CI_Controller {
 			echo $this->informasi_model->set_pejabat($nama,$jabatan,$kategori,$nambar, $this->waktu);
 			}
 			
-		//header('Location:'.site_url('Informasi/pejabat'));
 	}
 
 	public  function edit_pejabat(){
@@ -508,7 +582,7 @@ class Informasi extends CI_Controller {
 				redirect(site_url('Informasi/'.$url));
 				
 	}
-
+/*
 	public function set_struktur(){
 		$tipe = array('png','JPG','jpeg','GIF','jpg','PNG','gif');	
 		$nambar = $_FILES['foto']['name'];
@@ -524,11 +598,8 @@ class Informasi extends CI_Controller {
 					}
 				}
 
-	}
+	}*/
 
-	public function del_struktur(){
-
-	}
 
 	public function baca_gambar(){
 		$data=$this->informasi_model->baca_gambar($_GET['id'],$_GET['tp']);

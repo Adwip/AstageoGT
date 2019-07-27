@@ -70,11 +70,11 @@ class Aktlam extends CI_Controller {
 	}
 
 	public function del_gempa(){
-		$count = count($_POST['hapus']);
-		for ($i=0; $i < $count; $i++) { 
-			$this->Gempa_model->del_gempa($_POST['hapus'][$i]);
-			# code...
+		$hasil = null;
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
+			$hasil+=$this->Gempa_model->del_gempa($_POST['hapus'][$i]);
 		}
+		echo $hasil;
 	}
 
 	public function get_gempa_ID(){
@@ -234,13 +234,12 @@ class Aktlam extends CI_Controller {
 	}
 
 	public function del_ttm(){
-		$count = count($_POST['hapus']);
+		$hasil = null;
 
-		for ($i=0; $i < $count; $i++) { 
-			$this->Gempa_model->del_ttm($_POST['hapus'][$i]);
-			# code...
-			echo "hapus";
+		for ($i=0; $i < count($_POST['hapus']); $i++) { 
+			$hasil+=$this->Gempa_model->del_ttm($_POST['hapus'][$i]);
 		}
+		echo $hasil;
 	}
 
 	public function peta_sambaran_petir(){
@@ -286,9 +285,11 @@ class Aktlam extends CI_Controller {
 	}
 
 	public function del_petir(){
+		$hasil=null;
 		for ($i=0; $i < count($_POST['hapus']); $i++) { 
-			$this->Gempa_model->del_petir($_POST['hapus'][$i]);
+			$hasil+=$this->Gempa_model->del_petir($_POST['hapus'][$i]);
 		}
+		echo $hasil;
 	}
 
 	public function get_ptr_edit(){

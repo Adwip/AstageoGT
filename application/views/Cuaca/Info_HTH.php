@@ -31,7 +31,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -93,6 +93,7 @@
 
                         <tbody>                         
                           <?php echo $hth ?>
+                          
                         </tbody>
                       </table>
                     </div>
@@ -115,7 +116,7 @@
                   <div class="x_title">
                     <h5>Masukkan data hari tanpa hujan di sini</h5>
                   </div>
-                  <div class="x_content input-data" style="display:none;" >
+                  <div class="x_content input-data" style="display:none;" id="tambah-form">
                     <br />
                       <form method="POST" action="<?php echo site_url('cuaca/set_hth') ?>" id="kirim-data2">
                       <div class="form-group">
@@ -132,9 +133,9 @@
                         </div>
                         <div class=' col-sm-6 col-sm-6 col-xs-12'>
                           <div class="form-group">
-                            <label>Tanggal selesai</label>
+                            <label>Tanggal selesai</label><small id="cek-tgl"></small>
                             <div class='input-group col-md-8 col-sm-8 col-xs-12 date' id='myDatepicker1'>
-                              <input type='text' class="form-control" readonly="readonly" name="tanggal_akhir" />
+                              <input id="tanggal_akhir_set" type='text' class="form-control" readonly="readonly" name="tanggal_akhir" />
                               <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                               </span>
@@ -143,28 +144,29 @@
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <label>Judul</label>
-                          <input style="margin-bottom:15px;" required type="text"  class="form-control col-md-5 col-xs-12" autocomplete="off" name="judul">
+                          <input required type="text"  class="form-control col-md-5 col-xs-12" autocomplete="off" name="judul">
                         </div>
                       </div>
-                      <br>
-                      <br>
-                      <br>
                       <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12"><br>
                           <label>Keterangan</label>
-                          <textarea name="teks" class="ckeditor beritav" id="ckeditorc"></textarea>
+                          <div id="toolbar-container"></div>
+                            <div style="height:500px; border: 1px solid grey; color:black;" id="ckeditorc">
+
+                            </div>
                         </div>
                       </div>
                       <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                          <label style="margin-top:15px;">Masukkan Gambar</label>
+                        <div class="col-md-12 col-sm-12 col-xs-12"><br>
+                          <label>Masukkan Gambar</label><br>
+                          <small>JPG, JPEG, GIF, PNG</small>
                           <input  type="file" name="foto" style="margin-bottom:15px;">
                         </div>
                       </div>
                       <br>
                       <div class="form-group">
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                          <button  type="submit" class="btn btn-success">Kirim</button>
+                          <button  type="submit" class="btn btn-success cek-tanggal">Kirim</button>
                         </div>
                         <div class="col-md-8 col-sm-8 col-xs-12">
                           <button type="button" class="btn btn-danger tutup">Batal</button>
@@ -179,7 +181,7 @@
                   <div class="x_title">
                     <h5>Baca data hari tanpa hujan</h5>    
                   </div>
-                  <div class="x_content cek-data" style="display:none;">
+                  <div class="x_content cek-data" style="display:none;" id="baca-data">
                     <br />
                       <h2 class="text-c" id="ark-judul"></h2>
                       <h6 class="text-c" id="creator"></h6>
@@ -201,7 +203,7 @@
                     <h5>Edit data hari tanpa hujan di sini</h5>
                     
                   </div>
-                  <div class="x_content edit-form" style="display:none;">
+                  <div class="x_content edit-form" style="display:none;" id="edit-form">
                     <br />
                       <form method="POST" action="<?php echo site_url('cuaca/edit_hth') ?>" id="kirim-data3">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -223,7 +225,7 @@
 
                         <div class=' col-sm-6 col-sm-6 col-xs-12'>
                           <div class="form-group">
-                            <label>Tanggal selesai</label>
+                            <label>Tanggal selesai</label><small id="cek-tgl-edit"></small>
                             <div class='input-group col-md-8 col-sm-8 col-xs-12 date' id='myDatepicker2'>
                               <input id="tanggal_akhir_edit" type='text' class="form-control" readonly="readonly" name="tanggal_akhir" />
                               <span class="input-group-addon">
@@ -241,22 +243,18 @@
                       <br>
                       <br>
                       <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                          <label style="margin-bottom: 5px; margin-top: 20px;">Isi teks</label>
-                          <textarea name="teks" class="ckeditor beritav" id="ckeditorc2"></textarea>
+                        <div class="col-md-12 col-sm-12 col-xs-12"><br>
+                          <label>Isi teks</label>
+                          <div id="toolbar-container-edit"></div>
+                          <div style="height:500px; border: 1px solid grey; color:black;" id="ckeditorc2">
+
+                          </div>
                         </div>
                       </div>
-                      <br>
-                      <br>
                       <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                        </div>
-                      </div>
-                      <br>
-                      <br>
-                      <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                          <label>Masukkan Gambar jika mengubah gambar</label>
+                        <div class="col-md-12 col-sm-12 col-xs-12"><br>
+                          <label>Masukkan Gambar jika mengubah gambar</label><br>
+                          <small>JPG, JPEG, GIF, PNG</small>
                           <input type="file" name="foto">
                           <input type="hidden" name="gambar" id="id-foto">
                         </div>
@@ -264,7 +262,7 @@
                       <br>
                       <div class="form-group">
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                          <button  type="submit" class="btn btn-success ">Kirim</button>
+                          <button  type="submit" class="btn btn-success cek-tanggal-edit">Kirim</button>
                         </div>
                         <div class="col-md-8 col-sm-8 col-xs-12">
                           <button type="button" class="btn btn-danger tutup">Batal</button>
@@ -298,6 +296,9 @@
     hr{
       border-color: grey;
     }
+    #cek-tgl, #cek-tgl-edit{
+        color: red;
+      }
     </style>
     <!-- jQuery -->
     <script src="<?php echo base_url(); ?>asset/vendors/jquery/dist/jquery.min.js"></script>
@@ -313,8 +314,10 @@
     <!-- Custom Theme Scripts -->
     <script src="<?php echo base_url(); ?>asset/build/js/custom.js"></script>
     <!-- CK Editor -->
-    <script src="<?php echo base_url(); ?>asset/vendors/ckeditor/ckeditor.js"></script>
-    <script src="<?php echo base_url(); ?>asset/ckedtor.js"></script>
+    <script src="<?php echo base_url(); ?>asset/vendors/ckeditor5/ckeditor.js"></script>
+    <script src="<?php echo base_url(); ?>asset/ckeditor5set.js"></script>
+    <script src="<?php echo base_url(); ?>asset/ckeditor5Edit.js"></script>
+
      <!-- bootstrap-daterangepicker -->
     <script src="<?php echo base_url(); ?>asset/vendors/moment/min/moment.min.js"></script>
     <script src="<?php echo base_url(); ?>asset/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>

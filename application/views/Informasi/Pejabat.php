@@ -98,10 +98,10 @@
                         <label class="control-label left col-md-2" for="first-name">Kategori</label>
                         <div class="col-md-3">
                           <select class="form-control has-feedback-left" name="kategori">
-                          <option value="I">Eselon I</option>
-                          <option value="II">Eselon II</option>
-                          <option value="III">Eselon III</option>
-                          <option value="IV">Eselon IV</option>
+                          <option value="Eselon I">Eselon I</option>
+                          <option value="Eselon II">Eselon II</option>
+                          <option value="Eselon III">Eselon III</option>
+                          <option value="Eselon IV">Eselon IV</option>
                         </select>
                         </div>
                       </div>
@@ -145,11 +145,11 @@
                       </div>
                       <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
                         <label>Kategori</label>
-                        <select class="form-control has-feedback-left" name="kategori">
-                          <option value="I">Eselon I</option>
-                          <option value="II">Eselon II</option>
-                          <option value="III">Eselon III</option>
-                          <option value="IV">Eselon IV</option>
+                        <select class="form-control has-feedback-left" id="form-kategori" name="kategori">
+                          <option value="Eselon I">Eselon I</option>
+                          <option value="Eselon II">Eselon II</option>
+                          <option value="Eselon III">Eselon III</option>
+                          <option value="Eselon IV">Eselon IV</option>
                         </select>
                         <span class="fa fa-road form-control-feedback left" aria-hidden="true"></span>
                       </div>

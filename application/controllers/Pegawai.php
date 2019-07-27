@@ -141,10 +141,11 @@ class Pegawai extends CI_Controller {
 	}
 
 	public function del_admin(){
-		for ($i=0; $i < count($_POST['hapus']); $i++) { 
-			# code...
-			echo $this->Pegawai_model->del_admin($_POST['hapus'][$i]);
+		$hasil=null;
+		for ($i=0; $i < count($_POST['hapus']); $i++) {
+			$hasil+=$this->Pegawai_model->del_admin($_POST['hapus'][$i]);
 		}
+		echo $hasil;
 	}
 
 	public function edit_akun(){

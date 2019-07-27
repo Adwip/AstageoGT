@@ -24,7 +24,7 @@
     <link href="<?php echo base_url(); ?>asset/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
     <!-- bootstrap-daterangepicker -->
     <link href="<?php echo base_url(); ?>asset/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-
+    <link href="<?php echo base_url() ?>asset/event/modal-style.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>asset/confirm/ms-conf.css" rel="stylesheet">
   </head>
 
@@ -85,12 +85,12 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <?php echo $spm['spm'] ?>
+                          <?php echo $spm['spm']['l_spm'] ?>
                         </tbody>
                       </table>
                     </div>
                     <?php echo $hapus ?>
-                    <div class="form-input" style="display: none;">
+                    <div class="form-input" id="form-input" style="display: none;">
                       <form method="POST" id="kirim-data" action="<?php echo site_url('Cuaca/set_spm') ?>" >
                         <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
                           <label>Minggu ke-</label>
@@ -166,7 +166,7 @@
                         </div>
                       </form>
                     </div>
-                    <div class="form-edit-ph" style="display: none;">
+                    <div class="form-edit-ph" id="form-edit-ph" style="display: none;">
                       <form method="POST" id="kirim-data" action="<?php echo site_url('Cuaca/edit_spm') ?>" >
                       <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
                       <label>Minggu ke-</label>
@@ -230,6 +230,16 @@
         </footer>
         <!-- /footer content -->
       </div>
+    </div>
+    <div align="center" id="modal-ket">
+      <span>Kimia air hujan bulan <?php echo $spm['spm']['k_spm']['waktu'] ?></span>
+      <hr id="hr">
+      <div style="text-align:justify;" id="keterangan-read">
+        <?php echo $spm['spm']['k_spm']['isi'] ?>
+      </div>
+      <span id="close-post">
+        <button onclick="$(this).closest('#modal-ket').hide()" class="btn btn-md btn-danger">Tutup</button>
+      </span>
     </div>
     <style>
       textarea {

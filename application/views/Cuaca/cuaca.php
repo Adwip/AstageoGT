@@ -54,13 +54,11 @@
                       </li>                
                     </ul>
                   </div>
-
                   <div class="x_content dis-cuaca">
-                    
                       <form method="GET" action="<?php echo site_url('Cuaca/prakiraan') ?>">
                         <div class='col-md-4 col-sm-4 col-xs-12'>
                           <div class="form-group">
-                        <div class='input-group date' id='myDatepicker4'>
+                        <div style="z-index: 0;" class='input-group date' id='myDatepicker4'>
                             <input  type='text' class="form-control tgal" readonly="readonly" value="<?php echo $tanggal ?>" name="waktu" />
                             <span class="input-group-addon">
                                <span class="glyphicon glyphicon-calendar"></span>
@@ -135,11 +133,9 @@
               <div class="x_panel">
                   <div class="x_title">
                     <h5>Data Cuaca </h5>
-                    <ul class="nav navbar-right panel_toolbox">
-                      
+                    <ul class="nav navbar-right panel_toolbox">\
                     </ul>
                   </div>
-
                   <div class="x_content set_cuaca" style="display: none;">
                       <form method="POST" id="kirim-data" class="form-horizontal form-label-left input_mask" action="<?php echo site_url('Cuaca/set_cuaca') ?>">
 
@@ -197,33 +193,35 @@
                       </div>
 
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input autocomplete="off" type="number" class="form-control has-feedback-left" placeholder="Suhu minimal" name="suhu_minimal" required="required">
+                        <label>Suhu minimal</label>
+                        <input autocomplete="off" type="number" class="form-control has-feedback-left" placeholder="Suhu minimal" id="suhu-min-set" name="suhu_minimal" required="required">
                         <span class="fa fa-umbrella form-control-feedback left" aria-hidden="true"></span>
                       </div>
 
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input autocomplete="off" type="number" class="form-control has-feedback-left" placeholder="Suhu maksimal" name="suhu_maksimal" required="required">
+                        <label>Suhu maksimal</label>
+                        <input autocomplete="off" type="number" class="form-control has-feedback-left" placeholder="Suhu maksimal" id="suhu-maks-set" name="suhu_maksimal" required="required">
                         <span class="fa fa-umbrella form-control-feedback left" aria-hidden="true"></span>
                       </div>
 
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input autocomplete="off" type="number" class="form-control has-feedback-left" placeholder="Kelembapan minimal" name="lembap_min" required="required">
+                        <label>Kelembapan minimal</label>
+                        <input autocomplete="off" type="number" class="form-control has-feedback-left" placeholder="Kelembapan minimal" id="lembap-min-set" name="lembap_min" required="required">
                         <span class="fa fa-asterisk form-control-feedback left" aria-hidden="true"></span>
                       </div>
 
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input autocomplete="off" type="number" class="form-control has-feedback-left" placeholder="Kelembapan maksimal" name="lembap_maks" required="required">
+                        <label>Kelembapan maksimal</label>
+                        <input autocomplete="off" type="number" class="form-control has-feedback-left" placeholder="Kelembapan maksimal" id="lembap-maks-set" name="lembap_maks" required="required">
                         <span class="fa fa-asterisk form-control-feedback left" aria-hidden="true"></span>
                       </div>
                       <div class="col-md-2 col-sm-2 col-xs-12 ">
-                          <button type="submit" class="btn btn-success">Simpan</button>
+                          <button type="submit" class="btn btn-success cek-valid">Simpan</button>
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-12 ">
                           <button type="button" class="btn btn-danger tutup1">Batal</button>
                         </div>
-
                     </form>
-
                   </div>
               </div> 
             </div>
@@ -296,26 +294,30 @@
                       </div>
 
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input autocomplete="off" type="number" class="form-control has-feedback-left suhu_min_edit" placeholder="Suhu minimal" name="suhu_minimal" required="required">
+                        <label for="suhu-min-edit">Suhu minimal</label>
+                        <input autocomplete="off" type="number" class="form-control has-feedback-left suhu-min-edit" placeholder="Suhu minimal" id="suhu-min-edit" name="suhu_minimal" required="required">
                         <span class="fa fa-umbrella form-control-feedback left" aria-hidden="true"></span>
                       </div>
 
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input autocomplete="off" type="number" class="form-control has-feedback-left suhu_maks_edit" placeholder="Suhu maksimal" name="suhu_maksimal" required="required">
+                        <label for="suhu-maks-edit">Suhu maksimal</label>
+                        <input autocomplete="off" type="number" class="form-control has-feedback-left suhu-maks-edit" id="suhu-maks-edit" placeholder="Suhu maksimal" name="suhu_maksimal" required="required">
                         <span class="fa fa-umbrella form-control-feedback left" aria-hidden="true"></span>
                       </div>
 
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input autocomplete="off" type="number" class="form-control has-feedback-left lembap_min_edit" placeholder="Kelembapan minimal" name="lembap_min" required="required">
+                        <label for="lembap-min-edit">Kelembapan minimal</label>
+                        <input autocomplete="off" type="number" class="form-control has-feedback-left lembap-min-edit" placeholder="Kelembapan minimal" id="lembap-min-edit" name="lembap_min" required="required">
                         <span class="fa fa-asterisk form-control-feedback left" aria-hidden="true"></span>
                       </div>
 
                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input autocomplete="off" type="number" class="form-control has-feedback-left lembap_maks_edit" placeholder="Kelembapan maksimal" name="lembap_maks" required="required">
+                        <label for="lembap-maks-edit">Kelembapan maksimal</label>
+                        <input autocomplete="off" type="number" class="form-control has-feedback-left lembap-maks-edit" placeholder="Kelembapan maksimal" id="lembap-maks-edit"name="lembap_maks" required="required">
                         <span class="fa fa-asterisk form-control-feedback left" aria-hidden="true"></span>
                       </div>
                         <div class="col-md-2 col-sm-2 col-xs-12 ">
-                          <button type="submit" class="btn btn-success">Simpan</button>
+                          <button type="submit" class="btn btn-success cek-valid2">Simpan</button>
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-12 ">
                           <button type="button" class="btn btn-danger tutup1">Batal</button>
@@ -333,7 +335,7 @@
                     </ul>
                   </div>
 
-                  <div class="x_content cek_cuaca" style="display: none;">
+                  <div class="x_content cek_cuaca" style="display: none; color:black;">
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="weather-icon " style="text-align: center;" id="baca-cuaca">
                             <span id="cek-cuaca"></span>
@@ -399,6 +401,12 @@
       -webkit-appearance: none; 
       margin: 0; 
       }
+      /*
+      .suhu-maks, .suhu-maks:focus, .lembap-maks, .lembap-maks:focus{
+        border-color: red;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
+      }*/
+      
     </style>
 
     <!-- jQuery -->

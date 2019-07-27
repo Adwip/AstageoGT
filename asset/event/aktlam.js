@@ -64,14 +64,18 @@ function view_gempa(link){
         if (data!=null) {
           $('#v-wilayah').html(data.wilayah)
           $('#v-waktu').html(data.waktu)
-          $('#v-mag').html(data.mag)
+          $('#v-mag').html(data.mag+' SR')
           $('#v-koor').html(data.koor)
           $('#v-rasa').html(data.rasa)
           $('#v-lok').html(data.lok)
           $('#v-tsun').html(data.tsun)
           $('#v-mmi').html(data.mmi)
           $('#v-ket').html(data.ket)
-          $('.v-data').show()
+          $('#img-gempa').html(data.gambar)
+          $('#v-mmi').html(data.mmi)
+          $('#v-dalam').html(data.dalam+' Km')
+          $('#v-extend').html(data.tambahan)
+          $('#gempa-cek').show()
         }
       }
     })
@@ -81,26 +85,32 @@ function view_gempa(link){
 
 
 $('form#del').submit(function(e){
-    e.preventDefault()
-    if ($(this).serialize()==false) {
-      return false
-    }
-    mscConfirm("Hapus ?",function(){
-        $.ajax({
-          url: $('form#del').attr('action'),
-          type: 'POST',
-          data: $('form#del').serialize(),
-          success: function(){
-            notifjs("Berhasil menghapus data",'#ff6a00');
-          },error: function(){
+  e.preventDefault()
+  if ($(this).serialize()==false) {
+    return false
+  }
+  mscConfirm("Hapus data ?",function(){
+      $.ajax({
+        url: $('form#del').attr('action'),
+        type: 'POST',
+        data: $('form#del').serialize(),
+        success: function(data){
+          if (data!=null) {
+            notifjs("Berhasil menghapus "+data+" data",'#ff6a00');
+          }else{
             gagal("Gagal menghapus data");
           }
-      })
+          
+        },error: function(){
+          gagal("Gagal menghapus data");
+        }
     })
   })
+})
 
 $('.tutup').click(function(){
     $(this).closest('.x_content').hide()
+    document.getElementById("list-data").scrollIntoView();
 })
 
 function set_ttm(bulan, tahun, wilayah){
@@ -108,6 +118,7 @@ function set_ttm(bulan, tahun, wilayah){
   $('#form-bulan').val(bulan)
   $('#form-tahun').val(tahun)
   $('.form-input').show()
+  document.getElementById("form-input").scrollIntoView();
 }
 
 $('#kirim-data, #kirim-data2, #kirim-data3').submit(function(e){
@@ -147,6 +158,7 @@ function set_ptr(bulan, tahun) {
   $('#bulan_form').val(bulan)
   $('#tahun_form').val(tahun)
   $('.form-tambah').show()
+  document.getElementById("form-input").scrollIntoView();
 }
 
 function edit_spt(link){
@@ -179,6 +191,7 @@ function read_spt(link){
 
 function req_ptr_id(link){
   $('.req_ptr_id').click(function(){
+    var path = $(this).attr('data-link')
     $.ajax({
       url:link,
       data: {id: $(this).val()},
@@ -189,13 +202,22 @@ function req_ptr_id(link){
           $('#bulan_edit').val(data.bulan)
           $('#tahun_edit').val(data.tahun)
           $('#judul_edit').val(data.judul)
+          $('#rapat').html('<img src="'+path+data.kerapatan+'" alt="Kerapatan" width="400" height="200">')
+          $('#sambar').html('<img src="'+path+data.sambaran+'" alt="Sambaran" width="400" height="200">')
           $('#ket_edit').val(data.ket)
           $('.form-edit').show()
+          document.getElementById("form-edit").scrollIntoView();
         }
       }
     })
   })
 }
+
+$('.baca-ttm').click(function(){
+  $('#dokpdf').prop('src',$(this).val())
+  $('.cek-data').show()
+  document.getElementById("baca-data").scrollIntoView();
+})
 
 function keluar(link){
   mscConfirm("Lanjutkan keluar ?","Anda harus login kembali jika ingin masuk",function(){

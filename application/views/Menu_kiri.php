@@ -27,12 +27,11 @@
               </div>
             </div>
             <!-- /menu profile quick info -->
-
             <br />
-
+        <!--    <span style="width: 500px;" id="show_t2"></span>-->
             <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                          <div class="menu_section">
+            <div style="margin-top: 10px;" id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                <div class="menu_section">
                 <h3>Umum</h3>
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-newspaper-o"></i> Berita & Artikel <span class="fa fa-chevron-down"></span></a>
@@ -99,9 +98,9 @@
                             </li>
                             <li><a href="<?php echo site_url('Cuaca/Tren_suhu'); ?>">Tren Suhu</a>
                             </li>
-                            <li><a href="<?php echo site_url('Cuaca/PNH'); ?>">Perubahan Normal Hujan</a>
+                        <!--<li><a href="<?php echo site_url('Cuaca/PNH'); ?>">Perubahan Normal Hujan</a>
                             </li>
-                            <li><a href="<?php echo site_url('Cuaca/EPI'); ?>">Ekstrem Perubahan Iklim</a>
+                            <li><a href="<?php echo site_url('Cuaca/EPI'); ?>">Ekstrem Perubahan Iklim</a>-->
                             </li>
                           </ul>
                         </li>
@@ -125,8 +124,8 @@
                   <li><a><i class="fa fa-clone"></i>Umum<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo site_url('Informasi/pengumuman'); ?>">Pengumuman</a></li>
-                      <!--<li><a href="<?php echo site_url(''); ?>">Tsunami</a></li>-->
-                    <!--<li><a href="<?php echo site_url('Informasi/'); ?>">Peringatan</a></li>-->
+                      <li><a href="<?php echo site_url('Informasi/jdih'); ?>">JDIH</a></li>
+                      <li><a href="<?php echo site_url('Cuaca/peringatan'); ?>">Peringatan</a></li>
                   <!--<li><a href="<?php echo site_url(''); ?>">Peta Sambaran Petir</a></li>-->
                     </ul>
                   </li>
@@ -155,7 +154,7 @@
             <!-- /sidebar menu -->
 
             <!--menu footer buttons -->
-                      
+            
             <div class="sidebar-footer hidden-small">
               <a href="<?php echo site_url('Pegawai/gp_page')?>" style="width: 115px;" data-toggle="tooltip" data-placement="top" title="Panel akun">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
@@ -171,31 +170,57 @@
         <!-- top navigation -->
         <div class="top_nav">
           <div class="nav_menu">
-            <nav>
+            <nav class="fixed">
               <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
               </div>
-
               <ul class="nav navbar-nav navbar-right">
+                
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <img src="<?php echo base_url(); ?>../File_BMKG/Admin/<?php echo $this->session->userdata('foto')?>" alt=""><?php echo $this->session->userdata('nama')?>
                     <span class=" fa fa-angle-down"></span>
                   </a>
               <ul class="dropdown-menu dropdown-usermenu pull-right">
-                <!--<li>
-                        <a href="javascript:;"> Profile</a></li>
-                    <li>
-                        <a href="javascript:;"><span class="badge bg-red pull-right">50%</span><span>Settings</span>
-                            </a>
-                          </li>
-                          <li><a href="javascript:;">Help</a></li>-->
                 <li>
-                  <a onclick="keluar('<?php echo site_url('Login/keluar')?>')" href="#"><i class="fa fa-sign-out pull-right keluar"></i> Keluar</a></li>
+                  <a onclick="keluar('<?php echo site_url('Login/keluar')?>')" href="#"><i class="fa fa-sign-out pull-right keluar"></i> Keluar</a>
+                </li>
               </ul>
-                </li>       
+                </li>
+                <li style="margin-top: 12px; right: 10%;">
+                  <span style="font-size: 25px; color:black;" id="show_t"></span>
+                </li>    
             </ul>
           </nav>
         </div>
       </div>
+      <!-- jQuery -->
+      <script src="<?php echo base_url(); ?>asset/vendors/jquery/dist/jquery.min.js"></script>
         <!-- /top navigation -->
+        <script>
+          $(document).ready(function(){
+            setInterval(show_time,500)
+            $('#show_t2').css({'font-size':'16px','color':'white','margin':'0px 0 10px 15px','border':'1px solid white','padding':'4px 4px 4px 4px'})
+          })
+          function show_time(){
+            var bulan = ['01','02','03','04','05','06','07','08','09','10','11','12']
+            var day = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu']
+            var waktu = new Date()
+
+            var hari = day[waktu.getDay()]
+            var tanggal = waktu.getDate()+'-'+bulan[waktu.getMonth()]+'-'+waktu.getFullYear();
+            var jam = waktu.getHours()
+            var menit = waktu.getMinutes()
+            var detik = waktu.getSeconds()
+            if (jam>=0&&jam<=9) {
+              jam='0'+jam
+            }
+            if (menit>=0&&menit<=9) {
+              menit='0'+menit
+            }
+            if (detik>=0&&detik<=9) {
+              detik='0'+detik
+            }
+            $('#show_t2, #show_t').html(hari+', '+tanggal+' '+jam+':'+menit+':'+detik)
+          }
+        </script>

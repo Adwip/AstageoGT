@@ -105,21 +105,19 @@
                   </div>
                 </div>
             </div>
-            <br>
-            <br>
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                   <div class="x_title">
                     <h5>Masukkan Data Cuaca Mingguan</h5>
                   </div>
-                  <div class="x_content input-data" style="display: none;" >
+                  <div class="x_content input-data" style="display: none;" id="form-tambah" >
                     <br />
                       <form method="POST" action="<?php echo site_url('Cuaca/set_cuming') ?>" id="kirim-data">
                         <div class='col-sm-6'>
                           <div class="form-group">
                             <label>Tanggal mulai</label>
                             <div class='input-group col-md-7 col-sm-7 col-xs-12 date' id='myDatepicker4'>
-                              <input id="tanggal_mulai" type='text' class="form-control tgal" readonly="readonly" name="tanggal_mulai" />
+                              <input id="tanggal-mulai" type='text' class="form-control tgal" readonly="readonly" name="tanggal_mulai" />
                               <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                               </span>
@@ -129,8 +127,9 @@
                         <div class='col-sm-6'>
                           <div class="form-group">
                             <label>Tanggal akhir</label>
+                            <small id="cek-tgl"></small>
                             <div class='input-group col-md-7 col-sm-7 col-xs-12 date' id='myDatepicker1'>
-                              <input type='text' class="form-control tgal" readonly="readonly" name="tanggal_akhir" />
+                              <input type='text' class="form-control tgal" readonly name="tanggal_akhir" id="tanggal_akhir_set" />
                               <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                               </span>
@@ -139,14 +138,23 @@
                         </div>
                         <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
                           <label>Masukkan file PDF</label>
+                          <small>PDF</small>
                           <input required="required" type="file" class="form-control" name="pdf">
                         </div>
-
+                        <div class="form-group">
+                          <div class="col-md-12 col-sm-12 col-xs-12 ">
+                            
+                          </div>
+                        </div>
                         
-                        <div class=" form-group">
+                        <div class="form-group">
                           <div class="col-md-2 col-sm-2 col-xs-12 ">
-                            <br>
-                            <button type="submit" class="btn btn-success">Simpan</button>
+                            <button type="submit" class="btn btn-success cek-tanggal">Simpan</button>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-md-2 col-sm-2 col-xs-12 ">
+                              <button type="button" class="btn btn-danger tutup">Batal</button>
                           </div>
                         </div>
                       </form>
@@ -164,11 +172,16 @@
                   </div>
                   <div class="x_content pdf" style="display: none;" id="disp-data">
                     <br />
-                      <span id="pdf"></span>
+                      <div>
+                        <span id="pdf"></span>
+                      </div>
+                      
+                      <div class="col-md-2 col-sm-2 col-xs-12 ">
+                        <button type="button" class="btn btn-danger tutup">Batal</button>
+                      </div>
+
                   </div>
-                  <div class="col-md-2 col-sm-2 col-xs-12 ">
-                    <button type="button" class="btn btn-danger tutup">Batal</button>
-                  </div>
+                  
                 </div>
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -198,6 +211,7 @@
                         <div class='col-md-6 col-xs-6 col-sm-12'>
                           <div class="form-group">
                             <label>Tanggal akhir</label>
+                            <small id="cek-tgl-edit"></small>
                             <div class='input-group col-md-7 col-sm-7 col-xs-12 date' id='myDatepicker1'>
                               <input type='text' class="form-control tgal" readonly="readonly" name="tanggal_akhir" id="tanggal_akhir_edit" />
                               <span class="input-group-addon">
@@ -208,6 +222,7 @@
                         </div>
                         <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
                           <label>Masukkan file PDF jika diubah</label>
+                          <small>PDF</small>
                           <input type="file" class="form-control" name="pdf">
                         </div>
 
@@ -215,7 +230,7 @@
                         <div class=" form-group">
                           <div class="col-md-2 col-sm-2 col-xs-12 ">
                             <br>
-                            <button type="submit" class="btn btn-success">Simpan</button>
+                            <button type="submit" class="btn btn-success cek-tanggal-edit">Simpan</button>
                           </div>
                         </div>
                         <div class=" form-group">
@@ -241,7 +256,11 @@
         <!-- /footer content -->
       </div>
     </div>
-
+    <style>
+      #cek-tgl, #cek-tgl-edit{
+        color: red;
+      }
+    </style>
     <!-- jQuery -->
     <script src="<?php echo base_url(); ?>asset/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -253,7 +272,7 @@
     <!-- jQuery custom content scroller -->
     <script src="<?php echo base_url(); ?>asset/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src="<?php echo base_url(); ?>asset/build/js/custom.min.js"></script>
+    <script src="<?php echo base_url(); ?>asset/build/js/custom.js"></script>
     <!-- bootstrap-daterangepicker -->
     <script src="<?php echo base_url(); ?>asset/vendors/moment/min/moment.min.js"></script>
     <script src="<?php echo base_url(); ?>asset/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>

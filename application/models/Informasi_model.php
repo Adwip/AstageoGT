@@ -103,13 +103,15 @@ class Informasi_model extends CI_Model
 		if ($data->num_rows()>0) {
 			for($l=($order-1); $l<$data->num_rows(); $l++) {
 				if ($key[$l]->file!=null) {
-					$pdf='<a class="pdf" href="../File_BMKG/Pengumuman/'.$key[$l]->file.'">PDF</a>';
+					//$pdf='<a class="pdf" href="../File_BMKG/Pengumuman/'.$key[$l]->file.'">PDF</a>';
+					//$pdf = '<button type="button" value="'.$key[$l]->file.'" class="btn btn-xs btn-dark cek-pengumuman">PDF</button>';
+					$pdf = 'Ada dokument pdf';
 				}else{
 					$pdf='Tidak ada dokumen pdf';
 				}
-				$data2['peng'].='<tr>
+				$data2['peng'].='<tr >
 							<td>'.$list.'</td>
-							<td><a class="baca" href="'.$key[$l]->id_peng.'">'.$key[$l]->judul.'</a></td>
+							<td><a class="baca-pengumuman" href="'.$key[$l]->id_peng.'">'.$key[$l]->judul.'</a></td>
 							<td>'.$pdf.'</td>
 							<td>'.$key[$l]->penyusun.'</td>
 							<td>'.date('d-m-Y H:i:s',strtotime($key[$l]->tanggal_input)).'</td>
@@ -140,13 +142,30 @@ class Informasi_model extends CI_Model
 
 	public function del_pengumuman($id){
 		$data=$this->db->get_where('pengumuman',array('id_peng'=>$id))->result();
-		foreach ($data as $key) {
-			# code...
-			if (file_exists('../File_BMKG/Pengumuman/'.$key->file)) {
-				unlink('../File_BMKG/Pengumuman/'.$key->file);
+		$this->db->delete('pengumuman',array('id_peng'=>$id));
+		if ($this->db->affected_rows()==1) {
+			foreach ($data as $key) {
+				if (file_exists('../File_BMKG/Pengumuman/'.$key->file)) {
+					unlink('../File_BMKG/Pengumuman/'.$key->file);
+				}
+			}
+			return 1;
+		}
+
+	}
+
+	public function baca_peng($id){
+		$data2=null;
+		$data=$this->db->get_where('pengumuman',array('id_peng'=>$id));
+		foreach ($data->result() as $key) {
+			$data2['judul']=$key->judul;
+			$data2['isi']=$key->isi;
+			$data2['file']=null;
+			if ($key->file!=null) {
+				$data2['file']= '<iframe src="'.base_url('../File_BMKG/Pengumuman/'.$key->file).'" width="1000" height="800" ></iframe>' ;
 			}
 		}
-		$this->db->delete('pengumuman',array('id_peng'=>$id));
+		return $data2;
 	}
 
 	public function set_pengumuman($judul,$teks,$file,$nama,$tanggal_input){
@@ -240,15 +259,18 @@ class Informasi_model extends CI_Model
 	}
 
 	public function del_upt($id){
-		$data=$this->db->get_where('upt',array('id_upt'=>$id));
+	/*	$data=$this->db->get_where('upt',array('id_upt'=>$id));
 		foreach ($data->result() as $key) {
 			if (file_exists('../File_BMKG/Profil/Struktur/'.$key->struktur)) {
 				# code...
 				unlink('../File_BMKG/Profil/Struktur/'.$key->struktur);
 			}
 			# code...
-		}
+		}*/
 		$this->db->delete('upt',array('id_upt'=>$id));
+		if ($this->db->affected_rows()==1) {
+			return 1;
+		}
 	}
 
 	public function get_uptID($id){
@@ -312,12 +334,17 @@ class Informasi_model extends CI_Model
 	}
 
 	public function del_pjb($nip){
-		$data=$this->db->get_where('pegawai',array('nip'=>$nip));
-		foreach ($data->result() as $key) {
-			unlink('../File_BMKG/Profil/Pegawai/'.$key->gambar);
-			# code...
-		}
 		$this->db->delete('pegawai',array('nip'=>$nip));
+		if ($this->db->affected_rows()==1) {
+			$data=$this->db->get_where('pegawai',array('nip'=>$nip));
+			foreach ($data->result() as $key) {
+				unlink('../File_BMKG/Profil/Pegawai/'.$key->gambar);
+				# code...
+			}
+			return 1;
+		}
+			
+		
 	}
 
 	public function set_pejabat($nama,$jabatan,$kategori,$foto, $tanggal_input){
@@ -362,6 +389,7 @@ class Informasi_model extends CI_Model
 			$data2['nomor'] = $id;
 			$data2['img']= $pjb->gambar;
 			$data2['name']= $pjb->nama;
+			$data2['kategori']=$pjb->kategori;
 			$data2['posisi']=$pjb->jabatan;
 			$data2['foto']='<img src="'.base_url().'../File_BMKG/Profil/Pegawai/'.$pjb->gambar.'" style="width: 140px; height: 150px;">';
 		}
@@ -431,8 +459,11 @@ class Informasi_model extends CI_Model
 		);
 		
 		$this->db->insert('berita',$isi);
-
-		return $id;
+		if ($this->db->affected_rows()>0) {
+			return $id;
+		}else{
+			return null;
+		}
 	}
 
 	public function getBeritaID($id){
@@ -508,15 +539,17 @@ class Informasi_model extends CI_Model
 
 	public function del_berita($id){
 		$this->db->delete('berita',array('id_berita'=>$id));
-		$data = $this->db->get_where('foto',array('tautan'=>$id));
-		foreach ($data->result() as $ft) {
-			if (file_exists('../File_BMKG/Berita/'.$ft->foto)) {
-				unlink('../File_BMKG/Berita/'.$ft->foto);
-				# code...
+		if ($this->db->affected_rows()==1) {
+			$data = $this->db->get_where('foto',array('tautan'=>$id));
+			foreach ($data->result() as $ft) {
+				if (file_exists('../File_BMKG/Berita/'.$ft->foto)) {
+					unlink('../File_BMKG/Berita/'.$ft->foto);
+					# code...
+				}
 			}
-			# code...
+			$this->db->delete('foto',array('tautan'=>$id));
+			return 1;	
 		}
-		$this->db->delete('foto',array('tautan'=>$id));
 	}
 
 	public function edit_berita($id,$judul,$isi){
@@ -645,12 +678,15 @@ class Informasi_model extends CI_Model
 	}
 
 	public function del_artikel($id){
-		$data=$this->db->get_where('artikel',array('id_art'=>$id));
-		foreach ($data->result() as $key) {
-			unlink('../File_BMKG/Artikel/'.$key->pdf);
-			# code...
-		}
 		$this->db->delete('artikel',array('id_art'=>$id));
+		if ($this->db->affected_rows()==1) {
+			$data=$this->db->get_where('artikel',array('id_art'=>$id));
+			foreach ($data->result() as $key) {
+				unlink('../File_BMKG/Artikel/'.$key->pdf);
+				# code...
+			}
+			return 1;
+		}
 	}
 
 	// Foto
@@ -798,6 +834,147 @@ class Informasi_model extends CI_Model
 			$i++;
 		}
 		return json_encode($data2);
+	}
+
+	public function jdih($waktu,$order){
+		$this->db->LIKE('tanggal_input',$waktu);
+		$this->db->ORDER_BY('tanggal_input','DESC');
+		$data=$this->db->get('jdih');
+		$data2['jdih']=null;
+		$data2['page']=null;
+		$i=0;
+		$list=$order;
+		$key=$data->result();
+		if ($data->num_rows()>0) {
+			for($l=($order-1); $l<$data->num_rows(); $l++) {
+				if ($key[$l]->pdf!=null) {
+					$pdf='<a class="pdf" href="../File_BMKG/JDIH/'.$key[$l]->pdf.'">PDF</a>';
+				}else{
+					$pdf='Tidak ada dokumen pdf';
+				}
+				$data2['jdih'].='<tr>
+							<td>'.$list.'</td>
+							<td>'.$key[$l]->jenis_aturan.'</td>
+							<td><a class="baca-jdih" href="'.$key[$l]->id_jdih.'">'.$key[$l]->nomor.'</a></td>
+							<td>'.$key[$l]->nama.'</td>
+							<td>'.date('d-m-Y H:i:s',strtotime($key[$l]->tanggal_input)).'</td>
+							<td>
+								<button type="button" value="'.$key[$l]->id_jdih.'" class="btn btn-xs btn-round btn-info edit-req-jdih">Edit</button>
+								<input value="'.$key[$l]->id_jdih.'" type="checkbox" name="hapus[]" data-nama="hapus">
+							</td>
+						</tr>';
+						$i++;
+						$list++;
+						if ($i==5) {
+							break;
+						}
+			}
+		}
+		if ($data->num_rows()>5) {
+			$order2 = ($order==1)? 'empty' : ($order-5);
+			$data2['page'].='<li class="pag-tem"><button name="page" value="'.$order2.'" class="pag-lin fir-p">Sebelumnya</button></li>';
+			for ($i=0; $i < $data->num_rows(); $i=$i+5) {
+				$check = (($order-1)==$i) ? 'id="spage"' : null;
+				$data2['page'].='<li class="pag-tem"><button '.$check.' name="page" value="'.($i+1).'" class="pag-lin poin-p">'.($i+1).'</button></li>';
+			}
+			$order = ($order+5>$data->num_rows()) ? 'empty' : $order+5;
+			$data2['page'].='<li class="pag-tem"><button name="page" value="'.$order.'" class="pag-lin las-p">Selanjutnya</button></li>';
+		}
+		return $data2;
+	}
+
+	public function del_jdih($id){
+		$data=$this->db->get_where('jdih',array('id_jdih'=>$id))->result();
+		$this->db->delete('jdih',array('id_jdih'=>$id));
+		if ($this->db->affected_rows()==1) {
+			foreach ($data as $key) {
+				if (file_exists('../File_BMKG/JDIH/'.$key->pdf)) {
+					unlink('../File_BMKG/JDIH/'.$key->pdf);
+				}
+			}
+			return 1;
+		}
+		
+	}
+
+	public function baca_jdih($id){
+		$data2=null;
+		$data=$this->db->Get_where('jdih',array('id_jdih'=>$id));
+		foreach ($data->result() as $key) {
+			$data2['jenis']= $key->jenis_aturan;
+			$data2['nomor']=$key->nomor;
+			$data2['tentang']=$key->tentang;
+			$data2['pdf']= '<iframe src="'.base_url('../File_BMKG/JDIH/'.$key->pdf).'" width="1000" height="800"></iframe>';
+		}
+		return $data2;
+	}
+	public function set_jdih($jenis,$nomor,$file,$ket,$dokumen,$nama,$tanggal_input){
+		$this->db->SELECT('id_jdih');
+		$this->db->FROM('jdih');
+		$this->db->ORDER_BY('tanggal_input','DESC');
+		$this->db->LIMIT(1);
+		$seq=$this->db->get();
+		$id=null;
+		if ($seq->num_rows()==0) {
+			$id='001';
+			# code...
+		}else{
+			$id = $this->pemisah_angka->Pisah($seq->row()->id_jdih,7);
+			$id= (int)$id['angka']+1;
+			if (($id>=1)&&($id<=9)) {
+				$id='00'.$id;
+				# code...
+			}else if (($id>=10)&&($id<=99)) {
+				$id='0'.$id;
+				# code...
+			}
+		}
+		$id = date('dmy')."JDH".$id;
+		$isi=array(
+			'id_jdih'=>$id,
+			'jenis_aturan'=>$jenis,
+			'nomor'=>$nomor,
+			'pdf'=>$file,
+			'tentang'=>$ket,
+			'nama'=>$nama,
+			'tanggal_input'=>$tanggal_input
+		);
+
+		$this->db->insert('jdih',$isi);
+		$data=$this->db->affected_rows();
+		if ($data>0) {
+			move_uploaded_file($dokumen, '../File_BMKG/JDIH/'.$file);
+			return $data;
+		}
+	}
+
+	public function get_jdih_id($id){
+		return $this->db->get_where('jdih',array('id_jdih'=>$id))->result();
+	}
+
+	public function edit_jdih($id,$isi){
+		if (isset($isi['pdf'])) {
+			$data=$this->db->get_where('jdih',array('id_jdih'=>$id))->result();
+			if (isset($data[0]->file)) {
+				unlink('../File_BMKG/JDIH/'.$data[0]->file);
+			}
+		}
+		$this->db->where('id_jdih',$id);
+		$this->db->update('jdih',$isi);
+		if ($this->db->affected_rows()>0) {
+			return 2;
+		}
+	}
+
+	public function artikel_dashboard($bulan){
+		$this->db3=$this->load->database('informasi',true);
+		$data['berita']=$this->db3->get('berita')->num_rows();
+		$data['artikel']=$this->db3->get('artikel')->num_rows();
+		$this->db3->LIKE('tanggal_input',$bulan);
+		$data['berita_now']=$this->db3->get('berita')->num_rows();
+		$this->db3->LIKE('tanggal_input',$bulan);
+		$data['artikel_now']=$this->db3->get('artikel')->num_rows();
+		return $data;
 	}
 
 }

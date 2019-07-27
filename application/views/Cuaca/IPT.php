@@ -33,7 +33,7 @@
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('Menu_kiri') ?>
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="list-data">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -110,10 +110,9 @@
                   <div class="x_title">
                     <h5>Masukkan data IPT di sini</h5>
                   </div>
-                  <div class="x_content formulir" style="display: none;" >
+                  <div class="x_content formulir" style="display: none;" id="form-tambah">
                     <br />
                       <form method="POST" action="<?php echo site_url('cuaca/set_ipt') ?>" id="kirim-data">
-
                         <div class='col-md-6 col-sm-6 col-xs-12'>
                           <div class="form-group">
                             <label>Tanggal mulai</label>
@@ -127,9 +126,9 @@
                         </div>
                         <div class=' col-sm-6 col-sm-6 col-xs-12'>
                           <div class="form-group">
-                            <label>Tanggal selesai</label>
+                            <label>Tanggal selesai</label><small id="cek-tgl"></small>
                             <div class='input-group col-md-8 col-sm-8 col-xs-12 date' id='myDatepicker1'>
-                              <input type='text' class="form-control" readonly="readonly" name="tanggal_akhir" />
+                              <input type='text' id="tanggal_akhir_set"class="form-control" readonly="readonly" name="tanggal_akhir" />
                               <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                               </span>
@@ -151,15 +150,16 @@
                       </div>
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                          <label>Masukkan Gambar & PDF</label>
+                          <label>Masukkan Gambar & PDF</label><br>
+                          <small>JPG, JPEG, GIF, PNG || PDF</small>
                           <input id="dokumen" required type="file" name="dok[]" multiple>
                         </div>
                       </div>
                       <div  class="form-group">
-                        <div class="col-md-3 col-sm-3 col-xs-12">
-                          <button style="margin-top: 20px;" type="submit" class="btn btn-success kirim-ipt">Kirim</button>
+                        <div class="col-md-3 col-sm-3 col-xs-12"><br>
+                          <button type="submit" class="btn btn-success kirim-ipt cek-tanggal">Kirim</button>
                         </div>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-8 col-sm-8 col-xs-12"><br>
                           <button type="button" class="btn btn-danger tutup">Batal</button>
                         </div>
                       </div>
@@ -172,7 +172,7 @@
                   <div class="x_title">
                     <h5>Baca data indeks presipitasi terstandarisasi</h5>    
                   </div>
-                  <div class="x_content cek-data" style="display:none;">
+                  <div class="x_content cek-data" style="display:none;" id="baca-data">
                     <br />
                       <h2 class="text-c" id="ark-judul"></h2>
                       <h6 class="text-c" id="creator"></h6>
@@ -198,7 +198,7 @@
                   <div class="x_title">
                     <h5>Edit data IPT di sini</h5>
                   </div>
-                  <div class="x_content edit-form" style="display: none;" >
+                  <div class="x_content edit-form" style="display: none;" id="edit-form" >
                     <br />
                       <form method="POST" action="<?php echo site_url('cuaca/edit_ipt') ?>" id="kirim-data">
                         <div class="form-group">
@@ -220,7 +220,7 @@
                         </div>
                         <div class=' col-sm-6 col-sm-6 col-xs-12'>
                           <div class="form-group">
-                            <label>Tanggal selesai</label>
+                            <label>Tanggal selesai</label><small id="cek-tgl-edit"></small>
                             <div class='input-group col-md-8 col-sm-8 col-xs-12 date' id='myDatepicker1'>
                               <input id="tanggal_akhir_edit" type='text' class="form-control" readonly="readonly" name="tanggal_akhir" />
                               <span class="input-group-addon">
@@ -244,15 +244,16 @@
                       </div>
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                          <label>Masukkan Gambar atau PDF jika ingin mengubah</label>
+                          <label>Masukkan Gambar atau PDF jika ingin mengubah</label><br>
+                          <small>JPG, JPEG, GIF, PNG || PDF</small>
                           <input id="dokumen" type="file" name="dok[]" multiple>
                         </div>
                       </div>
                       <div  class="form-group">
-                        <div class="col-md-3 col-sm-3 col-xs-12">
-                          <button style="margin-top: 20px;" type="submit" class="btn btn-success">Kirim</button>
+                        <div class="col-md-3 col-sm-3 col-xs-12"><br>
+                          <button type="submit" class="btn btn-success cek-tanggal-edit">Kirim</button>
                         </div>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-8 col-sm-8 col-xs-12"><br>
                           <button type="button" class="btn btn-danger tutup">Batal</button>
                         </div>
                       </div>
@@ -284,6 +285,9 @@
     hr{
       border-color: grey;
     }
+    #cek-tgl, #cek-tgl-edit{
+        color: red;
+      }
     </style>
     <!-- jQuery -->
     <script src="<?php echo base_url(); ?>asset/vendors/jquery/dist/jquery.min.js"></script>

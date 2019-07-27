@@ -24,8 +24,8 @@
     <link href="<?php echo base_url(); ?>asset/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
     <!-- bootstrap-daterangepicker -->
     <link href="<?php echo base_url(); ?>asset/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-
     <link href="<?php echo base_url(); ?>asset/confirm/ms-conf.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>asset/event/modal-style.css" rel="stylesheet">
   </head>
 
   <body class="nav-md">
@@ -64,12 +64,12 @@
                           </select>
                           <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                       </div>
-                      <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                    <!--  <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
                           <select class="form-control has-feedback-left" name="opsi">
                             <?php echo $tahun ?>
                           </select>
                           <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                      </div>
+                      </div>-->
                         <button type="submit" class="btn btn-primary kirim">Tampilkan</button>
                       </form>
                     <br />
@@ -86,13 +86,13 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <?php echo $kah['kah'] ?>
+                          <?php echo $kah['kah']['l_kah'] ?>
                         </tbody>
                       </table>
                     </div>
                     <?php echo $hapus ?>
 
-                    <div class="form-input" style="display: none;">
+                    <div class="form-input" id="form-input" style="display: none;">
                       <form method="POST" id="kirim-data" action="<?php echo site_url('Cuaca/set_kah') ?>" >
                         <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
                           <label>Minggu ke-</label>
@@ -121,8 +121,8 @@
                       </div>
                       </form> 
                     </div>
-                    <div class="form-keterangan set_form_ket"  style="display: none;">
-                      <form method="POST" id="kirim-data"  action="<?php echo site_url('Cuaca/set_ket_ph') ?>">
+                    <div class="form-keterangan"  style="display: none;">
+                      <form method="POST" id="kirim-data" class="set_form_ket"  action="<?php echo site_url('Cuaca/set_ket_ph') ?>">
                         <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
                           <label>Bulan</label>
                           <input type="text" class="form-control has-feedback-left " id="bulan-form-ket" readonly="readonly" name="bulan">
@@ -148,7 +148,7 @@
                       <form  method="POST" id="kirim-data" class="edit_form_ket" action="<?php echo site_url('Cuaca/edit_ket_ph') ?>" >
                         <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
                           <label>Bulan</label>
-                          <input type="text" class="form-control has-feedback-left " id="edit_ket_bulan" readonly="readonly" name="bulan">
+                          <input type="text" class="form-control has-feedback-left" id="edit_ket_bulan" readonly="readonly" name="bulan">
                           <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
                         </div>
                         <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
@@ -168,7 +168,7 @@
                         </div>
                       </form>
                     </div>
-                    <div class="form-edit-ph" style="display: none;">
+                    <div class="form-edit-ph" id="form-edit-ph" style="display: none;">
                       <form method="POST" id="kirim-data" action="<?php echo site_url('Cuaca/edit_ph_kah') ?>" >
                       <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
                       <label>Minggu ke-</label>
@@ -231,13 +231,24 @@
           </div>
           <div class="clearfix"></div>
         </footer>
-        <!-- /footer content -->
       </div>
     </div>
+    <div align="center" id="modal-ket">
+      <span>Kimia air hujan bulan <?php echo $kah['kah']['k_kah']['waktu'] ?></span>
+      <hr id="hr">
+      <div style="text-align:justify;" id="keterangan-read">
+        <?php echo $kah['kah']['k_kah']['isi'] ?>
+      </div>
+      <span id="close-post">
+        <button onclick="$(this).closest('#modal-ket').hide()" class="btn btn-md btn-danger">Tutup</button>
+      </span>
+    </div>
+    
     <style>
       textarea {
         resize: vertical;
       }
+      
     </style>
     <!-- jQuery -->
     <script src="<?php echo base_url(); ?>asset/vendors/jquery/dist/jquery.min.js"></script>

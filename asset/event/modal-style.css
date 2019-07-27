@@ -1,0 +1,41 @@
+#modal-ket{
+    display: none;
+    z-index: 1;
+    top: 20%;
+    right: 20%;
+    width: 800px;
+    height: auto;
+    border: 1px solid black;
+    position: fixed;
+    background-color: azure;
+    color: black;
+}
+
+#keterangan-read{
+    margin: 20px 10px 20px 10px;
+}
+
+#hr{
+    border: 0.3px solid brown;
+    margin:0;
+}
+
+@media only screen and (min-width: 1300px){
+    #gempa-cek{
+        z-index: 1;
+        top: 5%;
+        right: 5%;
+        width: 1200px;
+        height: auto;
+        border: 1px solid black;
+        position: fixed;
+        background-color: azure;
+        color: black;
+    }
+}
+
+@media only screen and (max-width: 1300px){
+    #gempa-cek{
+        display: none;
+    }
+}

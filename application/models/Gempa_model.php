@@ -76,9 +76,11 @@ class Gempa_model extends CI_Model{
 		$data=null;
 		if ($status=='*') {
 			# code...
+			$this->db->ORDER_BY('tanggal_input','DESC');
 			$data=$this->db->get('gempa');
 		}else if ($status!='*') {
 			$this->db->LIKE('status_rasa',$status);
+			$this->db->ORDER_BY('tanggal_input','DESC');
 			$data=$this->db->get('gempa');
 			# code...
 		}
@@ -134,10 +136,18 @@ class Gempa_model extends CI_Model{
 			$data2['mag']=$gempa->magnitudo;
 			$data2['koor']=$gempa->lintang.' '.$gempa->arah_lintang.' || '.$gempa->bujur.' '.$gempa->arah_bujur;
 			$data2['rasa'] = $gempa->status_rasa;
+			$data2['dalam']=$gempa->kedalaman;
 			$data2['lok']=$gempa->lokasi;
 			$data2['tsun']=$gempa->potensi;
 			$data2['mmi']=$gempa->skala_mmi;
 			$data2['ket']=$gempa->keterangan;
+			$data2['mmi']=$gempa->skala_mmi;
+			$data2['tambahan']=$gempa->nama.' || '.$gempa->tanggal_input;
+			$data2['gambar']=null;
+			if ($gempa->gambar!=null) {
+				$data2['gambar']='<img width="300" height="300"  src="'.base_url('../File_BMKG/Gempa/'.$gempa->gambar).'" alt="gempa bumi">';
+			}
+			
 			# code...
 		}
 		return $data2;
@@ -216,12 +226,15 @@ class Gempa_model extends CI_Model{
 
 	public function del_gempa($id){
 		$data=$this->db->get_where('gempa',array('id_gmp'=>$id));
-		foreach ($data->result() as $key) {
-			if (file_exists('../File_BMKG/Gempa/'.$key->gambar)) {
-				unlink('../File_BMKG/Gempa/'.$key->gambar);
-			}
-		}
 		$this->db->delete('gempa',array('id_gmp'=>$id));
+		if ($this->db->affected_rows()==1) {
+			foreach ($data->result() as $key) {
+				if (file_exists('../File_BMKG/Gempa/'.$key->gambar)) {
+					unlink('../File_BMKG/Gempa/'.$key->gambar);
+				}
+			}
+			return 1;
+		}
 	}
 
 	public function edit_gempa($id,$isi){
@@ -444,7 +457,7 @@ class Gempa_model extends CI_Model{
 				$data=$data->result()[0];
 				$data2.='<tr>
                             <td class="pos-teks">'.$kt.'</td>
-                            <td class="pos-teks"><a href="'.base_url('../File_BMKG/TTM/').$data->pdf.'" target="_blank">Baca dokumen</a></td>
+                            <td class="pos-teks"><button type="button" class="btn btn-xs btn-warning baca-ttm" value="'.base_url('../File_BMKG/TTM/').$data->pdf.'">Baca</button></button></td>
                             <td class="pos-teks">'.$data->nama.'</td>
                             <td class="pos-teks">'.date('d-m-Y H:i:s',strtotime($data->tanggal_input)).'</td>
                             <td class="pos-teks"><input type="checkbox" name="hapus[]" value="'.$data->id_ttm.'" data-nama="hapus" >
@@ -468,11 +481,13 @@ class Gempa_model extends CI_Model{
 
 	public function del_ttm($id){
 		$data=$this->db->get_where('ttm',array('id_ttm'=>$id));
-		foreach ($data->result() as $key) {
-			# code...
-			unlink('../File_BMKG/TTM/'.$key->pdf);
-		}
 		$this->db->delete('ttm',array('id_ttm'=>$id));
+		if ($this->db->affected_rows()==1) {
+			foreach ($data->result() as $key) {
+				unlink('../File_BMKG/TTM/'.$key->pdf);
+			}
+			return 1;
+		}
 	}
 
 	public function get_petir($tahun){
@@ -499,20 +514,22 @@ class Gempa_model extends CI_Model{
 					$petir['rpt']='Data belum ada';
 					if ($data->sambaran!=null) {
 						# code...
-						$petir['sbr']='<a target="_blank" href="'.base_url('../File_BMKG/Sam_petir/').$data->sambaran.'">Lihat sambaran  petir</a>';
+						//$petir['sbr']='<a target="_blank" href="'.base_url('../File_BMKG/Sam_petir/').$data->sambaran.'">Lihat sambaran  petir</a>';
+						$petir['sbr']='<button type="button" value="'.$data->sambaran.'" class="btn btn-xs btn-warning cek_g_ptr">Gambar</button>';
 					}
 					if ($data->kerapatan!=null) {
 						# code...
-						$petir['rpt']='<a target="_blank" href="'.base_url('../File_BMKG/Sam_petir/').$data->kerapatan.'">Lihat kerapatan petir</a>';
+						//$petir['rpt']='<a target="_blank" href="'.base_url('../File_BMKG/Sam_petir/').$data->kerapatan.'">Lihat kerapatan petir</a>';
+						$petir['rpt']='<button type="button" value="'.$data->kerapatan.'" class="btn btn-xs btn-warning cek_g_ptr">Gambar</button>';
 					}
 					$data2 .='<tr>
 	                          <td>'.$bln.'</td>
 	                          <td>'.$data->judul.'</td>
-	                          <td>'.$petir['sbr'].'</td>
 	                          <td>'.$petir['rpt'].'</td>
+	                          <td>'.$petir['sbr'].'</td>
 	                          <td>'.$data->nama.'</td>
 	                          <td>'.date('d-m-Y',strtotime($data->tanggal_input)).'</td>
-	                          <td><button value="'.$data->id_spt.'" class="btn btn-round btn-xs btn-info req_ptr_id">Edit</button>
+	                          <td><button data-link="'.base_url('../File_BMKG/Sam_petir/').'" value="'.$data->id_spt.'" class="btn btn-round btn-xs btn-info req_ptr_id">Edit</button>
 							      <input value="'.$data->id_spt.'" type="checkbox" name="hapus[]" data-nama="hapus">
 							  </td>
 	                        </tr>';
@@ -561,11 +578,15 @@ class Gempa_model extends CI_Model{
 
 	public function del_petir($id){
 		$data=$this->db->get_where('sambaran_petir',array('id_spt'=>$id));
-		foreach ($data->result() as $key) {
-			unlink('../File_BMKG/Sam_petir/'.$key->sambaran);
-			unlink('../File_BMKG/Sam_petir/'.$key->kerapatan);
-		}
 		$this->db->delete('sambaran_petir',array('id_spt'=>$id));
+		if ($this->db->affected_rows()==1) {
+			foreach ($data->result() as $key) {
+				unlink('../File_BMKG/Sam_petir/'.$key->sambaran);
+				unlink('../File_BMKG/Sam_petir/'.$key->kerapatan);
+			}
+			return 1;
+		}
+		
 	}
 
 	public function get_ptr_edit($id){
@@ -577,6 +598,8 @@ class Gempa_model extends CI_Model{
 			$data2['tahun']=$key->tahun;
 			$data2['judul']=$key->judul;
 			$data2['ket']=$key->keterangan;
+			$data2['kerapatan']=$key->kerapatan;
+			$data2['sambaran']=$key->sambaran;
 		}
 		return json_encode($data2);
 	}
